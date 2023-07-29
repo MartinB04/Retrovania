@@ -1,0 +1,6 @@
+# Unity generated
+Library/
+obj/
+Logs/
+.vs/
+.vscode/
