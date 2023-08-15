@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private bool bandAnimation;
     private bool movement = true;
     public float enemyImpulse = 2f;
+
+    [SerializeField] LayerChecker footA;
+    [SerializeField] LayerChecker footB;
     
 
     //Singleton de playercontroller
@@ -207,17 +210,26 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        // F = m*a ====> a = F/m
-        rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        
+        if (IsTouchingTheGround())
+        {
+            // Eliminar la velocidad vertical actual antes de aplicar el salto
+            rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
+
+            // Aplicar el impulso de salto
+            // F = m*a ====> a = F/m
+            rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
     }
 
     bool IsTouchingTheGround()
     {
         // se traza rayo desde posicion de player hacia abajo a 20 cm y choca capa suelo
-       //if (Physics2D.Raycast(rgbd.transform.position, Vector2.down, groundDistance, groundLayer))
-       if(Physics2D.BoxCast(capsuleCollider.bounds.center, capsuleCollider.size, 0f, Vector2.down, groundDistance, groundLayer))
+        //if (Physics2D.Raycast(rgbd.transform.position, Vector2.down, groundDistance, groundLayer))
+        if (footA.isTouching || footB.isTouching)
             return true;
         return false;
+       
     }
 
     public void Kill()
