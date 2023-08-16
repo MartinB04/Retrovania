@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rgbd;
     private CapsuleCollider2D capsuleCollider;
+
+    [SerializeField] private BoxCollider2D attackCollider;
     
     public Animator animator;
     public SpriteRenderer spr;
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         
         
+        
         sharedInstance = this;
         //Toma el valor de donde empieza personaje
         startPosition = this.transform.position;
@@ -62,6 +65,9 @@ public class PlayerController : MonoBehaviour
         //recupera los puntos de vida almacenados al inicio de la escena
         //SetLife(ChangeScene.sharedInstance.GetLife());
         SaveLife(ChangeScene.sharedInstance.GetLife());
+
+
+        attackCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -75,9 +81,6 @@ public class PlayerController : MonoBehaviour
             SetAnimations();
 
         }
-      
-        //Debug.DrawRay(transform.position, ,  Color.green);
-        //Debug.DrawRay(transform.position, Vector3.down, Color.green);
 
     }
 
@@ -210,7 +213,6 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        
         if (IsTouchingTheGround())
         {
             // Eliminar la velocidad vertical actual antes de aplicar el salto
@@ -239,10 +241,8 @@ public class PlayerController : MonoBehaviour
         //movement = false;
         Debug.Log("Jugador muerto");
         Invoke("GameOver", 3f);
-        
     }
 
-    
     public void EnemyKnockBack(float enemyPosX)
     {
         movement = false;
@@ -275,6 +275,30 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Juego terminado");
     }
 
-   
+
+    // Agrega un nuevo método en tu script PlayerController para habilitar o deshabilitar el Collider2D
+    // Agrega un nuevo método en tu script PlayerController para habilitar o deshabilitar el Collider2D
+    public void AttackCollider(int act)
+    {
+        //attackCollider.enabled = act == 1 ? true : false;
+        if (act == 1) {
+            attackCollider.enabled = true;
+            Debug.Log("Attack collider activado");
+        }
+            
+        else
+        {
+            attackCollider.enabled = false;
+            Debug.Log("Attack collider DESACTIVADO BV");
+        }
+    }
+
+    public bool GetAttackCollider()
+    {
+        if (attackCollider.enabled == true)
+            return true;
+        else 
+            return false;
+    }
 
 }

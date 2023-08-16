@@ -50,10 +50,10 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("PlayerAttack") && PlayerController.sharedInstance.IsAttacking() == true)
+        if (col.gameObject.CompareTag("PlayerAttack") && PlayerController.sharedInstance.GetAttackCollider())
             Destroy(gameObject);
 
-        if (col.gameObject.CompareTag("NoPlayerAttack") && PlayerController.sharedInstance.IsAttacking() == false
+        if (col.gameObject.CompareTag("NoPlayerAttack") && PlayerController.sharedInstance.GetAttackCollider()
             && PlayerController.sharedInstance.IsAlive())
         {
             PlayerController.sharedInstance.EnemyKnockBack(transform.position.x);

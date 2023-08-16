@@ -64,10 +64,13 @@
     <Compile Include="Assets\Scripts\NPCat.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Redirector.cs" />
     <Compile Include="Assets\Scripts\RelicController.cs" />
     <Compile Include="Assets\Scripts\Physics\LayerChecker.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\ScoreController.cs" />
+    <Compile Include="Assets\Scripts\PlayerSpriteController.cs" />
+    <Compile Include="Assets\Scripts\ColliderActivation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

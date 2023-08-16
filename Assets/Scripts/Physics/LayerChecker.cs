@@ -16,11 +16,6 @@ public class LayerChecker : MonoBehaviour
     {
         isTouching = Physics2D.Raycast(this.transform.position, direction, distance, targetMask);
 
-        if (isTouching)
-            Debug.Log("Tocando Bv");
-        else
-            Debug.Log("Nel Bv");
-
     }
 
 #if UNITY_EDITOR
