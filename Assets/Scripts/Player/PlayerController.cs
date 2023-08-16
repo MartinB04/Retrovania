@@ -62,8 +62,8 @@ public class PlayerController : MonoBehaviour
 
         //recupera los puntos de vida almacenados al inicio de la escena
         //SetLife(ChangeScene.sharedInstance.GetLife());
-        SaveLife(ChangeScene.sharedInstance.GetLife());
-
+        //SaveLife(ChangeScene.sharedInstance.GetLife());
+        pointsLife = 100;
 
         attackCollider.enabled = false;
     }
