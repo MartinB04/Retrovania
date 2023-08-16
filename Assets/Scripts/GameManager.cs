@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        if (ChangeScene.sharedInstance.GetValue() == 0)
+            if (ChangeScene.sharedInstance.GetValue() == 0)
         BackToMenu();
-        else
+            else
         StartGame();
         
     }
@@ -39,13 +39,9 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             if(gameIsPaused == true)
-            {
                 Resume();
-            }
             else
-            {
                 Pause();
-            }
         }
     }
     public void StartGame()

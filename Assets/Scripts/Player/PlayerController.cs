@@ -39,8 +39,6 @@ public class PlayerController : MonoBehaviour
         rgbd = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         
-        
-        
         sharedInstance = this;
         //Toma el valor de donde empieza personaje
         startPosition = this.transform.position;
@@ -97,23 +95,16 @@ public class PlayerController : MonoBehaviour
 
     private bool AnimationTest()
     {
-        if (Input.GetKey(KeyCode.F))
-            return true;
-        return false;
+        return Input.GetKey(KeyCode.F);
     }
     private bool IsFalling()
     {
-        if (!IsTouchingTheGround() && rgbd.velocity.y <= 0)
-            return true;
-        return false;
+        return !IsTouchingTheGround() && rgbd.velocity.y <= 0;
     }
     
     public bool IsAlive()
-    {
-        if (animator.GetBool("isAlive"))
-            return true;
-        return false;
-          
+    { 
+        return animator.GetBool("isAlive");
     }
 
     private void FixedUpdate()
@@ -147,9 +138,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAttacking()
     {
-        if (Input.GetButton("Attack"))
-            return true;
-        return false;
+        return Input.GetButton("Attack");
     }
 
     //suma o resta los pv que recibe como parametro al jugador
@@ -170,16 +159,12 @@ public class PlayerController : MonoBehaviour
 
     bool IsMoving()
     {
-        if (rgbd.velocity.x != 0 && movement == true)
-            return true;
-        return false;
+        return rgbd.velocity.x != 0 && movement == true;
     }
 
     bool MirrorAnimation()
     {
-        if (Input.GetKey(KeyCode.D))
-            return true;
-        return false;
+        return Input.GetKey(KeyCode.D);
     }
 
     void Movement()
@@ -228,10 +213,8 @@ public class PlayerController : MonoBehaviour
     {
         // se traza rayo desde posicion de player hacia abajo a 20 cm y choca capa suelo
         //if (Physics2D.Raycast(rgbd.transform.position, Vector2.down, groundDistance, groundLayer))
-        if (footA.isTouching || footB.isTouching)
-            return true;
-        return false;
-       
+        
+        return footA.isTouching || footB.isTouching;
     }
 
     public void Kill()
@@ -257,9 +240,7 @@ public class PlayerController : MonoBehaviour
     }
     private bool IsHurting()
     {
-        if (movement == false)
-            return true;
-        return false;
+        return !movement;
     }
     void EnableMovement()
     {
@@ -280,25 +261,12 @@ public class PlayerController : MonoBehaviour
     // Agrega un nuevo método en tu script PlayerController para habilitar o deshabilitar el Collider2D
     public void AttackCollider(int act)
     {
-        //attackCollider.enabled = act == 1 ? true : false;
-        if (act == 1) {
-            attackCollider.enabled = true;
-            Debug.Log("Attack collider activado");
-        }
-            
-        else
-        {
-            attackCollider.enabled = false;
-            Debug.Log("Attack collider DESACTIVADO BV");
-        }
+        attackCollider.enabled = act == 1 ? true : false;
     }
 
     public bool GetAttackCollider()
     {
-        if (attackCollider.enabled == true)
-            return true;
-        else 
-            return false;
+        return attackCollider.enabled;
     }
 
 }
