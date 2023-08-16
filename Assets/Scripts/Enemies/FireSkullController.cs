@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class FireSkullController : MonoBehaviour
 {
-    public float distance, damage, speed = 1f;
+    public float distance, speed = 1f;
     public bool horizontal;
 
     Vector3 initialPosition;
@@ -48,17 +48,6 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("PlayerAttack") && PlayerController.sharedInstance.GetAttackCollider())
-            Destroy(gameObject);
-
-        if (col.gameObject.CompareTag("NoPlayerAttack") && PlayerController.sharedInstance.GetAttackCollider()
-            && PlayerController.sharedInstance.IsAlive())
-        {
-            PlayerController.sharedInstance.EnemyKnockBack(transform.position.x);
-            PlayerController.sharedInstance.SetLife(damage);
-        }
-    }
+    
 
 }

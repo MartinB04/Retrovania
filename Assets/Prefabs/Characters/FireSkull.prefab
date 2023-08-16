@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2492040719708214202}
   - component: {fileID: 459540780}
   - component: {fileID: 459540781}
-  - component: {fileID: 336520181}
+  - component: {fileID: 5739055940982653515}
+  - component: {fileID: 5508570272799355951}
   m_Layer: 3
   m_Name: FireSkull
   m_TagString: Untagged
@@ -72,7 +73,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.14249492, y: -0.12468338}
   m_Size: {x: 3.349893, y: 4.2761087}
   m_Direction: 0
---- !u!114 &336520181
+--- !u!114 &5739055940982653515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,9 +86,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 10
-  damage: -15
-  speed: 3
+  damage: 0
+  speed: 5
   horizontal: 0
+--- !u!114 &5508570272799355951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2492040719708214200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 353889b97c5668d4983e96d3b5757a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: -10
 --- !u!1 &2492040720131418018
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +133,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2492040719708214202}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2492040720131418021
 SpriteRenderer:
@@ -175,7 +189,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &2492040720131418020
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -192,4 +206,5 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

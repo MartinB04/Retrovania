@@ -181,6 +181,7 @@ public class PlayerController : MonoBehaviour
                 //rgbd.transform.localEulerAngles = new Vector3(0, 0, 0);
                 FixAnimationMirror();
             }
+            
 
             if (Input.GetKey(KeyCode.A))
             {
@@ -192,7 +193,7 @@ public class PlayerController : MonoBehaviour
                 //rgbd.transform.localEulerAngles = new Vector3(0, 180, 0);
                 FixAnimationMirror();
             }
-
+            
         }
     }
 
@@ -256,8 +257,6 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Juego terminado");
     }
 
-
-    // Agrega un nuevo método en tu script PlayerController para habilitar o deshabilitar el Collider2D
     // Agrega un nuevo método en tu script PlayerController para habilitar o deshabilitar el Collider2D
     public void AttackCollider(int act)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NightmareController : MonoBehaviour
 {
-    public float distance, damage, speed = 1f;
+    public float distance,speed = 1f;
     public bool horizontal;
     public Animator animator;
 
@@ -66,16 +66,5 @@ public class NightmareController : MonoBehaviour
     }
 
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("PlayerAttack") && PlayerController.sharedInstance.IsAttacking() == true)
-            Destroy(gameObject);
-
-        if (col.gameObject.CompareTag("NoPlayerAttack") && PlayerController.sharedInstance.IsAttacking() == false
-            && PlayerController.sharedInstance.IsAlive())
-        {
-            PlayerController.sharedInstance.EnemyKnockBack(transform.position.x);
-            PlayerController.sharedInstance.SetLife(damage);
-        }
-    }
+    
 }
