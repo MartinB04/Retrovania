@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum Scenes
+{
+    level1, level2, level3
+}
 public class ChangeScene : MonoBehaviour
 {
     public static ChangeScene sharedInstance;
@@ -14,6 +18,8 @@ public class ChangeScene : MonoBehaviour
     string lifePreferName;
     int relic1;
     string relic1PreferName;
+
+    [SerializeField] Scenes tarjetScene;
 
     private void Awake()
     {
@@ -37,21 +43,12 @@ public class ChangeScene : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Scene esena = SceneManager.GetActiveScene();
-        if (col.gameObject.CompareTag("Player") && (esena.name == "Level1"))
-        {
-            valor += 1;
-            Debug.Log("Valor = " + valor);
+        if (col.gameObject.CompareTag("Player") && tarjetScene == Scenes.level1)
+            SceneManager.LoadScene("Level1");
+        else if(col.gameObject.CompareTag("Player") && tarjetScene == Scenes.level2)
             SceneManager.LoadScene("Level2");
-        }
-
-        else if (col.gameObject.CompareTag("Player") && (esena.name == "Level2"))
-        {
-            valor += 1;
-            Debug.Log("Valor = " + valor);
+        else if (col.gameObject.CompareTag("Player") && tarjetScene == Scenes.level3)
             SceneManager.LoadScene("Level3");
-        }
-
     }
     public void SaveData()
     {
