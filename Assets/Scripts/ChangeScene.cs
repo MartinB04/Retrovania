@@ -43,12 +43,16 @@ public class ChangeScene : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player") && tarjetScene == Scenes.level1)
-            SceneManager.LoadScene("Level1");
-        else if(col.gameObject.CompareTag("Player") && tarjetScene == Scenes.level2)
-            SceneManager.LoadScene("Level2");
-        else if (col.gameObject.CompareTag("Player") && tarjetScene == Scenes.level3)
-            SceneManager.LoadScene("Level3");
+        if (col.gameObject.CompareTag("Player"))
+        {
+            if (this.tarjetScene == Scenes.level1)
+                SceneManager.LoadScene("Level1");
+            else if (this.tarjetScene == Scenes.level2)
+                SceneManager.LoadScene("Level2");
+            else if (this.tarjetScene == Scenes.level3)
+                SceneManager.LoadScene("Level3");
+        }
+    
     }
     public void SaveData()
     {

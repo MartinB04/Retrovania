@@ -38,10 +38,7 @@ public class GameManager : MonoBehaviour
         //StartGame();
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if(gameIsPaused == true)
-                Resume();
-            else
-                Pause();
+            TogglePause();
         }
     }
     public void StartGame()
@@ -54,20 +51,34 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+
+
+    public void TogglePause()
+    {
+        gameIsPaused = !gameIsPaused;
+
+        if (gameIsPaused)
+        {
+            Pause();
+        }
+        else
+        {
+            Resume();
+        }
+    }
 
     public void Pause()
     {
         gameIsPaused = true;
-        this.SetGameState(GameState.pause);
         Time.timeScale = 0f;
+        this.SetGameState(GameState.pause);
     }
 
     public void Resume()
     {
         gameIsPaused = false;
-        this.SetGameState(GameState.inGame);
         Time.timeScale = 1f;
+        this.SetGameState(GameState.inGame);
     }
 
     public void GameOver()
