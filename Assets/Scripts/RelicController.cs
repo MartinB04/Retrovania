@@ -35,6 +35,10 @@ public class RelicController : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 obj.SetActive(false);
+            } else if(gameObject.name == "FinalRelic")
+            {
+                Debug.Log("Jugador toco reliquia final Bv");
+                GameManager.sharedInstance.Win();
             }
 
         }
