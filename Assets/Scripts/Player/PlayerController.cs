@@ -8,20 +8,19 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider2D capsuleCollider;
 
     [SerializeField] private BoxCollider2D attackCollider;
-    
-    public Animator animator;
-    public SpriteRenderer spr;
 
-    public float groundDistance = .2f;
-    public float jumpForce = 5;
-    public float runningSpeed = 1.5f;
-    public float pointsLife = 100;
+    [SerializeField] Animator animator;
+    [SerializeField] SpriteRenderer spr;
+
+    [SerializeField] float jumpForce = 5;
+    [SerializeField] float runningSpeed = 1.5f;
+    [SerializeField] float pointsLife = 100;
     //sirva para detectar capa de suelo
-    public LayerMask groundLayer;
+    [SerializeField] LayerMask groundLayer;
 
     private bool bandAnimation;
     private bool movement = true;
-    public float enemyImpulse = 2f;
+    [SerializeField] float enemyImpulse = 2f;
 
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
@@ -46,9 +45,10 @@ public class PlayerController : MonoBehaviour
         //localScale = this.transform.localScale;
     }
 
-    // Start is called before the first frame update
-    public void StartGame()
+   
+    public void Start()
     {
+        //antes public void StartGame()
         animator.SetBool("isAlive", true);
         animator.SetBool("isGrounded", true);
         animator.SetBool("isMoving", false);
@@ -60,12 +60,9 @@ public class PlayerController : MonoBehaviour
         //Cada vez que reiniciamos colocamos al personaje en la posicion inicial
         this.transform.position = this.startPosition;
 
-        //recupera los puntos de vida almacenados al inicio de la escena
-        //SetLife(ChangeScene.sharedInstance.GetLife());
-        //SaveLife(ChangeScene.sharedInstance.GetLife());
-        pointsLife = 100;
-
-        attackCollider.enabled = false;
+        this.SaveLife(ChangeScene.sharedInstance.LoadPlayerPointsLife());
+    
+        this.attackCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -82,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //Gestiona las animaciones
     private void SetAnimations()
     {
         animator.SetBool("isGrounded", IsTouchingTheGround());
@@ -144,7 +142,8 @@ public class PlayerController : MonoBehaviour
     //suma o resta los pv que recibe como parametro al jugador
     public void SetLife(float life)
     {
-        pointsLife += life;
+        this.pointsLife += life;
+        ChangeScene.sharedInstance.SavePlayerPointsLife(this.pointsLife);
     }
 
     public float GetLife()
@@ -152,9 +151,11 @@ public class PlayerController : MonoBehaviour
         return this.pointsLife;
     }
 
+    //Establece los puntos de vida almacenados en PlayerPrefs
     public void SaveLife(float life)
     {
-        pointsLife = life;
+        this.pointsLife = life;
+        Debug.Log("PLAYER CONTROLLER save data this.pointslife " + this.pointsLife);
     }
 
     bool IsMoving()
@@ -212,17 +213,14 @@ public class PlayerController : MonoBehaviour
 
     bool IsTouchingTheGround()
     {
-        // se traza rayo desde posicion de player hacia abajo a 20 cm y choca capa suelo
-        //if (Physics2D.Raycast(rgbd.transform.position, Vector2.down, groundDistance, groundLayer))
-        
+        //Verifica si almenos uno de los elementos hijos pie toca el suelo
         return footA.isTouching || footB.isTouching;
     }
 
     public void Kill()
     {
-        //ChangeScene.sharedInstance.SaveData();
         this.animator.SetBool("isAlive", false);
-        //movement = false;
+      
         Debug.Log("Jugador muerto");
         Invoke("GameOver", 3f);
     }

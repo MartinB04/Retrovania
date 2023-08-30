@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
     //Variable para saber estado del juego, al inicio esta en menu principal
     public GameState currentGameState = GameState.menu;
 
-    public bool gameIsPaused = false;
+    [SerializeField] bool gameIsPaused = false;
 
-    public Canvas canvasMenu, canvasGameOver, canvasInGame, canvasPause, canvasWin;
+    [SerializeField] Canvas canvasMenu, canvasGameOver, canvasInGame, canvasPause, canvasWin;
     private void Awake()
     {
         sharedInstance = this;
@@ -25,21 +25,17 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-            if (ChangeScene.sharedInstance.GetValue() == 0)
-        BackToMenu();
-            else
-        StartGame();
+        if (ChangeScene.sharedInstance.GetEnableMainMenu())
+            BackToMenu();
+        else
+            StartGame();
         
     }
 
     private void Update()
     {
-        //if (Input.GetButtonDown("Start") && this.currentGameState != GameState.inGame)
-        //StartGame();
         if (Input.GetKeyDown(KeyCode.P))
-        {
             TogglePause();
-        }
     }
     public void StartGame()
     {
@@ -47,24 +43,24 @@ public class GameManager : MonoBehaviour
         //resetea posicion de camara evitando barrido
         //CameraFollow.sharedInstance.ResetCameraPosition();
         //resetea posicion player
-        PlayerController.sharedInstance.StartGame();
+        
+        
+        
+        //estaba habilitado Bv
+        //PlayerController.sharedInstance.StartGame();
 
     }
 
 
-
+    //Gestiona si el juego esta pausado o no
     public void TogglePause()
     {
         gameIsPaused = !gameIsPaused;
 
         if (gameIsPaused)
-        {
             Pause();
-        }
         else
-        {
             Resume();
-        }
     }
 
     public void Pause()
@@ -81,78 +77,80 @@ public class GameManager : MonoBehaviour
         this.SetGameState(GameState.inGame);
     }
 
+    //<<< Termina lo que gestiona la pausa>>>
+
     public void GameOver()
     {
-        this.SetGameState(GameState.gameOver);
+        ChangeScene.sharedInstance.ResetData();
+        this.SetGameState(GameState.gameOver);     
     }
 
     public void Win()
     {
-        this.SetGameState(GameState.win);
+        ChangeScene.sharedInstance.ResetData();
+        this.SetGameState(GameState.win);   
     }
 
     public void BackToMenu()
     {
-        ChangeScene.sharedInstance.SaveData();
-        //Debug.Log("Click backTomenu");
-        if(PlayerController.sharedInstance.IsAlive() == false ||
-            this.currentGameState == GameState.win)
+        if(this.currentGameState == GameState.gameOver ||
+        this.currentGameState == GameState.win)
         {
-            //Debug.Log("Jugador muerto");
-            //Debug.Log(ChangeScene.sharedInstance.GetValue());
+
             ChangeScene.sharedInstance.RefreshScene();
-            //Debug.Log(ChangeScene.sharedInstance.GetValue());
         }
             
         this.SetGameState(GameState.menu);
     }
 
+    //Desactiva todos los canvas a la vez
+    void SetCanvasEnable()
+    {
+        canvasMenu.enabled = false;
+        canvasGameOver.enabled = false;
+        canvasInGame.enabled = false;
+        canvasPause.enabled = false;
+        canvasWin.enabled = false;
+    }
+
     //Funcion que cambia el estado del juego
+    //Activa el canvas correspondiente
     void SetGameState(GameState newGameState)
     {
         // sera necesario que solo sea en el lvl1
         if(newGameState == GameState.menu)
         {
             //Preparar codigo para volver al menu
+            SetCanvasEnable();
             canvasMenu.enabled = true;
-            canvasGameOver.enabled = false;
-            canvasInGame.enabled = false;
-            canvasPause.enabled = false;
-            canvasWin.enabled = false;
+            
 
         } else if(newGameState == GameState.gameOver)
         {
             //Preparar codigo para pantalla de gameover
-            canvasMenu.enabled = false;
+            SetCanvasEnable();
             canvasGameOver.enabled = true;
-            canvasInGame.enabled = false;
-            canvasPause.enabled = false;
-            canvasWin.enabled = false;
+            
         } else if(newGameState == GameState.inGame)
         {
+
+            ChangeScene.sharedInstance.SetEnableMainMenu(false); //es para que no aparezca  el main menu al cambiar de escena.
             //Preparar codigo para estar en juego
-            canvasMenu.enabled = false;
-            canvasGameOver.enabled = false;
+            SetCanvasEnable();
             canvasInGame.enabled = true;
-            canvasPause.enabled = false;
-            canvasWin.enabled = false;
+   
         }
         else if (newGameState == GameState.pause)
         {
             //Preparar codigo para estar en juego
-            canvasMenu.enabled = false;
-            canvasGameOver.enabled = false;
-            canvasInGame.enabled = false;
+            SetCanvasEnable();
             canvasPause.enabled = true;
-            canvasWin.enabled = false;
+            
         }
         else if (newGameState == GameState.win)
         {
             //Preparar codigo para estar en juego
-            canvasMenu.enabled = false;
-            canvasGameOver.enabled = false;
-            canvasInGame.enabled = false;
-            canvasPause.enabled = false;
+            SetCanvasEnable();
             canvasWin.enabled = true;
         }
         this.currentGameState = newGameState;

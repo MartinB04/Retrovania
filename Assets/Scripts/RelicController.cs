@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RelicController : MonoBehaviour
 {
+    [SerializeField] GameObject target;
+
     //GameObject relic1;
-    public GameObject obj;
+    //public GameObject obj;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,16 +24,31 @@ public class RelicController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Jugador toco reliquia");
-            if (gameObject.name == "Relic1" && obj.name == "Brigde")
+        Debug.Log("Jugador toco reliquia");
+            if(this.gameObject.name == "FinalRelic")
             {
-                gameObject.SetActive(false);
-                obj.SetActive(false);
-            } else if (gameObject.name == "Relic2" && obj.name == "FlyPlatform")
-            {
-                gameObject.SetActive(false);
-                obj.SetActive(true);
+                this.gameObject.SetActive(false);
+                Debug.Log("Jugador toco reliquia final Bv");
+                GameManager.sharedInstance.Win();
             }
+            else if (this.target.name == "FlyPlatform") {
+                this.gameObject.SetActive(false);
+                this.target.SetActive(true);
+                Debug.Log(this.gameObject.name + " y " + this.target.name + " desactivado");
+            }
+            else
+            {
+                this.gameObject.SetActive(false);
+                this.target.SetActive(false);
+                Debug.Log(this.gameObject.name + " y " + this.target.name + " desactivado");
+            }
+
+                
+                    
+
+            
+            
+            /*
             else if (gameObject.name == "Relic3" && obj.name == "WallDoor")
             {
                 gameObject.SetActive(false);
@@ -39,8 +57,12 @@ public class RelicController : MonoBehaviour
             {
                 Debug.Log("Jugador toco reliquia final Bv");
                 GameManager.sharedInstance.Win();
-            }
-
+            }*/
         }
+            
+
+        
     }
+
+
 }
