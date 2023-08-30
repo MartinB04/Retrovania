@@ -170,33 +170,34 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        //solo poder moverse si estar en modo juego
+        // Solo poder moverse si estar en modo juego
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
+            // Inicialmente, la velocidad en el eje X es 0
+            float moveX = 0f;
+
             if (Input.GetKey(KeyCode.D))
             {
-                if (rgbd.velocity.x < runningSpeed)
-                    rgbd.velocity = new Vector2(runningSpeed, rgbd.velocity.y);
-                //rgbd.transform.localScale = localScale;
+                // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
+                moveX = runningSpeed;
+                // Voltea la escala hacia la derecha
                 rgbd.transform.localScale = new Vector3(1, 1, 1);
-                //rgbd.transform.localEulerAngles = new Vector3(0, 0, 0);
                 FixAnimationMirror();
             }
-            
-
-            if (Input.GetKey(KeyCode.A))
+            else if (Input.GetKey(KeyCode.A))
             {
-                if (rgbd.velocity.x > -runningSpeed)
-                    rgbd.velocity = new Vector2(-runningSpeed, rgbd.velocity.y);
-
-                //rgbd.transform.localScale = new Vector3(-localScale.x, localScale.y, localScale.z);
+                // Si se presiona la tecla A, establece la velocidad a -runningSpeed en el eje X
+                moveX = -runningSpeed;
+                // Voltea la escala hacia la izquierda
                 rgbd.transform.localScale = new Vector3(-1, 1, 1);
-                //rgbd.transform.localEulerAngles = new Vector3(0, 180, 0);
                 FixAnimationMirror();
             }
-            
+
+            // Establece la velocidad en el eje X
+            rgbd.velocity = new Vector2(moveX, rgbd.velocity.y);
         }
     }
+
 
     void Jump()
     {
