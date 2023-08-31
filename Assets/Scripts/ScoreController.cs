@@ -23,9 +23,27 @@ public class ScoreController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        textLife.text = "PV " + PlayerController.sharedInstance.GetLife();
-        textScene.text = ChangeScene.sharedInstance.GetCurrentScene();
+        textLife.text = "Vida " + PlayerController.sharedInstance.GetLife();
+        textScene.text = this.UpdateNameScene();
         //time -= Time.deltaTime;
         //textTime.text = time + timeS.ToString("f0");
+    }
+
+    string UpdateNameScene()
+    {
+        string nameScene = "";
+        switch (ChangeScene.sharedInstance.GetCurrentScene())
+        {
+            case "Level1":
+                nameScene = "Nivel 1";
+                return nameScene;
+            case "Level2":
+                nameScene = "Nivel 2";
+                return nameScene;
+            case "Level3":
+                nameScene = "Nivel 3";
+                return nameScene;
+        }
+        return "null";
     }
 }
