@@ -2,67 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Relic { 
+    relic1, relic2, relic3, finalRelic
+}
+
 
 public class RelicController : MonoBehaviour
 {
-    [SerializeField] GameObject target;
+    [SerializeField] Relic typeRelic;
+    [SerializeField] ObjectActivation target;
 
-    //GameObject relic1;
-    //public GameObject obj;
-    // Start is called before the first frame update
-    void Start()
+    private SpriteRenderer spr;
+
+    private void Awake()
     {
-        
+        this.spr = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-        Debug.Log("Jugador toco reliquia");
-            if(this.gameObject.name == "FinalRelic")
+            int relic = 0;
+
+            if (this.typeRelic == Relic.relic1)
+                relic = 1;
+            else if (this.typeRelic == Relic.relic2)
+                relic = 2;
+            else if (this.typeRelic == Relic.relic3)
+                relic = 3;
+
+            if (this.spr.color == Color.white)
             {
-                this.gameObject.SetActive(false);
-                Debug.Log("Jugador toco reliquia final Bv");
-                GameManager.sharedInstance.Win();
-            }
-            else if (this.target.name == "FlyPlatform") {
-                this.gameObject.SetActive(false);
-                this.target.SetActive(true);
-                Debug.Log(this.gameObject.name + " y " + this.target.name + " desactivado");
+                this.spr.color = Color.red;
+                if(this.typeRelic != Relic.finalRelic)
+                    this.target.Activation(relic, false);
+                else
+                    GameManager.sharedInstance.Win();
             }
             else
             {
-                this.gameObject.SetActive(false);
-                this.target.SetActive(false);
-                Debug.Log(this.gameObject.name + " y " + this.target.name + " desactivado");
+                this.spr.color = Color.white;
+                if (this.typeRelic != Relic.finalRelic)
+                    this.target.Activation(relic, true);
             }
-
-                
-                    
-
-            
-            
-            /*
-            else if (gameObject.name == "Relic3" && obj.name == "WallDoor")
-            {
-                gameObject.SetActive(false);
-                obj.SetActive(false);
-            } else if(gameObject.name == "FinalRelic")
-            {
-                Debug.Log("Jugador toco reliquia final Bv");
-                GameManager.sharedInstance.Win();
-            }*/
         }
-            
 
-        
     }
-
 
 }

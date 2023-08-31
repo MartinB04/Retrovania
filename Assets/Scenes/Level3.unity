@@ -1877,7 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976eb2054bea5f844a699ce000f21b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  typeRelic: 3
 --- !u!1001 &638235745
 PrefabInstance:
   m_ObjectHideFlags: 0

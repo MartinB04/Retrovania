@@ -10,6 +10,10 @@ public class DataStorage : MonoBehaviour
 
     bool enableMainMenu = true;
     float playerPointsLife = 100;
+
+    bool relic1 = true;
+    bool relic2 = true;
+    bool relic3 = true;
     
 
     private void Awake()
@@ -23,13 +27,6 @@ public class DataStorage : MonoBehaviour
         sharedInstance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-    void Start()
-    {
-        
-    }
-
-
 
 
     public void SavePlayerPointsLife(float life)
@@ -59,5 +56,38 @@ public class DataStorage : MonoBehaviour
     public float LoadPlayerPointsLife()
     {
         return this.playerPointsLife;
+    }
+
+    public void SetRelics(int relic, bool status)
+    {
+        switch (relic)
+        {
+            case 1:
+                this.relic1 = status;
+                break;
+            case 2:
+                this.relic2 = status;
+                break;
+            case 3:
+                this.relic3 = status;
+                break;
+        }
+    }
+
+    public bool GetRelics(int relic, bool status)
+    {
+        switch (relic)
+        {
+            case 1:
+                return this.relic1;
+                
+            case 2:
+                return this.relic2;
+          
+            case 3:
+                return this.relic3;
+              
+        }
+        return false;
     }
 }
