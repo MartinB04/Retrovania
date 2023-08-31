@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\ScoreController.cs" />
     <Compile Include="Assets\Scripts\PlayerSpriteController.cs" />
     <Compile Include="Assets\Scripts\ColliderActivation.cs" />
+    <Compile Include="Assets\Scripts\DataStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

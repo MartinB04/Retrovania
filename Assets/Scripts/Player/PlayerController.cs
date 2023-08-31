@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAlive", true);
         animator.SetBool("isGrounded", true);
         animator.SetBool("isMoving", false);
-        animator.SetBool("rightAnimation", true);
+        
         animator.SetBool("isAttacking", false);
         animator.SetBool("isFalling", false);
         animator.SetBool("isHurting", false);
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         //Cada vez que reiniciamos colocamos al personaje en la posicion inicial
         this.transform.position = this.startPosition;
 
-        this.SaveLife(ChangeScene.sharedInstance.LoadPlayerPointsLife());
+        this.SaveLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
     
         this.attackCollider.enabled = false;
     }
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool("isGrounded", IsTouchingTheGround());
         animator.SetBool("isMoving", IsMoving());
-        animator.SetBool("rightAnimation", MirrorAnimation());
+      
         animator.SetBool("isAttacking", IsAttacking());
         animator.SetBool("isFalling", IsFalling());
         animator.SetBool("isHurting", IsHurting());
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
         if(GameManager.sharedInstance.currentGameState == GameState.inGame) {
             if (movement && IsAlive())
                 Movement();
-            MirrorAnimation();
+            
 
             if (Input.GetButtonDown("Pause"))
                 GameManager.sharedInstance.Pause();
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
     public void SetLife(float life)
     {
         this.pointsLife += life;
-        ChangeScene.sharedInstance.SavePlayerPointsLife(this.pointsLife);
+        DataStorage.sharedInstance.SavePlayerPointsLife(this.pointsLife);
     }
 
     public float GetLife()
@@ -163,10 +163,7 @@ public class PlayerController : MonoBehaviour
         return rgbd.velocity.x != 0 && movement == true;
     }
 
-    bool MirrorAnimation()
-    {
-        return Input.GetKey(KeyCode.D);
-    }
+    
 
     void Movement()
     {

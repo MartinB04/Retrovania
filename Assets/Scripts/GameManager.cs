@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        if (ChangeScene.sharedInstance.GetEnableMainMenu())
+        if (DataStorage.sharedInstance.GetEnableMainMenu())
             BackToMenu();
         else
             StartGame();
@@ -81,13 +81,13 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        ChangeScene.sharedInstance.ResetData();
+        DataStorage.sharedInstance.ResetData();
         this.SetGameState(GameState.gameOver);     
     }
 
     public void Win()
     {
-        ChangeScene.sharedInstance.ResetData();
+        DataStorage.sharedInstance.ResetData();
         this.SetGameState(GameState.win);   
     }
 
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         } else if(newGameState == GameState.inGame)
         {
 
-            ChangeScene.sharedInstance.SetEnableMainMenu(false); //es para que no aparezca  el main menu al cambiar de escena.
+            DataStorage.sharedInstance.SetEnableMainMenu(false); //es para que no aparezca  el main menu al cambiar de escena.
             //Preparar codigo para estar en juego
             SetCanvasEnable();
             canvasInGame.enabled = true;
