@@ -14,6 +14,7 @@ public class DataStorage : MonoBehaviour
     bool relic1 = true;
     bool relic2 = true;
     bool relic3 = true;
+    bool finalRelic = true;
     
 
     private void Awake()
@@ -27,7 +28,6 @@ public class DataStorage : MonoBehaviour
         sharedInstance = this;
         DontDestroyOnLoad(gameObject);
     }
-
 
     public void SavePlayerPointsLife(float life)
     {
@@ -58,7 +58,7 @@ public class DataStorage : MonoBehaviour
         return this.playerPointsLife;
     }
 
-    public void SetRelics(int relic, bool status)
+    public void SetKeyObjects(int relic, bool status)
     {
         switch (relic)
         {
@@ -71,10 +71,14 @@ public class DataStorage : MonoBehaviour
             case 3:
                 this.relic3 = status;
                 break;
+            case 0:
+                this.finalRelic = status;
+                break;
         }
+        
     }
 
-    public bool GetRelics(int relic, bool status)
+    public bool GetKeyObjects(int relic)
     {
         switch (relic)
         {
@@ -86,7 +90,10 @@ public class DataStorage : MonoBehaviour
           
             case 3:
                 return this.relic3;
-              
+
+            case 0:
+                return this.finalRelic;
+
         }
         return false;
     }
