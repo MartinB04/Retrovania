@@ -40,14 +40,6 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         this.SetGameState(GameState.inGame);
-        //resetea posicion de camara evitando barrido
-        //CameraFollow.sharedInstance.ResetCameraPosition();
-        //resetea posicion player
-        
-        
-        
-        //estaba habilitado Bv
-        //PlayerController.sharedInstance.StartGame();
 
     }
 

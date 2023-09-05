@@ -58,7 +58,15 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isHurting", false);
         bandAnimation = false;
         //Cada vez que reiniciamos colocamos al personaje en la posicion inicial
-        this.transform.position = this.startPosition;
+
+        Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition();
+
+        if (playerPosition == Vector2.zero)
+            this.transform.position = this.startPosition;
+        else
+            this.transform.position = playerPosition;
+
+
 
         this.SaveLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
     

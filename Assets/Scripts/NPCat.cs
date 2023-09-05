@@ -27,7 +27,8 @@ public class NPCat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("NoPlayerAttack"))
+        //solo se inicia cuando el jugador lo toca y no hay dialogo mostrandose antes.
+        if (collision.gameObject.CompareTag("NoPlayerAttack") && DialogueManager.sharedInstance.GetDialogueStatus() == false)
         {
             // Cuando el jugador interactúa con el NPC, inicia el diálogo.
             dialogueManager.StartDialogue(dialogueLines, this.npcName);

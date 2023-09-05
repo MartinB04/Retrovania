@@ -5,11 +5,27 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager sharedInstance;
+
     [SerializeField] Canvas canvas;
     [SerializeField] Text npcNameText;
     [SerializeField] Text dialogueText; // Referencia al Texto UI donde se mostrará el diálogo.
     private Queue<string> sentences; // Cola para almacenar las líneas de diálogo.
+
+    private bool dialogueStatus = false;
     private string npcName;
+
+    private void Awake()
+    {
+        if (sharedInstance != null && sharedInstance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        sharedInstance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         sentences = new Queue<string>();
@@ -39,6 +55,7 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
+        this.dialogueStatus = true;
 
         string sentence = sentences.Dequeue();
         npcNameText.text = this.npcName; //muestra el nombre del npc
@@ -51,5 +68,11 @@ public class DialogueManager : MonoBehaviour
         // Puedes agregar aquí la lógica para cerrar la ventana de diálogo o realizar otras acciones.
         Debug.Log("Fin del diálogo");
         this.canvas.enabled = false;
+        dialogueStatus = false;
+    }
+
+    public bool GetDialogueStatus()
+    {
+        return this.dialogueStatus;
     }
 }

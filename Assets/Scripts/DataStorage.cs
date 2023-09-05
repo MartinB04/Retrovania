@@ -15,6 +15,8 @@ public class DataStorage : MonoBehaviour
     bool relic2 = true;
     bool relic3 = true;
     bool finalRelic = true;
+
+    private Vector2 playerPosition = Vector2.zero;
     
 
     private void Awake()
@@ -96,5 +98,15 @@ public class DataStorage : MonoBehaviour
 
         }
         return false;
+    }
+
+    public void SetPlayerPosition(Vector2 position)
+    {
+        this.playerPosition = position;
+    } 
+    
+    public Vector2 GetPlayerPosition()
+    {
+        return this.playerPosition;
     }
 }

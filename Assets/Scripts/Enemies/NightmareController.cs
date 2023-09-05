@@ -25,25 +25,7 @@ public class NightmareController : MonoBehaviour
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
             rb2d.AddForce(Vector2.right * speed);
-            //float limitedSpeed = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
-            //rb2d.velocity = new Vector2(limitedSpeed, rb2d.velocity.y);
-
-            /*
-            if (horizontal == true && rb2d.transform.position.x < initialPosition.x + distance)
-                rb2d.velocity = new Vector2(speed, rb2d.velocity.y);
-            else
-                horizontal = false;
-
-            if (horizontal == false && rb2d.transform.position.x > initialPosition.x - distance)
-                rb2d.velocity = new Vector2(-speed, rb2d.velocity.y);
-            else
-                horizontal = true;
-
-            if (horizontal == false)
-                transform.localScale = new Vector3(1f, 1f, 1f);
-            else
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-            */
+            
 
 
             if (rb2d.velocity.x > -0.01f && rb2d.velocity.x < 0.01f)
