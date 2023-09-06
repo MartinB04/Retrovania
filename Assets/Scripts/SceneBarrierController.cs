@@ -24,7 +24,7 @@ public class SceneBarrierController : MonoBehaviour
     private void Start()
     {
         this.numBarrier = GetTypeObjectActivation();
-        Debug.Log("numBarrier" + this.numBarrier);
+        
         if (this.numBarrier != -1)
         {
             bool statusKeyObject = DataStorage.sharedInstance.GetKeyObjects(this.numBarrier);

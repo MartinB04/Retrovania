@@ -16,12 +16,21 @@ public class ChangeScene : MonoBehaviour
 
     private bool knockingDoor;
 
+    [SerializeField] Vector2 fixExitPosition;
+
+    private Vector2 exitPosition;
+
     private void Awake()
     {
         sharedInstance = this;
+        this.exitPosition = new Vector2(this.gameObject.transform.position.x + this.fixExitPosition.x, this.gameObject.transform.position.y + this.fixExitPosition.y);
     }
 
-    
+    private void Start()
+    {
+        
+    }
+
 
     private void Update()
     {
@@ -58,15 +67,38 @@ public class ChangeScene : MonoBehaviour
 
     public string GetCurrentScene()
     {
-        Scene scene = SceneManager.GetActiveScene();
-        return scene.name;
+        Scene currentScene = SceneManager.GetActiveScene();
+        return currentScene.name;
     }
 
-    
+    public int GetNumberCurrentScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        switch (currentScene.name)
+        {
+            case "Level1":
+                return 0;
+            case "Level2":
+                return 1;
+            case "Level3":
+                return 2;
+            case "Level4":
+                return 3;
+            case "FinalLevel":
+                return 4;
+
+        }
+        Debug.Log("ChangeScene getNumberCurrentScene " + currentScene.name.ToString());
+        return -1;
+    }
 
 
     void ChangeSceneNow()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        DataStorage.sharedInstance.SetPlayerPosition(this.exitPosition, GetNumberCurrentScene());
+        Debug.Log(currentScene.name + " " + GetNumberCurrentScene() + " " + this.exitPosition);
+
         if (this.tarjetScene == Scenes.level1)
             SceneManager.LoadScene("Level1");
         else if (this.tarjetScene == Scenes.level2)

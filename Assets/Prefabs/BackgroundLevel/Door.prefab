@@ -335,7 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaa8f86ead0db0439b1586f1694d805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tarjetScene: 0
+  tarjetScene: 1
+  fixExitPosition: {x: 1.5, y: -0.2}
 --- !u!1 &3590676576657278476
 GameObject:
   m_ObjectHideFlags: 0

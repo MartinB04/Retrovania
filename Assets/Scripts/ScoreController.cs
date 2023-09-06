@@ -43,6 +43,12 @@ public class ScoreController : MonoBehaviour
             case "Level3":
                 nameScene = "Nivel 3";
                 return nameScene;
+            case "Level4":
+                nameScene = "Nivel 4";
+                return nameScene;
+            case "FinalLevel":
+                nameScene = "Nivel Final";
+                return nameScene;
         }
         return "null";
     }

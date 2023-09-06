@@ -16,8 +16,17 @@ public class DataStorage : MonoBehaviour
     bool relic3 = true;
     bool finalRelic = true;
 
-    private Vector2 playerPosition = Vector2.zero;
-    
+    //private Vector2 playerPosition = Vector2.zero;
+
+    private Vector2[] playerPositions = new Vector2[5]
+{
+    new Vector2(0, 0),
+    new Vector2(0, 0),
+    new Vector2(0, 0),
+    new Vector2(0, 0),
+    new Vector2(0, 0)
+};
+
 
     private void Awake()
     {
@@ -42,6 +51,14 @@ public class DataStorage : MonoBehaviour
 
         SetEnableMainMenu(true);
         SavePlayerPointsLife(this.playerPointsLife);
+
+        this.relic1 = true;
+        this.relic2 = true;
+        this.relic3 = true;
+        this.finalRelic = true;
+
+        for(int i = 0; i < playerPositions.Length; i++)
+            playerPositions[i] = Vector2.zero;
     }
 
     public bool GetEnableMainMenu()
@@ -100,13 +117,14 @@ public class DataStorage : MonoBehaviour
         return false;
     }
 
-    public void SetPlayerPosition(Vector2 position)
+    public void SetPlayerPosition(Vector2 position, int scene)
     {
-        this.playerPosition = position;
+        this.playerPositions[scene] = position;
+        
     } 
     
-    public Vector2 GetPlayerPosition()
+    public Vector2 GetPlayerPosition(int scene)
     {
-        return this.playerPosition;
+        return this.playerPositions[scene];
     }
 }

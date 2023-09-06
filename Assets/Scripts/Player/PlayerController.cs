@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
    
     public void Start()
     {
-        //antes public void StartGame()
         animator.SetBool("isAlive", true);
         animator.SetBool("isGrounded", true);
         animator.SetBool("isMoving", false);
@@ -57,9 +56,9 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isFalling", false);
         animator.SetBool("isHurting", false);
         bandAnimation = false;
-        //Cada vez que reiniciamos colocamos al personaje en la posicion inicial
 
-        Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition();
+        int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
+        Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition(numScene);
 
         if (playerPosition == Vector2.zero)
             this.transform.position = this.startPosition;
