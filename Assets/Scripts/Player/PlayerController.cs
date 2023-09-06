@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool IsTouchingTheGround()
+    public bool IsTouchingTheGround()
     {
         //Verifica si almenos uno de los elementos hijos pie toca el suelo
         return footA.isTouching || footB.isTouching;
@@ -269,6 +269,11 @@ public class PlayerController : MonoBehaviour
     public bool GetAttackCollider()
     {
         return attackCollider.enabled;
+    }
+
+    public float GetCurrentPlayerPosition()
+    {
+        return this.transform.position.y;
     }
 
 }

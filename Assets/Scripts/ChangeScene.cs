@@ -18,12 +18,12 @@ public class ChangeScene : MonoBehaviour
 
     [SerializeField] Vector2 fixExitPosition;
 
-    private Vector2 exitPosition;
+    private float exitPosition;
 
     private void Awake()
     {
         sharedInstance = this;
-        this.exitPosition = new Vector2(this.gameObject.transform.position.x + this.fixExitPosition.x, this.gameObject.transform.position.y + this.fixExitPosition.y);
+        this.exitPosition = this.gameObject.transform.position.x + this.fixExitPosition.x;
     }
 
     private void Start()
@@ -36,7 +36,7 @@ public class ChangeScene : MonoBehaviour
     {
         if(GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            if (this.knockingDoor && Input.GetKeyDown(KeyCode.E))
+            if (this.knockingDoor && Input.GetKeyDown(KeyCode.E) && PlayerController.sharedInstance.IsTouchingTheGround())
                 ChangeSceneNow();
         }
     }
@@ -86,9 +86,7 @@ public class ChangeScene : MonoBehaviour
                 return 3;
             case "FinalLevel":
                 return 4;
-
         }
-        Debug.Log("ChangeScene getNumberCurrentScene " + currentScene.name.ToString());
         return -1;
     }
 
@@ -96,7 +94,10 @@ public class ChangeScene : MonoBehaviour
     void ChangeSceneNow()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        DataStorage.sharedInstance.SetPlayerPosition(this.exitPosition, GetNumberCurrentScene());
+
+        Vector2 playerPosition = new Vector2(this.exitPosition, PlayerController.sharedInstance.GetCurrentPlayerPosition());
+
+        DataStorage.sharedInstance.SetPlayerPosition(playerPosition, GetNumberCurrentScene());
         Debug.Log(currentScene.name + " " + GetNumberCurrentScene() + " " + this.exitPosition);
 
         if (this.tarjetScene == Scenes.level1)
@@ -111,10 +112,5 @@ public class ChangeScene : MonoBehaviour
             SceneManager.LoadScene("Level5");
         else if (this.tarjetScene == Scenes.finalLevel)
             SceneManager.LoadScene("FinalLevel");
-
     }
-
-
-
-
 }
