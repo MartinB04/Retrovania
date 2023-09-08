@@ -10,13 +10,10 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    //Variable que hace referencia al mismo game manager
-    public static GameManager sharedInstance;
-    //Variable para saber estado del juego, al inicio esta en menu principal
-    public GameState currentGameState = GameState.menu;
+    public static GameManager sharedInstance;  //Variable que hace referencia al mismo game manager
+    public GameState currentGameState = GameState.menu; //Variable para saber estado del juego, al inicio esta en menu principal
 
     [SerializeField] bool gameIsPaused = false;
-
     [SerializeField] Canvas canvasMenu, canvasGameOver, canvasInGame, canvasPause, canvasWin;
     private void Awake()
     {

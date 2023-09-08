@@ -16,22 +16,14 @@ public class SceneBarrierController : MonoBehaviour
     private int numBarrier;
     private bool isInitiallyActive;
 
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
-        this.numBarrier = GetTypeObjectActivation();
-        
-        if (this.numBarrier != -1)
+        this.numBarrier = GetTypeObjectActivation(); 
+        if (this.numBarrier != -1) //si es una barrera valida ejecuta el codigo de dentro.
         {
-            bool statusKeyObject = DataStorage.sharedInstance.GetKeyObjects(this.numBarrier);
-
+            bool statusKeyObject = DataStorage.sharedInstance.GetKeyObjects(this.numBarrier); //Consulta el estado del keyObject asociado a la barrera
             if (statusKeyObject)
             {
-
                 if (this.reverseActivation)
                     gameObject.SetActive(false);
                 else
@@ -48,6 +40,7 @@ public class SceneBarrierController : MonoBehaviour
     }
 
 
+    //determina que barrera es el objeto.
     int GetTypeObjectActivation()
     {
         if (this.obj == Barrier.bridge)
