@@ -17,9 +17,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
 
     private bool bandAnimation; //Ayuda a determinar la correccion de posicion del player
-    private bool movement = true;
+    private bool canMove = true;
 
     private bool isHurt = false;
+
+    private bool isAttacking = false;
+
     [SerializeField] float enemyImpulse = 2f;
 
     [SerializeField] LayerChecker footA;
@@ -41,7 +44,7 @@ public class PlayerController : MonoBehaviour
         this.spr = GetComponentInChildren<SpriteRenderer>();
         
         sharedInstance = this;   
-        startPosition = this.transform.position; //Toma el valor de donde empieza personaje
+        startPosition = this.transform.position; //Toma el valor de la posicion del player en el inspector
     }
 
    
@@ -50,7 +53,6 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAlive", true);
         animator.SetBool("isGrounded", true);
         animator.SetBool("isMoving", false);
-        
         animator.SetBool("isAttacking", false);
         animator.SetBool("isFalling", false);
         animator.SetBool("isHurt", false);
@@ -73,34 +75,32 @@ public class PlayerController : MonoBehaviour
         if(GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
             // solo poder saltar si esta en modo juego
-            if (Input.GetButtonDown("Jump") && IsTouchingTheGround())
+            if (IsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton())
                 Jump();
             SetAnimations();
+            Attack();
         }
     }
 
     private void FixedUpdate()
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
-        {
-            if (movement && IsAlive())
+            if (canMove && IsAlive())
                 Movement();
-
-
-            if (Input.GetButtonDown("Pause"))
-                GameManager.sharedInstance.Pause();
-        }
     }
 
     //Gestiona las animaciones
     private void SetAnimations()
     {
+        animator.SetBool("isAlive", IsAlive());
         animator.SetBool("isGrounded", IsTouchingTheGround());
         animator.SetBool("isMoving", IsMoving());
-        animator.SetBool("isAttacking", IsAttacking());
+        
         animator.SetBool("isFalling", IsFalling());
         animator.SetBool("isHurt", IsHurt());
         animator.SetBool("test", AnimationTest());
+
+        animator.SetBool("isAttacking", this.isAttacking);
     }
 
     private bool AnimationTest()
@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
     { 
         return animator.GetBool("isAlive");
     }
-
 
 
     //corrige la pocision cuando se invierte la animacion
@@ -135,9 +134,18 @@ public class PlayerController : MonoBehaviour
     }
     
 
-    public bool IsAttacking()
+    public void Attack()
     {
-        return Input.GetButton("Attack");
+        if (InputManager.sharedInstance.GetAttackButton())
+        {
+            this.isAttacking = true;
+            Invoke("RealiseAttack", 1f);
+        }
+    }
+
+    public void RealiseAttack()
+    {
+        this.isAttacking = false;
     }
 
     //suma o resta los pv que recibe como parametro al jugador
@@ -160,28 +168,35 @@ public class PlayerController : MonoBehaviour
 
     bool IsMoving()
     {
-        return rgbd.velocity.x != 0 && movement == true;
+        return rgbd.velocity.x != 0 && canMove == true;
     }
 
-    
+
 
     void Movement()
     {
-        // Solo poder moverse si estar en modo juego
-        if (GameManager.sharedInstance.currentGameState == GameState.inGame)
+        if (this.isAttacking) // Verifica si el jugador está atacando
         {
+            Debug.Log("Player atacando Bv");
+            rgbd.velocity = new Vector2(0f, rgbd.velocity.y); // Detiene el movimiento en el eje X mientras ataca
+        }
+        else
+        {
+            Debug.Log("no esta atacando Bv");
             float moveX = 0f; // Inicialmente, la velocidad en el eje X es 0
+                              //float direction = Input.GetAxis("Horizontal");
+                              //if (direction > 0)  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
             if (Input.GetKey(KeyCode.D))  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
             {
                 moveX = runningSpeed;
-                FlipAnimation(true); //voltea sprite a la derecha.
+                FlipAnimation(true); // Voltea sprite a la derecha.
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 // Si se presiona la tecla A, establece la velocidad a -runningSpeed en el eje X
                 moveX = -runningSpeed;
                 FlipAnimation(false);
-            } 
+            }
             rgbd.velocity = new Vector2(moveX, rgbd.velocity.y); // Establece la velocidad en el eje X
         }
     }
@@ -224,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
     public void EnemyKnockBack(float enemyPosX)
     {
-        movement = false;
+        canMove = false;
         this.isHurt = true;
         float side = Mathf.Sign(enemyPosX - transform.position.x);
         rgbd.AddForce(enemyImpulse * side * Vector2.left, ForceMode2D.Impulse);
@@ -244,7 +259,7 @@ public class PlayerController : MonoBehaviour
     }
     void EnableMovement()
     {
-        movement = true;
+        canMove = true;
         this.isHurt = false;
         spr.color = Color.white;
         if (lifePoints <= 0)
@@ -268,10 +283,17 @@ public class PlayerController : MonoBehaviour
     {
         return attackCollider.enabled;
     }
+    //<----Termina el animationEvent para el attack collider---->
+
 
     public float GetCurrentPlayerPosition()
     {
         return this.transform.position.y;
+    }
+    
+    public bool GetIsAttacking()
+    {
+        return this.isAttacking;
     }
 
 }

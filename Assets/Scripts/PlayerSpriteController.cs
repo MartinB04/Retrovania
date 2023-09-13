@@ -23,4 +23,6 @@ public class PlayerSpriteController : MonoBehaviour
         playerController.AttackCollider(0);
         Debug.Log("Disable");
     }
+
+
 }
