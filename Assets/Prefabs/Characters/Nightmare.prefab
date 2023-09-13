@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 2316045323074795357}
   - component: {fileID: 1434533679}
   - component: {fileID: 1724481957940352299}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Nightmare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 0
-  damage: -10
   speed: 30
   horizontal: 0
   animator: {fileID: 4136731596603087431}

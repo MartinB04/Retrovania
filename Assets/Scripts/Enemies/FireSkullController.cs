@@ -5,9 +5,16 @@ using UnityEngine;
 public class FireSkullController : MonoBehaviour
 {
     public float distance, speed = 1f;
-    public bool horizontal;
+    public bool flipRight;
 
-    Vector3 initialPosition;
+    [SerializeField] Transform TargetA;
+    [SerializeField] Transform TargetB;
+
+    bool AxisY;
+
+    Vector2 initialPosition;
+
+    Vector2 midpoint;
 
     private Rigidbody2D rb2d;
 
@@ -15,7 +22,12 @@ public class FireSkullController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        initialPosition = rb2d.transform.position;
+
+        this.midpoint = (TargetA.transform.position + TargetB.transform.position) / 2;
+
+        rb2d.position = this.midpoint;
+
+
     }
 
     // Update is called once per frame
@@ -23,31 +35,61 @@ public class FireSkullController : MonoBehaviour
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            rb2d.AddForce(Vector2.right * speed);
-            //float limitedSpeed = Mathf.Clamp(rb2d.velocity.x, -maxSpeed, maxSpeed);
-            //rb2d.velocity = new Vector2(limitedSpeed, rb2d.velocity.y);
-
-
-            if (horizontal == true && rb2d.transform.position.x < initialPosition.x + distance)
-                rb2d.velocity = new Vector2(speed, rb2d.velocity.y);
-            else
-                horizontal = false;
-
-            if (horizontal == false && rb2d.transform.position.x > initialPosition.x - distance)
-                rb2d.velocity = new Vector2(-speed, rb2d.velocity.y);
-            else
-                horizontal = true;
-
-            if (horizontal == false)
-                transform.localScale = new Vector3(1f, 1f, 1f);
-            else
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+            Movement();
         }
         else
             rb2d.velocity = new Vector2(0, 0);
+
+    }
+
+    void FlipAnimation()
+    {
+        if (this.flipRight)
+            gameObject.transform.localScale = new Vector3(-1,1,1);
+        else
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+    }
+    void Movement()
+    {
+        // Calcula la dirección del movimiento.
+        Vector2 direction = this.flipRight ? (TargetB.position - rb2d.transform.position) : (TargetA.position - rb2d.transform.position);
+        direction.Normalize(); // Normaliza la dirección para mantener una velocidad constante.
+
+        // Aplica velocidad en ambos ejes.
+        rb2d.velocity = direction * speed;
+
+        // Cambia la dirección cuando llega a los límites.
+        if ((this.flipRight && rb2d.transform.position.x >= TargetB.position.x) ||
+            (!this.flipRight && rb2d.transform.position.x <= TargetA.position.x))
+        {
+            this.flipRight = !this.flipRight;
+            FlipAnimation();
+        }
     }
 
 
-    
+
+    // Este método se ejecutará en el Editor de Unity.
+
+
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        // Calculamos la dirección del rayo.
+        Vector2 targetAPosition = TargetA.position;
+        Vector2 targetBPosition = TargetB.position;
+        Vector2 direction = targetBPosition - targetAPosition;
+
+        // Dibuja un rayo desde TargetA hacia TargetB en el Editor de Unity.
+
+        if (targetAPosition.y == targetBPosition.y || targetAPosition.x == targetBPosition.x)
+            Gizmos.color = Color.green;
+        else
+            Gizmos.color = Color.red;
+        Gizmos.DrawLine(targetAPosition, targetBPosition);
+    }
+
+#endif
 
 }

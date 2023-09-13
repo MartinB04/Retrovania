@@ -310,7 +310,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020957823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44, y: -1.68, z: 0}
+  m_LocalPosition: {x: -0.13, y: -1.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 566880018}
   - component: {fileID: 192460824}
   m_Layer: 7
-  m_Name: Player2
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -426,9 +426,8 @@ MonoBehaviour:
   attackCollider: {fileID: 1449300791}
   animator: {fileID: 827527966}
   spr: {fileID: 827527965}
-  groundDistance: 0.5
   jumpForce: 45
-  runningSpeed: 5
+  runningSpeed: 8
   pointsLife: 100
   groundLayer:
     serializedVersion: 2

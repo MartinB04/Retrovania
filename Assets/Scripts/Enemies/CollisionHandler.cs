@@ -11,7 +11,7 @@ public class CollisionHandler : MonoBehaviour
         if (col.gameObject.CompareTag("PlayerAttack") && PlayerController.sharedInstance.GetAttackCollider())
             Destroy(gameObject);
 
-        if (col.gameObject.CompareTag("NoPlayerAttack") && PlayerController.sharedInstance.IsAttacking() == false
+        if (col.gameObject.CompareTag("NoPlayerAttack") && PlayerController.sharedInstance.GetIsAttacking() == false
             && PlayerController.sharedInstance.IsAlive())
         {
             PlayerController.sharedInstance.EnemyKnockBack(transform.position.x);

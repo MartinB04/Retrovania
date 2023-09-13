@@ -5,26 +5,44 @@ using UnityEngine.UI;
 
 public class NPCat : MonoBehaviour
 {
-    public Animator animator;
-    public Canvas canvas;
-    public Text text;
+    
+    //[SerializeField] Dialogue dialogue;
+    [SerializeField] DialogueManager dialogueManager;
+
+    private Animator animator;
+    [SerializeField] string[] dialogueLines; // Líneas de diálogo del NPC.
+    private string npcName;
+
     private void Awake()
     {
+        this.animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        this.npcName = gameObject.name;
         
     }
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        //solo se inicia cuando el jugador lo toca y no hay dialogo mostrandose antes.
+        if (collision.gameObject.CompareTag("NoPlayerAttack") && DialogueManager.sharedInstance.GetDialogueStatus() == false)
+        {
+            // Cuando el jugador interactúa con el NPC, inicia el diálogo.
+            dialogueManager.StartDialogue(dialogueLines, this.npcName);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    /*void OnMouseDown()
     {
-        
-    }
-    void OnTriggerEnter2D(Collider2D col)
+        dialogueManager.StartDialogue(dialogue);
+    }*/
+
+
+    /*void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("NoPlayerAttack"))
         {
@@ -43,5 +61,6 @@ public class NPCat : MonoBehaviour
     private void DisableCanvas()
     {
         canvas.enabled = false;
-    }
+
+    }*/
 }
