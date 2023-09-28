@@ -177,21 +177,21 @@ public class PlayerController : MonoBehaviour
     {
         if (this.isAttacking) // Verifica si el jugador está atacando
         {
-            Debug.Log("Player atacando Bv");
+ 
             rgbd.velocity = new Vector2(0f, rgbd.velocity.y); // Detiene el movimiento en el eje X mientras ataca
         }
         else
         {
-            Debug.Log("no esta atacando Bv");
+            float direction = InputManager.sharedInstance.GetMovement();
             float moveX = 0f; // Inicialmente, la velocidad en el eje X es 0
                               //float direction = Input.GetAxis("Horizontal");
                               //if (direction > 0)  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
-            if (Input.GetKey(KeyCode.D))  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
+            if (direction == 1)  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
             {
                 moveX = runningSpeed;
                 FlipAnimation(true); // Voltea sprite a la derecha.
             }
-            else if (Input.GetKey(KeyCode.A))
+            else if (direction== -1)
             {
                 // Si se presiona la tecla A, establece la velocidad a -runningSpeed en el eje X
                 moveX = -runningSpeed;

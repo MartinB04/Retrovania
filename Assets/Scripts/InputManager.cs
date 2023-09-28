@@ -51,4 +51,13 @@ public class InputManager : MonoBehaviour
     {
         return this.attackButtonDown;
     }
+
+    public float GetMovement()
+    {
+        if (Input.GetKey(KeyCode.A))
+            return -1;
+        else if (Input.GetKey(KeyCode.D))
+            return 1;
+        return 0;
+    }
 }
