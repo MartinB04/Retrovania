@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lifePoints = 100;
     [SerializeField] LayerMask groundLayer;
 
-    private bool bandAnimation; //Ayuda a determinar la correccion de posicion del player
+    private bool flipAnimation; //Ayuda a determinar la correccion de posicion del player
     private bool canMove = true;
 
     private bool isHurt = false;
@@ -56,7 +56,9 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAttacking", false);
         animator.SetBool("isFalling", false);
         animator.SetBool("isHurt", false);
-        bandAnimation = false;
+
+        //Gira
+        FlipAnimation(!DataStorage.sharedInstance.GetDirectionPlayer());
 
         int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
         Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition(numScene);
@@ -121,15 +123,15 @@ public class PlayerController : MonoBehaviour
     //corrige la pocision cuando se invierte la animacion
     private void FixAnimationMirror()
     {
-        if ((bandAnimation == true) && Input.GetKey(KeyCode.D))
+        if ((flipAnimation == true) && Input.GetKey(KeyCode.D))
         {
             rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x +1), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
-            bandAnimation = false;
+            flipAnimation = false;
         }
-         else if ((bandAnimation == false) && Input.GetKey(KeyCode.A))
+         else if ((flipAnimation == false) && Input.GetKey(KeyCode.A))
         {
             rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - 1), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
-            bandAnimation = true;
+            flipAnimation = true;
         }
     }
     
@@ -294,6 +296,11 @@ public class PlayerController : MonoBehaviour
     public bool GetIsAttacking()
     {
         return this.isAttacking;
+    }
+
+    public bool GetFlipAnimation()
+    {
+        return this.flipAnimation;
     }
 
 }

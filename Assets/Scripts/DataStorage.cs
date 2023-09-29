@@ -17,6 +17,8 @@ public class DataStorage : MonoBehaviour
     bool finalRelic = true;
     bool example = true;
 
+    bool directionPlayer = true;
+
     //private Vector2 playerPosition = Vector2.zero;
 
     private Vector2[] playerPositions = new Vector2[5]
@@ -132,5 +134,15 @@ public class DataStorage : MonoBehaviour
     public Vector2 GetPlayerPosition(int scene)
     {
         return this.playerPositions[scene];
+    }
+
+    public bool GetDirectionPlayer()
+    {
+        return this.directionPlayer;
+    }
+
+    public void SetDirectionPlayer(bool direction)
+    {
+        this.directionPlayer = direction;
     }
 }
