@@ -15,6 +15,7 @@ public class DataStorage : MonoBehaviour
     bool relic2 = true;
     bool relic3 = true;
     bool finalRelic = true;
+    bool example = true;
 
     //private Vector2 playerPosition = Vector2.zero;
 
@@ -90,6 +91,9 @@ public class DataStorage : MonoBehaviour
             case 3:
                 this.relic3 = status;
                 break;
+            case 4:
+                this.example = status;
+                break;
             case 0:
                 this.finalRelic = status;
                 break;
@@ -109,6 +113,8 @@ public class DataStorage : MonoBehaviour
           
             case 3:
                 return this.relic3;
+            case 4:
+                return this.example;
 
             case 0:
                 return this.finalRelic;

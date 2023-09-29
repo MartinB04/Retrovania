@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum KeyObject { 
-    relic1, relic2, relic3, finalRelic
+    relic1, relic2, relic3, finalRelic, example
 }
 
 
 public class KeyObjectController : MonoBehaviour
 {
     [SerializeField] KeyObject typeKeyObjetct;
+    [SerializeField] bool sameScene = false;
 
     private SpriteRenderer spr;
     private bool statusKeyObject;
@@ -23,13 +24,30 @@ public class KeyObjectController : MonoBehaviour
     private void Start()
     {
         this.keyObject = GetTypeKeyObject();
-        if (this.keyObject != -1)
+        if (this.keyObject != -1 && this.sameScene == false)
         {
             this.statusKeyObject = DataStorage.sharedInstance.GetKeyObjects(this.keyObject);
             if(this.statusKeyObject)
                 this.spr.color = Color.white;
             else
                 this.spr.color = Color.red;
+        }
+    }
+
+    private void Update()
+    {
+        if (this.keyObject != -1 && this.sameScene == true)
+        {
+            this.statusKeyObject = DataStorage.sharedInstance.GetKeyObjects(this.keyObject);
+            if (this.statusKeyObject)
+            {
+                this.spr.color = Color.white;
+            }
+
+            else { 
+                this.spr.color = Color.red;
+            }
+            SceneBarrierController.sharedInstance.SetBarrier();
         }
     }
 
@@ -41,6 +59,8 @@ public class KeyObjectController : MonoBehaviour
             return this.keyObject = 2;
         else if (this.typeKeyObjetct == KeyObject.relic3)
             return this.keyObject = 3;
+        else if (this.typeKeyObjetct == KeyObject.example)
+            return this.keyObject = 4;
         else if (this.typeKeyObjetct == KeyObject.finalRelic)
             return this.keyObject = 0;
         return this.keyObject = -1;
