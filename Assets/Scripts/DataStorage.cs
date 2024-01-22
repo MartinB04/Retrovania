@@ -17,7 +17,7 @@ public class DataStorage : MonoBehaviour
     bool finalRelic = true;
     bool example = true;
 
-    bool directionPlayer = true;
+    bool directionPlayer = false;
 
     //private Vector2 playerPosition = Vector2.zero;
 

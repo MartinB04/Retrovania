@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rgbd;
     private CapsuleCollider2D capsuleCollider;
-    private Animator animator;
     private SpriteRenderer spr;
 
     [SerializeField] private BoxCollider2D attackCollider;
@@ -16,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lifePoints = 100;
     [SerializeField] LayerMask groundLayer;
 
-    private bool flipAnimation; //Ayuda a determinar la correccion de posicion del player
+
     private bool canMove = true;
 
     private bool isHurt = false;
@@ -27,8 +26,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
-    
 
+
+    [SerializeField] float fixFlip; 
+    
     //Singleton de playercontroller
     public static PlayerController sharedInstance;
 
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         this.rgbd = GetComponent<Rigidbody2D>();
         this.capsuleCollider = GetComponent<CapsuleCollider2D>();
-        this.animator = GetComponentInChildren<Animator>();
+       
         this.spr = GetComponentInChildren<SpriteRenderer>();
         
         sharedInstance = this;   
@@ -50,15 +51,10 @@ public class PlayerController : MonoBehaviour
    
     public void Start()
     {
-        animator.SetBool("isAlive", true);
-        animator.SetBool("isGrounded", true);
-        animator.SetBool("isMoving", false);
-        animator.SetBool("isAttacking", false);
-        animator.SetBool("isFalling", false);
-        animator.SetBool("isHurt", false);
+        
 
         //Gira
-        FlipAnimation(!DataStorage.sharedInstance.GetDirectionPlayer());
+        FlipRigidbody(!DataStorage.sharedInstance.GetDirectionPlayer());
 
         int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
         Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition(numScene);
@@ -79,7 +75,7 @@ public class PlayerController : MonoBehaviour
             // solo poder saltar si esta en modo juego
             if (IsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton())
                 Jump();
-            SetAnimations();
+           
             Attack();
         }
     }
@@ -92,49 +88,16 @@ public class PlayerController : MonoBehaviour
     }
 
     //Gestiona las animaciones
-    private void SetAnimations()
-    {
-        animator.SetBool("isAlive", IsAlive());
-        animator.SetBool("isGrounded", IsTouchingTheGround());
-        animator.SetBool("isMoving", IsMoving());
-        
-        animator.SetBool("isFalling", IsFalling());
-        animator.SetBool("isHurt", IsHurt());
-        animator.SetBool("test", AnimationTest());
+    
 
-        animator.SetBool("isAttacking", this.isAttacking);
-    }
-
-    private bool AnimationTest()
+    public bool AnimationTest()
     {
         return Input.GetKey(KeyCode.F);
     }
-    private bool IsFalling()
+    public bool IsFalling()
     {
         return !IsTouchingTheGround() && rgbd.velocity.y <= 0;
     }
-    
-    public bool IsAlive()
-    { 
-        return animator.GetBool("isAlive");
-    }
-
-
-    //corrige la pocision cuando se invierte la animacion
-    private void FixAnimationMirror()
-    {
-        if ((flipAnimation == true) && Input.GetKey(KeyCode.D))
-        {
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x +1), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
-            flipAnimation = false;
-        }
-         else if ((flipAnimation == false) && Input.GetKey(KeyCode.A))
-        {
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - 1), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
-            flipAnimation = true;
-        }
-    }
-    
 
     public void Attack()
     {
@@ -145,6 +108,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //libera para detener la animacion de ataque
     public void RealiseAttack()
     {
         this.isAttacking = false;
@@ -168,12 +132,10 @@ public class PlayerController : MonoBehaviour
         this.lifePoints = life;
     }
 
-    bool IsMoving()
+    public bool IsMoving()
     {
         return rgbd.velocity.x != 0 && canMove == true;
     }
-
-
 
     void Movement()
     {
@@ -190,26 +152,48 @@ public class PlayerController : MonoBehaviour
                               //if (direction > 0)  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
             if (direction == 1)  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
             {
+                if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+                {
+                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(false);
+                    FlipRigidbody(true);
+                }
+
                 moveX = runningSpeed;
-                FlipAnimation(true); // Voltea sprite a la derecha.
+
+                
+                 // Voltea sprite a la derecha.
             }
             else if (direction== -1)
             {
+                if (!PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+                {
+                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(true);
+                    FlipRigidbody(false);
+                }
                 // Si se presiona la tecla A, establece la velocidad a -runningSpeed en el eje X
                 moveX = -runningSpeed;
-                FlipAnimation(false);
+                PlayerAnimationController.sharedInstance.SetMirrorAnimation(true);
+              
+
             }
             rgbd.velocity = new Vector2(moveX, rgbd.velocity.y); // Establece la velocidad en el eje X
         }
     }
 
-    private void FlipAnimation(bool flip)
+    private void FlipRigidbody(bool flip)
     {
-        if(flip)
+        if (flip)
+        {
             rgbd.transform.localScale = new Vector3(1, 1, 1);
+            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x + fixFlip), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+        }
+
         else
+        {
             rgbd.transform.localScale = new Vector3(-1, 1, 1);
-        FixAnimationMirror();
+            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - fixFlip), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+        }
+
     }
 
 
@@ -233,7 +217,6 @@ public class PlayerController : MonoBehaviour
     {
         this.isHurt = false;
         spr.color = Color.white;
-        this.animator.SetBool("isAlive", false);
 
         Debug.Log("Jugador muerto");
         Invoke("GameOver", 3f);
@@ -247,7 +230,7 @@ public class PlayerController : MonoBehaviour
         rgbd.AddForce(enemyImpulse * side * Vector2.left, ForceMode2D.Impulse);
         Invoke("EnableMovement", 0.9f);
 
-        if (this.lifePoints <= 0)
+        if (IsAlive() == false)
             Kill();
         else
             Invoke("EnableMovement", 0.9f);
@@ -255,7 +238,7 @@ public class PlayerController : MonoBehaviour
         spr.color = Color.red;
 
     }
-    private bool IsHurt()
+    public bool IsHurt()
     {
         return this.isHurt;
     }
@@ -264,7 +247,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         this.isHurt = false;
         spr.color = Color.white;
-        if (lifePoints <= 0)
+        if (IsAlive() == false)
             Kill();
         spr.color = Color.white;
     }
@@ -298,9 +281,11 @@ public class PlayerController : MonoBehaviour
         return this.isAttacking;
     }
 
-    public bool GetFlipAnimation()
+    public bool IsAlive() 
     {
-        return this.flipAnimation;
+        if (this.lifePoints > 0)
+            return true;
+        return false;
     }
 
 }

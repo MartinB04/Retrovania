@@ -48,7 +48,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   direction: {x: 0, y: -1}
-  distance: 0.2
+  distance: 0.15
   isTouching: 0
 --- !u!1 &827527963
 GameObject:
@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 827527966}
   - component: {fileID: 827527965}
   - component: {fileID: 948291265}
+  - component: {fileID: 8603402683382493290}
   m_Layer: 7
   m_Name: sprite
   m_TagString: Player
@@ -167,6 +168,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f8f0689e65c017498596a43b24e1dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8603402683382493290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827527963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bae31d361d78864fbdb37db8f90a06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &882386888
@@ -333,7 +346,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   direction: {x: 0, y: -1}
-  distance: 0.2
+  distance: 0.15
   isTouching: 0
 --- !u!1 &4472717892086031724
 GameObject:
@@ -424,11 +437,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 1449300791}
-  animator: {fileID: 827527966}
-  spr: {fileID: 827527965}
   jumpForce: 45
   runningSpeed: 8
-  pointsLife: 100
+  lifePoints: 100
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

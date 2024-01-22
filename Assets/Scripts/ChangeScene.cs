@@ -95,7 +95,7 @@ public class ChangeScene : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
 
-        bool directionPlayer = PlayerController.sharedInstance.GetFlipAnimation();
+        bool directionPlayer = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
         DataStorage.sharedInstance.SetDirectionPlayer(directionPlayer);
 
         Vector2 playerPosition = new Vector2(this.exitPosition, PlayerController.sharedInstance.GetCurrentPlayerPosition());

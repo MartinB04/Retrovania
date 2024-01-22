@@ -16,6 +16,9 @@ public class NPCat : MonoBehaviour
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
+
+        if (this.animator == null)
+            Debug.LogWarning("Error, NPCat no tiene animator asignado");
     }
 
     private void Start()
