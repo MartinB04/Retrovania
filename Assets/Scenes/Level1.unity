@@ -1982,10 +1982,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 192460824, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
-      propertyPath: fixFlip
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4472717892086031724, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
       propertyPath: m_Name
       value: Player

@@ -446,3 +446,4 @@ MonoBehaviour:
   enemyImpulse: 10
   footA: {fileID: 294454145}
   footB: {fileID: 2020957824}
+  fixFlip: 1

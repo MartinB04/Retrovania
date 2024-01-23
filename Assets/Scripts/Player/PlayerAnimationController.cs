@@ -28,7 +28,8 @@ public class PlayerAnimationController : MonoBehaviour
         animator.SetBool("isHurt", false);
 
 
-        this.mirrorAnimation = (!DataStorage.sharedInstance.GetDirectionPlayer());
+        this.mirrorAnimation = DataStorage.sharedInstance.GetDirectionPlayer();
+
     }
 
     // Update is called once per frame

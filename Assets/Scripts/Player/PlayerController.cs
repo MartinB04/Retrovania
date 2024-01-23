@@ -54,9 +54,15 @@ public class PlayerController : MonoBehaviour
         
 
         //Gira
-        FlipRigidbody(!DataStorage.sharedInstance.GetDirectionPlayer());
+        if(PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+            FlipRigidbody(false, this.fixFlip);
 
-        int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
+        else
+            FlipRigidbody(true, 0f);
+
+        //FlipRigidbody(!PlayerAnimationController.sharedInstance.GetMirrorAnimation(), 0f);
+
+            int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
         Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition(numScene);
 
         if (playerPosition == Vector2.zero) //si la posicion del player en DataStorage es 0, toma la posicion del inspector.
@@ -155,7 +161,8 @@ public class PlayerController : MonoBehaviour
                 if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
                 {
                     PlayerAnimationController.sharedInstance.SetMirrorAnimation(false);
-                    FlipRigidbody(true);
+                    //Debug.Log(PlayerAnimationController.sharedInstance.GetMirrorAnimation() + "se supone que false Bv");
+                    FlipRigidbody(true, this.fixFlip);
                 }
 
                 moveX = runningSpeed;
@@ -168,11 +175,11 @@ public class PlayerController : MonoBehaviour
                 if (!PlayerAnimationController.sharedInstance.GetMirrorAnimation())
                 {
                     PlayerAnimationController.sharedInstance.SetMirrorAnimation(true);
-                    FlipRigidbody(false);
+
+                    FlipRigidbody(false, this.fixFlip);
                 }
                 // Si se presiona la tecla A, establece la velocidad a -runningSpeed en el eje X
                 moveX = -runningSpeed;
-                PlayerAnimationController.sharedInstance.SetMirrorAnimation(true);
               
 
             }
@@ -180,18 +187,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FlipRigidbody(bool flip)
+    private void FlipRigidbody(bool flip, float value)
     {
         if (flip)
         {
             rgbd.transform.localScale = new Vector3(1, 1, 1);
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x + fixFlip), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x + value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
         }
 
         else
         {
             rgbd.transform.localScale = new Vector3(-1, 1, 1);
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - fixFlip), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
         }
 
     }
