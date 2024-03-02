@@ -8,26 +8,21 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider2D capsuleCollider;
     private SpriteRenderer spr;
 
-    [SerializeField] private BoxCollider2D attackCollider;
 
+    private bool canMove = true;
+    private bool isHurt = false;
+    private bool isAttacking = false;
+    private bool isAlive = true;
+
+    [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] float jumpForce = 5;
     [SerializeField] float runningSpeed = 1.5f;
     [SerializeField] float lifePoints = 100;
-    [SerializeField] LayerMask groundLayer;
-
-
-    private bool canMove = true;
-
-    private bool isHurt = false;
-
-    private bool isAttacking = false;
-
     [SerializeField] float enemyImpulse = 2f;
 
+    [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
-
-
     [SerializeField] float fixFlip; 
     
     //Singleton de playercontroller
@@ -35,7 +30,6 @@ public class PlayerController : MonoBehaviour
 
     
     private Vector3 startPosition;
-    //private Vector3 localScale;
 
     private void Awake()
     {
@@ -46,6 +40,8 @@ public class PlayerController : MonoBehaviour
         
         sharedInstance = this;   
         startPosition = this.transform.position; //Toma el valor de la posicion del player en el inspector
+
+        
     }
 
    
@@ -56,13 +52,10 @@ public class PlayerController : MonoBehaviour
         //Gira
         if(PlayerAnimationController.sharedInstance.GetMirrorAnimation())
             FlipRigidbody(false, this.fixFlip);
-
         else
             FlipRigidbody(true, 0f);
 
-        //FlipRigidbody(!PlayerAnimationController.sharedInstance.GetMirrorAnimation(), 0f);
-
-            int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
+        int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
         Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition(numScene);
 
         if (playerPosition == Vector2.zero) //si la posicion del player en DataStorage es 0, toma la posicion del inspector.
@@ -72,6 +65,9 @@ public class PlayerController : MonoBehaviour
 
         this.LoadLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
         this.attackCollider.enabled = false;
+
+        if(GameManager.sharedInstance.currentGameState == GameState.inGame)
+            this.isAlive = true;
     }
 
     void Update()
@@ -93,7 +89,6 @@ public class PlayerController : MonoBehaviour
                 Movement();
     }
 
-    //Gestiona las animaciones
     
 
     public bool AnimationTest()
@@ -104,6 +99,28 @@ public class PlayerController : MonoBehaviour
     {
         return !IsTouchingTheGround() && rgbd.velocity.y <= 0;
     }
+    public bool IsMoving()
+    {
+        return rgbd.velocity.x != 0 && canMove == true;
+    }
+    public bool IsTouchingTheGround()
+    {
+        //Verifica si almenos uno de los elementos hijos pie toca el suelo
+        return footA.isTouching || footB.isTouching;
+    }
+    public bool GetIsAttacking()
+    {
+        return this.isAttacking;
+    }
+    public bool IsAlive()
+    {
+        return this.isAlive;
+    }
+    public bool IsHurt()
+    {
+        return this.isHurt;
+    }
+
 
     public void Attack()
     {
@@ -138,14 +155,9 @@ public class PlayerController : MonoBehaviour
         this.lifePoints = life;
     }
 
-    public bool IsMoving()
-    {
-        return rgbd.velocity.x != 0 && canMove == true;
-    }
-
     void Movement()
     {
-        if (this.isAttacking) // Verifica si el jugador está atacando
+        if (this.isAttacking && this.IsTouchingTheGround()) // Verifica si el jugador está atacando
         {
  
             rgbd.velocity = new Vector2(0f, rgbd.velocity.y); // Detiene el movimiento en el eje X mientras ataca
@@ -194,13 +206,11 @@ public class PlayerController : MonoBehaviour
             rgbd.transform.localScale = new Vector3(1, 1, 1);
             rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x + value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
         }
-
         else
         {
             rgbd.transform.localScale = new Vector3(-1, 1, 1);
             rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
         }
-
     }
 
 
@@ -214,54 +224,42 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool IsTouchingTheGround()
-    {
-        //Verifica si almenos uno de los elementos hijos pie toca el suelo
-        return footA.isTouching || footB.isTouching;
-    }
+  
 
     public void Kill()
     {
         this.isHurt = false;
+        this.isAlive = false;
         spr.color = Color.white;
-
-        Debug.Log("Jugador muerto");
         Invoke("GameOver", 3f);
     }
 
-    public void EnemyKnockBack(float enemyPosX)
+    public void EnemyKnockBack(float enemyPosX, float damage)
     {
         canMove = false;
         this.isHurt = true;
         float side = Mathf.Sign(enemyPosX - transform.position.x);
         rgbd.AddForce(enemyImpulse * side * Vector2.left, ForceMode2D.Impulse);
-        Invoke("EnableMovement", 0.9f);
-
-        if (IsAlive() == false)
-            Kill();
-        else
-            Invoke("EnableMovement", 0.9f);
-
         spr.color = Color.red;
 
+        this.SetLife(damage);
+
+        if (this.lifePoints <= 0)  
+            Invoke("Kill", 0.9f);
+        else
+            Invoke("EnableMovement", 0.9f);
+  
     }
-    public bool IsHurt()
-    {
-        return this.isHurt;
-    }
+  
     void EnableMovement()
     {
         canMove = true;
         this.isHurt = false;
         spr.color = Color.white;
-        if (IsAlive() == false)
-            Kill();
-        spr.color = Color.white;
     }
     void GameOver()
     {
         GameManager.sharedInstance.GameOver();
-        Debug.Log("Juego terminado");
     }
   
 
@@ -277,22 +275,8 @@ public class PlayerController : MonoBehaviour
     }
     //<----Termina el animationEvent para el attack collider---->
 
-
     public float GetCurrentPlayerPosition()
     {
         return this.transform.position.y;
     }
-    
-    public bool GetIsAttacking()
-    {
-        return this.isAttacking;
-    }
-
-    public bool IsAlive() 
-    {
-        if (this.lifePoints > 0)
-            return true;
-        return false;
-    }
-
 }
