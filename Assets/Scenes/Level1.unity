@@ -1984,7 +1984,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 566880018, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 882386890, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449300791, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4472717892086031724, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
       propertyPath: m_Name
@@ -1996,11 +2004,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4474815598828567062, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.41
+      value: -0.74
       objectReference: {fileID: 0}
     - target: {fileID: 4474815598828567062, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.9
+      value: 2.78
       objectReference: {fileID: 0}
     - target: {fileID: 4474815598828567062, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2353,6 +2361,14 @@ PrefabInstance:
     - target: {fileID: 3980766647126675048, guid: ddf52026afc295148854005a873cf3e6, type: 3}
       propertyPath: m_Name
       value: TraversablePlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980766647126675049, guid: ddf52026afc295148854005a873cf3e6, type: 3}
+      propertyPath: m_SurfaceArc
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980766647126675049, guid: ddf52026afc295148854005a873cf3e6, type: 3}
+      propertyPath: m_RotationalOffset
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3980766647126675051, guid: ddf52026afc295148854005a873cf3e6, type: 3}
       propertyPath: m_RootOrder
@@ -3280,7 +3296,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795573754}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -4350,7 +4366,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 2061089219}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 3affdf0f24cfdcc4b8518aca720cd90b, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

@@ -440,10 +440,10 @@ MonoBehaviour:
   jumpForce: 45
   runningSpeed: 8
   lifePoints: 100
+  enemyImpulse: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  enemyImpulse: 10
   footA: {fileID: 294454145}
   footB: {fileID: 2020957824}
   fixFlip: 1
