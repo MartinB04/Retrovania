@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
             // solo poder saltar si esta en modo juego
-            if (IsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton())
+            if (IsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton() && !this.attackAnimationStatus)
                 Jump();
 
             Attack();
@@ -224,11 +224,10 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         // F = m*a ====> a = F/m
-        if (IsTouchingTheGround())
-        {
-            rgbd.velocity = new Vector2(rgbd.velocity.x, 0f); // Eliminar la velocidad vertical actual antes de aplicar el salto
-            rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Aplicar el impulso de salto
-        }
+
+        rgbd.velocity = new Vector2(rgbd.velocity.x, 0f); // Eliminar la velocidad vertical actual antes de aplicar el salto
+        rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Aplicar el impulso de salto
+
     }
 
 
