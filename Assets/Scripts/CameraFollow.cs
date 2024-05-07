@@ -5,13 +5,13 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public static CameraFollow sharedInstance;
-    public GameObject follow;
-    public Vector2 minCamPos, maxCamPos;
+    [SerializeField] GameObject follow;
+    [SerializeField] Vector2 minCamPos, maxCamPos;
    
 
-    public float smoothTime;
+    [SerializeField] float smoothTime;
 
-    private Vector2 velocity;
+    [SerializeField] Vector2 velocity;
 
     private void Awake()
     {
@@ -21,7 +21,10 @@ public class CameraFollow : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        transform.position = new Vector3(
+            Mathf.Clamp(follow.transform.position.x, minCamPos.x, maxCamPos.x),
+            Mathf.Clamp(follow.transform.position.y, minCamPos.y, maxCamPos.y),
+            transform.position.z);
     }
 
     // Update is called once per frame

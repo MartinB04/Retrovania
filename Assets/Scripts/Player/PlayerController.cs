@@ -10,9 +10,13 @@ public class PlayerController : MonoBehaviour
 
 
     private bool canMove = true;
+
+
     private bool isHurt = false;
     private bool isAttacking = false;
     private bool isAlive = true;
+
+    private bool attackAnimationStatus;
 
     [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] float jumpForce = 5;
@@ -23,34 +27,34 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
-    [SerializeField] float fixFlip; 
-    
+    [SerializeField] float fixFlip;
+
     //Singleton de playercontroller
     public static PlayerController sharedInstance;
 
-    
+
     private Vector3 startPosition;
 
     private void Awake()
     {
         this.rgbd = GetComponent<Rigidbody2D>();
         this.capsuleCollider = GetComponent<CapsuleCollider2D>();
-       
+
         this.spr = GetComponentInChildren<SpriteRenderer>();
-        
-        sharedInstance = this;   
+
+        sharedInstance = this;
         startPosition = this.transform.position; //Toma el valor de la posicion del player en el inspector
 
-        
+
     }
 
-   
+
     public void Start()
     {
-        
+
 
         //Gira
-        if(PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+        if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
             FlipRigidbody(false, this.fixFlip);
         else
             FlipRigidbody(true, 0f);
@@ -66,18 +70,20 @@ public class PlayerController : MonoBehaviour
         this.LoadLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
         this.attackCollider.enabled = false;
 
-        if(GameManager.sharedInstance.currentGameState == GameState.inGame)
+        if (GameManager.sharedInstance.currentGameState == GameState.inGame)
             this.isAlive = true;
+
+        attackAnimationStatus = false;
     }
 
     void Update()
     {
-        if(GameManager.sharedInstance.currentGameState == GameState.inGame)
+        if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
             // solo poder saltar si esta en modo juego
             if (IsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton())
                 Jump();
-           
+
             Attack();
         }
     }
@@ -89,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 Movement();
     }
 
-    
+
 
     public bool AnimationTest()
     {
@@ -127,7 +133,7 @@ public class PlayerController : MonoBehaviour
         if (InputManager.sharedInstance.GetAttackButton())
         {
             this.isAttacking = true;
-            Invoke("RealiseAttack", 1f);
+            Invoke("RealiseAttack", 0.6f);
         }
     }
 
@@ -135,6 +141,7 @@ public class PlayerController : MonoBehaviour
     public void RealiseAttack()
     {
         this.isAttacking = false;
+        Debug.Log("false");
     }
 
     //suma o resta los pv que recibe como parametro al jugador
@@ -157,9 +164,9 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        if (this.isAttacking && this.IsTouchingTheGround()) // Verifica si el jugador está atacando
+        if (this.attackAnimationStatus && this.IsTouchingTheGround()) // Verifica si el jugador estï¿½ atacando
         {
- 
+
             rgbd.velocity = new Vector2(0f, rgbd.velocity.y); // Detiene el movimiento en el eje X mientras ataca
         }
         else
@@ -179,10 +186,10 @@ public class PlayerController : MonoBehaviour
 
                 moveX = runningSpeed;
 
-                
-                 // Voltea sprite a la derecha.
+
+                // Voltea sprite a la derecha.
             }
-            else if (direction== -1)
+            else if (direction == -1)
             {
                 if (!PlayerAnimationController.sharedInstance.GetMirrorAnimation())
                 {
@@ -192,7 +199,7 @@ public class PlayerController : MonoBehaviour
                 }
                 // Si se presiona la tecla A, establece la velocidad a -runningSpeed en el eje X
                 moveX = -runningSpeed;
-              
+
 
             }
             rgbd.velocity = new Vector2(moveX, rgbd.velocity.y); // Establece la velocidad en el eje X
@@ -224,7 +231,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-  
+
 
     public void Kill()
     {
@@ -244,13 +251,13 @@ public class PlayerController : MonoBehaviour
 
         this.SetLife(damage);
 
-        if (this.lifePoints <= 0)  
+        if (this.lifePoints <= 0)
             Invoke("Kill", 0.9f);
         else
             Invoke("EnableMovement", 0.9f);
-  
+
     }
-  
+
     void EnableMovement()
     {
         canMove = true;
@@ -261,9 +268,9 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.sharedInstance.GameOver();
     }
-  
 
-    // Agrega un nuevo método en tu script PlayerController para habilitar o deshabilitar el Collider2D
+
+    // Agrega un nuevo mï¿½todo en tu script PlayerController para habilitar o deshabilitar el Collider2D
     public void AttackCollider(int act)
     {
         attackCollider.enabled = act == 1 ? true : false;
@@ -274,6 +281,11 @@ public class PlayerController : MonoBehaviour
         return attackCollider.enabled;
     }
     //<----Termina el animationEvent para el attack collider---->
+
+    public void AttackAnimationStatus(bool status)
+    {
+        this.attackAnimationStatus = status;
+    }
 
     public float GetCurrentPlayerPosition()
     {

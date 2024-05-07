@@ -11,18 +11,26 @@ public class PlayerSpriteController : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
     }
 
-    // Método público para habilitar o deshabilitar el collider
+    // Mï¿½todo pï¿½blico para habilitar o deshabilitar el collider
     public void EnableAttackCollider()
     {
-        // Llamar al método del script PlayerController en el padre
+        // Llamar al mï¿½todo del script PlayerController en el padre
         playerController.AttackCollider(1);
-        Debug.Log("Enable");
+        //Debug.Log("Enable");
     }
     public void DisableAttackCollider()
     {
         playerController.AttackCollider(0);
-        Debug.Log("Disable");
+        //Debug.Log("Disable");
     }
 
+    public void EnableAttackAnimation()
+    {
+        playerController.AttackAnimationStatus(true);
+    }
+    public void DisableAttackAnimationStatus()
+    {
+        playerController.AttackAnimationStatus(false);
+    }
 
 }
