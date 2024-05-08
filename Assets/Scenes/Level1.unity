@@ -189,7 +189,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 522070760, guid: e78b404e3f86190449ace366b18d6a12, type: 3}
       propertyPath: damage
-      value: -50
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 2492040719708214200, guid: e78b404e3f86190449ace366b18d6a12, type: 3}
       propertyPath: m_Name
@@ -3334,28 +3334,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4472717892086031724, guid: 51a50769c7fa96748b4ade3fd7c4915e, type: 3}
   m_PrefabInstance: {fileID: 1205037564}
   m_PrefabAsset: {fileID: 0}
---- !u!68 &1795573764
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795573754}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.5, y: 0}
-  - {x: 0.5, y: 0}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!1001 &1817361560
 PrefabInstance:
   m_ObjectHideFlags: 0
