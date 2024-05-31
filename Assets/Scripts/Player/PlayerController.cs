@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lifePoints = 100;
     [SerializeField] float enemyImpulse = 2f;
 
+    [SerializeField] float MAXLIFE;
+
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
@@ -151,8 +153,22 @@ public class PlayerController : MonoBehaviour
     //suma o resta los pv que recibe como parametro al jugador
     public void SetLife(float life)
     {
-        this.lifePoints += life;
+        if (life > 0)
+        {
+            if (GetLife() < this.MAXLIFE)
+                this.lifePoints += life;
+            if (this.lifePoints > this.MAXLIFE)
+                this.lifePoints = this.MAXLIFE;
+        }
+        else
+        {
+            this.lifePoints += life;
+            if (this.lifePoints < 0)
+                this.lifePoints = 0;
+        }
+
         DataStorage.sharedInstance.SavePlayerPointsLife(this.lifePoints);
+
     }
 
     public float GetLife()
@@ -288,9 +304,9 @@ public class PlayerController : MonoBehaviour
     public void AttackAnimationStatus(bool status)
     {
         this.attackAnimationStatus = status;
-        
+
         //this.isAttacking = status;
-        if(!status) 
+        if (!status)
             this.isAttacking = false;
     }
 
