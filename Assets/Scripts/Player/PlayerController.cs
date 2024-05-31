@@ -86,6 +86,9 @@ public class PlayerController : MonoBehaviour
 
             Attack();
         }
+        Debug.Log("CanMOve" + this.canMove);
+        Debug.Log("isAttack " + this.isAttacking);
+        Debug.Log("this.attackAnimationStatus" + this.attackAnimationStatus);
     }
 
     private void FixedUpdate()
@@ -133,16 +136,17 @@ public class PlayerController : MonoBehaviour
         if (InputManager.sharedInstance.GetAttackButton())
         {
             this.isAttacking = true;
-            Invoke("RealiseAttack", 0.6f);
+            AttackAnimationStatus(true);
+            //Invoke("RealiseAttack", 1f);
         }
     }
 
     //libera para detener la animacion de ataque
-    public void RealiseAttack()
+    /* public void RealiseAttack()
     {
         this.isAttacking = false;
         Debug.Log("false");
-    }
+    } */
 
     //suma o resta los pv que recibe como parametro al jugador
     public void SetLife(float life)
@@ -284,6 +288,10 @@ public class PlayerController : MonoBehaviour
     public void AttackAnimationStatus(bool status)
     {
         this.attackAnimationStatus = status;
+        
+        //this.isAttacking = status;
+        if(!status) 
+            this.isAttacking = false;
     }
 
     public float GetCurrentPlayerPosition()

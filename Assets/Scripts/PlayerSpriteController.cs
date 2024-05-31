@@ -26,7 +26,7 @@ public class PlayerSpriteController : MonoBehaviour
 
     public void EnableAttackAnimation()
     {
-        playerController.AttackAnimationStatus(true);
+        //playerController.AttackAnimationStatus(true);
     }
     public void DisableAttackAnimationStatus()
     {
