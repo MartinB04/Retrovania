@@ -88,9 +88,9 @@ public class PlayerController : MonoBehaviour
 
             Attack();
         }
-        Debug.Log("CanMOve" + this.canMove);
-        Debug.Log("isAttack " + this.isAttacking);
-        Debug.Log("this.attackAnimationStatus" + this.attackAnimationStatus);
+        //Debug.Log("CanMOve" + this.canMove);
+        //Debug.Log("isAttack " + this.isAttacking);
+        //Debug.Log("this.attackAnimationStatus" + this.attackAnimationStatus);
     }
 
     private void FixedUpdate()
