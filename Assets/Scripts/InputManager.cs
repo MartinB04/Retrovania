@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-
     public static InputManager sharedInstance;
 
-    private bool jumpButtonDown;
-    private bool pauseButtonDown;
-    private bool attackButtonDown;
-
+    private GameInput input;
 
     private void Awake()
     {
@@ -18,46 +15,48 @@ public class InputManager : MonoBehaviour
             sharedInstance = this;
         else
             Destroy(gameObject);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+        input = new GameInput();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        this.jumpButtonDown = Input.GetButtonDown("Jump");
-        this.pauseButtonDown = Input.GetButtonDown("Pause");
-        this.attackButtonDown = Input.GetButtonDown("Attack");
+        input.Enable();
     }
 
-    private void FixedUpdate()
+    private void OnDisable()
     {
-        
+        input.Disable();
+    }
+
+    public Vector2 GetMovement()
+    {
+        Vector2 movementValue = input.Gameplay.Move.ReadValue<Vector2>();
+        return movementValue;
     }
 
     public bool GetJumpButton()
     {
-        return this.jumpButtonDown;
+        return input.Gameplay.Jump.triggered;
+    }
+
+    public bool GetAttackButton()
+    {
+        return input.Gameplay.Attack.triggered;
     }
 
     public bool GetPauseButton()
     {
-        return this.pauseButtonDown;
-    } 
-    public bool GetAttackButton()
-    {
-        return this.attackButtonDown;
+        return input.Gameplay.Pause.triggered;
     }
 
-    public float GetMovement()
-    {
-        if (Input.GetKey(KeyCode.A))
-            return -1;
-        else if (Input.GetKey(KeyCode.D))
-            return 1;
-        return 0;
-    }
+    public bool GetAnimationTestButton(){
+        return input.Gameplay.AnimationTest.triggered;
+    } 
+
 }
+
+
+/* public bool GetAnimationTestButton(){
+        return input.Gameplay.AnimationTest.triggered;
+    } */

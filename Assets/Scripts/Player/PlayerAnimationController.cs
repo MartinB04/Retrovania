@@ -47,7 +47,7 @@ public class PlayerAnimationController : MonoBehaviour
 
         animator.SetBool("isFalling", PlayerController.sharedInstance.IsFalling());
         animator.SetBool("isHurt", PlayerController.sharedInstance.IsHurt());
-        animator.SetBool("test", PlayerController.sharedInstance.AnimationTest());
+        animator.SetBool("test", InputManager.sharedInstance.GetAnimationTestButton());
 
         animator.SetBool("isAttacking", PlayerController.sharedInstance.GetIsAttacking());
     }

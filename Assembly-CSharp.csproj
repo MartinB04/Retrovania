@@ -39,6 +39,7 @@
      <Compile Include="Assets\Scripts\Enemies\CollisionHandler.cs" />
      <Compile Include="Assets\Scripts\Enemies\NightmareController.cs" />
      <Compile Include="Assets\Scripts\SwitchController.cs" />
+     <Compile Include="Assets\InputActions\GameInput.cs" />
      <Compile Include="Assets\Scripts\MobilePlatform.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\ChangeScene.cs" />
