@@ -117,18 +117,18 @@ public class PlayerController : MonoBehaviour
         AttackAnimationStatus(true);
     }
 
-    public void SetLife(float life)
+    public void SetLife(float points)
     {
-        if (life > 0)
+        if (points > 0)
         {
             if (GetLife() < this.MAXLIFE)
-                this.lifePoints += life;
+                this.lifePoints += points;
             if (this.lifePoints > this.MAXLIFE)
                 this.lifePoints = this.MAXLIFE;
         }
         else
         {
-            this.lifePoints += life;
+            this.lifePoints += points;
             if (this.lifePoints < 0)
                 this.lifePoints = 0;
         }
