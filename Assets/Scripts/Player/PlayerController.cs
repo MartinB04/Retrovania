@@ -133,7 +133,6 @@ public class PlayerController : MonoBehaviour
                 this.lifePoints = 0;
         }
 
-        DataStorage.sharedInstance.SavePlayerPointsLife(this.lifePoints);
     }
 
     public float GetLife()

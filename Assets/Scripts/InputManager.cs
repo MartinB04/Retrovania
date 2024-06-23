@@ -54,6 +54,10 @@ public class InputManager : MonoBehaviour
         return input.Gameplay.AnimationTest.triggered;
     } 
 
+    public bool GetActionButton(){
+        return input.Gameplay.Action.triggered;
+    }
+
 }
 
 

@@ -28,15 +28,15 @@ public class ChangeScene : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
 
     private void Update()
     {
-        if(GameManager.sharedInstance.currentGameState == GameState.inGame)
+        if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            if (this.knockingDoor && Input.GetKeyDown(KeyCode.E) && PlayerController.sharedInstance.IsTouchingTheGround())
+            if (this.knockingDoor && InputManager.sharedInstance.GetActionButton() && PlayerController.sharedInstance.IsTouchingTheGround())
                 ChangeSceneNow();
         }
     }
@@ -95,13 +95,16 @@ public class ChangeScene : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
 
+        DataStorage.sharedInstance.SavePlayerPointsLife(PlayerController.sharedInstance.GetLife());
+
+
         bool directionPlayer = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
         DataStorage.sharedInstance.SetDirectionPlayer(directionPlayer);
 
         Vector2 playerPosition = new Vector2(this.exitPosition, PlayerController.sharedInstance.GetCurrentPlayerPosition());
 
         DataStorage.sharedInstance.SetPlayerPosition(playerPosition, GetNumberCurrentScene());
-        Debug.Log(currentScene.name + " " + GetNumberCurrentScene() + " " + this.exitPosition);
+        //Debug.Log(currentScene.name + " " + GetNumberCurrentScene() + " " + this.exitPosition);
 
         if (this.tarjetScene == Scenes.level1)
             SceneManager.LoadScene("Level1");

@@ -71,6 +71,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Action"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2e87e29-4714-4a61-9017-e19759ec5882"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -249,6 +258,28 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edbb3a83-c582-41f4-b34b-b28903ae630b"",
+                    ""path"": ""<DualShockGamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cced8832-99fe-47db-8df8-12c9718dd296"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -268,6 +299,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_AnimationTest = m_Gameplay.FindAction("AnimationTest", throwIfNotFound: true);
+        m_Gameplay_Action = m_Gameplay.FindAction("Action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -334,6 +366,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_AnimationTest;
+    private readonly InputAction m_Gameplay_Action;
     public struct GameplayActions
     {
         private @GameInput m_Wrapper;
@@ -343,6 +376,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @AnimationTest => m_Wrapper.m_Gameplay_AnimationTest;
+        public InputAction @Action => m_Wrapper.m_Gameplay_Action;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -367,6 +401,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @AnimationTest.started += instance.OnAnimationTest;
             @AnimationTest.performed += instance.OnAnimationTest;
             @AnimationTest.canceled += instance.OnAnimationTest;
+            @Action.started += instance.OnAction;
+            @Action.performed += instance.OnAction;
+            @Action.canceled += instance.OnAction;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -386,6 +423,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @AnimationTest.started -= instance.OnAnimationTest;
             @AnimationTest.performed -= instance.OnAnimationTest;
             @AnimationTest.canceled -= instance.OnAnimationTest;
+            @Action.started -= instance.OnAction;
+            @Action.performed -= instance.OnAction;
+            @Action.canceled -= instance.OnAction;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -419,5 +459,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnAnimationTest(InputAction.CallbackContext context);
+        void OnAction(InputAction.CallbackContext context);
     }
 }
