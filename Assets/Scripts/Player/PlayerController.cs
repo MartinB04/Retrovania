@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
         AttackAnimationStatus(true);
     }
 
-    public void SetLife(float points)
+    /* public void SetLife(float points)
     {
         if (points > 0)
         {
@@ -132,6 +132,36 @@ public class PlayerController : MonoBehaviour
             if (this.lifePoints < 0)
                 this.lifePoints = 0;
         }
+
+    } */
+
+    public float IncreaseLife(float points)
+    {
+        float remainingPoints = points;
+
+        // Solo añadir vida si el jugador no está al máximo de vida
+        if (GetLife() < this.MAXLIFE)
+        {
+            this.lifePoints += points;
+            if (this.lifePoints > this.MAXLIFE)
+            {
+                remainingPoints = this.lifePoints - this.MAXLIFE;
+                this.lifePoints = this.MAXLIFE;
+            }
+            else 
+            {
+                remainingPoints = 0;  // Todo el "points" se ha utilizado
+            }
+        }
+
+        return remainingPoints;
+    }
+
+    public void DecreaseLife(float points)
+    {
+        this.lifePoints -= points;
+        if (this.lifePoints < 0)
+            this.lifePoints = 0;
 
     }
 
@@ -216,7 +246,7 @@ public class PlayerController : MonoBehaviour
         rgbd.AddForce(enemyImpulse * side * Vector2.left, ForceMode2D.Impulse);
         spr.color = Color.red;
 
-        this.SetLife(damage);
+        this.DecreaseLife(damage);
 
         if (this.lifePoints <= 0)
             Invoke("Kill", 0.9f);
@@ -258,5 +288,5 @@ public class PlayerController : MonoBehaviour
         return this.transform.position.y;
     }
 
-    
+
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class redPotion : MonoBehaviour
 {
 
-    [SerializeField] int recoveryLife;
+    [SerializeField] float recoveryLife;
+    private float remainingPoints;
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +24,16 @@ public class redPotion : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerController.sharedInstance.SetLife(this.recoveryLife);
-            Destroy(gameObject);
+            //Debug.Log("recoverylife " + this.recoveryLife);
+
+            this.remainingPoints = PlayerController.sharedInstance.IncreaseLife(this.recoveryLife);
+            //Debug.Log("recoverylife2 " + this.recoveryLife);
+
+
+            if (this.remainingPoints <= 0)
+                Destroy(gameObject);
+            else
+                this.recoveryLife = this.remainingPoints;
         }
     }
 }
