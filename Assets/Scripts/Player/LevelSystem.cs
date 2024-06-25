@@ -50,11 +50,7 @@ public class LevelSystem : MonoBehaviour
 
     public void SetPlayerTotalExp(int exp)
     {
-        if (this.playerTotalExp == 0)
-            this.playerTotalExp = exp;
-        //this.playerRemainingExp = exp;
-
-        else
+        
             this.playerTotalExp += exp;
 
     }
@@ -92,11 +88,13 @@ public class LevelSystem : MonoBehaviour
 
     public void IncreaseLevel()
     {
-        if (this.playerLevel > 1)
+        /* if (this.playerLevel > 1)
         {
             //this.nextLevel = (this.playerLevel * 10) + this.nextLevel;
             this.nextLevel += 10;
-        }
+        } */
+            this.nextLevel += 10;
+
         SetPlayerLevel();
 
 
