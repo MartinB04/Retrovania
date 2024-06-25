@@ -98,13 +98,24 @@ public class ChangeScene : MonoBehaviour
         DataStorage.sharedInstance.SavePlayerPointsLife(PlayerController.sharedInstance.GetLife());
 
 
+
         bool directionPlayer = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
         DataStorage.sharedInstance.SetDirectionPlayer(directionPlayer);
 
         Vector2 playerPosition = new Vector2(this.exitPosition, PlayerController.sharedInstance.GetCurrentPlayerPosition());
 
         DataStorage.sharedInstance.SetPlayerPosition(playerPosition, GetNumberCurrentScene());
+
         //Debug.Log(currentScene.name + " " + GetNumberCurrentScene() + " " + this.exitPosition);
+
+        /* DataStorage.sharedInstance.SetPlayerExp(LevelSystem.sharedInstance.GetPlayerExp());
+        DataStorage.sharedInstance.SetPlayerLevel(LevelSystem.sharedInstance.GetPlayerLevel()); */
+
+        DataStorage.sharedInstance.SetPlayerTotalExp(LevelSystem.sharedInstance.GetPlayerTotalExp());
+        DataStorage.sharedInstance.SetPlayerLevel(LevelSystem.sharedInstance.GetPlayerLevel());
+        DataStorage.sharedInstance.SetPlayerRemainingExp(LevelSystem.sharedInstance.GetPlayerRemainingExp());
+        DataStorage.sharedInstance.SetNextLevel(LevelSystem.sharedInstance.GetNextLevel());
+
 
         if (this.tarjetScene == Scenes.level1)
             SceneManager.LoadScene("Level1");

@@ -19,6 +19,12 @@ public class DataStorage : MonoBehaviour
 
     bool directionPlayer = false;
 
+    int playerLevel = 1;
+    int playerTotalExp = 0;
+
+    int playerRemainingExp = 0;
+    int nextLevel = 10;
+
     //private Vector2 playerPosition = Vector2.zero;
 
     private Vector2[] playerPositions = new Vector2[5]
@@ -33,7 +39,7 @@ public class DataStorage : MonoBehaviour
 
     private void Awake()
     {
-        if(sharedInstance != null && sharedInstance != this)
+        if (sharedInstance != null && sharedInstance != this)
         {
             Destroy(gameObject);
             return;
@@ -59,8 +65,12 @@ public class DataStorage : MonoBehaviour
         this.relic2 = true;
         this.relic3 = true;
         this.finalRelic = true;
+        this.playerLevel = 1;
+        this.playerTotalExp = 0;
+        this.playerRemainingExp = 0;
+        this.nextLevel = 10;
 
-        for(int i = 0; i < playerPositions.Length; i++)
+        for (int i = 0; i < playerPositions.Length; i++)
             playerPositions[i] = Vector2.zero;
     }
 
@@ -100,7 +110,7 @@ public class DataStorage : MonoBehaviour
                 this.finalRelic = status;
                 break;
         }
-        
+
     }
 
     public bool GetKeyObjects(int relic)
@@ -109,10 +119,10 @@ public class DataStorage : MonoBehaviour
         {
             case 1:
                 return this.relic1;
-                
+
             case 2:
                 return this.relic2;
-          
+
             case 3:
                 return this.relic3;
             case 4:
@@ -128,9 +138,9 @@ public class DataStorage : MonoBehaviour
     public void SetPlayerPosition(Vector2 position, int scene)
     {
         this.playerPositions[scene] = position;
-        
-    } 
-    
+
+    }
+
     public Vector2 GetPlayerPosition(int scene)
     {
         return this.playerPositions[scene];
@@ -145,4 +155,42 @@ public class DataStorage : MonoBehaviour
     {
         this.directionPlayer = direction;
     }
+
+    public int GetPlayerLevel()
+    {
+        return this.playerLevel;
+    }
+
+    public void SetPlayerLevel(int level)
+    {
+        this.playerLevel = level;
+    }
+
+    public int GetPlayerTotalExp()
+    {
+        return this.playerTotalExp;
+    }
+
+    public void SetPlayerTotalExp(int exp)
+    {
+        this.playerTotalExp = exp;
+    }
+
+    public int GetPlayerRemainingExp(){
+        return this.playerRemainingExp;
+    }
+
+    public void SetPlayerRemainingExp(int exp){
+        this.playerRemainingExp = exp;
+    }
+
+    public int GetNextLevel(){
+        return this.nextLevel;
+    }
+
+    public void SetNextLevel(int points){
+        this.nextLevel = points;
+    }
+
+
 }

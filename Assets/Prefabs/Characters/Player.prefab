@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 4513927351012616430}
   - component: {fileID: 566880018}
   - component: {fileID: 192460824}
+  - component: {fileID: 1795573759}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -439,11 +440,26 @@ MonoBehaviour:
   attackCollider: {fileID: 1449300791}
   jumpForce: 45
   runningSpeed: 8
-  lifePoints: 100
+  lifePoints: 50
   enemyImpulse: 10
+  MAXLIFE: 100
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   footA: {fileID: 294454145}
   footB: {fileID: 2020957824}
   fixFlip: 1
+--- !u!114 &1795573759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472717892086031724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8b595f19771d545b35c198827b5244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDamage: 0
+  currentDamage: 0

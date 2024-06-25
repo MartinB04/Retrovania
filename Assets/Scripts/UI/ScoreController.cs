@@ -12,6 +12,11 @@ public class ScoreController : MonoBehaviour
     public Text textScene;
     public Text textTime;
 
+    public Text textPlayerLevel;
+    public Text textPlayerTotalExp;
+    public Text textNextLevel;
+    public Text textRemainingExp;
+
     //string timeS = "tiempo ";
     //float time=0;
 
@@ -27,6 +32,19 @@ public class ScoreController : MonoBehaviour
         textScene.text = this.UpdateNameScene();
         //time -= Time.deltaTime;
         //textTime.text = time + timeS.ToString("f0");
+        
+        if (LevelSystem.sharedInstance != null)
+        {
+            textPlayerLevel.text = "Lvl " + LevelSystem.sharedInstance.GetPlayerLevel();
+            textPlayerTotalExp.text = "Exp " + LevelSystem.sharedInstance.GetPlayerTotalExp();
+            textNextLevel.text = "Next " + LevelSystem.sharedInstance.GetNextLevel();
+            textRemainingExp.text = "ReExp " + LevelSystem.sharedInstance.GetPlayerRemainingExp();
+        }
+        else
+        {
+            Debug.LogError("LevelSystem.sharedInstance is null");
+        }
+
     }
 
     string UpdateNameScene()

@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 30
+  enemyExp: 5
 --- !u!114 &522070761
 MonoBehaviour:
   m_ObjectHideFlags: 0
