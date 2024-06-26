@@ -9,7 +9,8 @@ public class ScoreController : MonoBehaviour
     public static ScoreController sharedInstance;
 
     //public string textValue;
-    [SerializeField] Slider life;
+    [SerializeField] Slider sliderLife;
+    [SerializeField] Slider sliderRemainingExp;
     [SerializeField] TextMeshProUGUI textScene;
     [SerializeField] TextMeshProUGUI textTime;
     [SerializeField] TextMeshProUGUI textPlayerLevel;
@@ -20,6 +21,7 @@ public class ScoreController : MonoBehaviour
     [SerializeField] TextMeshProUGUI textRemainingExp;
 
     private Image lifeFillImage;
+    private Image remainingExpFillImage;
 
     //string timeS = "tiempo ";
     //float time=0;
@@ -27,20 +29,30 @@ public class ScoreController : MonoBehaviour
     private void Awake()
     {
         sharedInstance = this;
-        this.lifeFillImage = life.fillRect.GetComponent<Image>();
+        this.lifeFillImage = sliderLife.fillRect.GetComponent<Image>();
+        this.remainingExpFillImage = sliderRemainingExp.fillRect.GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.life.value = PlayerController.sharedInstance.GetLife();
+        this.sliderLife.value = PlayerController.sharedInstance.GetLife();
+
+        this.sliderRemainingExp.maxValue = LevelSystem.sharedInstance.GetNextLevel();
+        this.sliderRemainingExp.value = LevelSystem.sharedInstance.GetPlayerRemainingExp();
+
 
         //se desactiva el relleno rojo de vida cuando el jugador muere
         //debido a que sino, queda un resto rojo en la barra al morir
-        if (this.life.value <= 0)
+        if (this.sliderLife.value <= 0)
             this.lifeFillImage.enabled = false;
         else
             this.lifeFillImage.enabled = true;
+
+        if (this.sliderRemainingExp.value <= 0)
+            this.remainingExpFillImage.enabled = false;
+        else
+            this.remainingExpFillImage.enabled = true;
 
         textScene.text = this.UpdateNameScene();
         //time -= Time.deltaTime;
@@ -53,7 +65,7 @@ public class ScoreController : MonoBehaviour
             textNextLevel.text = "Next " + LevelSystem.sharedInstance.GetNextLevel();
             //textRemainingExp.text = "ReExp " + LevelSystem.sharedInstance.GetPlayerRemainingExp();
 
-            textRemainingExp.text = $"ReExp {LevelSystem.sharedInstance.GetPlayerRemainingExp()} ";
+            //textRemainingExp.text = $"ReExp {LevelSystem.sharedInstance.GetPlayerRemainingExp()} ";
 
         }
         else

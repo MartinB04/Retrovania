@@ -462,4 +462,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialDamage: 0
-  currentDamage: 0
+  currentDamage: 10
