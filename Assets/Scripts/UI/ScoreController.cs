@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScoreController : MonoBehaviour
 {
     public static ScoreController sharedInstance;
 
     //public string textValue;
-    public Text textLife;
-    public Text textScene;
-    public Text textTime;
+    [SerializeField] TextMeshProUGUI textLife;
+    [SerializeField] TextMeshProUGUI textScene;
+    [SerializeField] TextMeshProUGUI textTime;
+    [SerializeField] TextMeshProUGUI textPlayerLevel;
+    [SerializeField] TextMeshProUGUI textPlayerTotalExp;
+    [SerializeField] TextMeshProUGUI textNextLevel;
+    //public Text textRemainingExp;
 
-    public Text textPlayerLevel;
-    public Text textPlayerTotalExp;
-    public Text textNextLevel;
-    public Text textRemainingExp;
+    [SerializeField] TextMeshProUGUI textRemainingExp;
 
     //string timeS = "tiempo ";
     //float time=0;
@@ -32,13 +34,16 @@ public class ScoreController : MonoBehaviour
         textScene.text = this.UpdateNameScene();
         //time -= Time.deltaTime;
         //textTime.text = time + timeS.ToString("f0");
-        
+
         if (LevelSystem.sharedInstance != null)
         {
             textPlayerLevel.text = "Lvl " + LevelSystem.sharedInstance.GetPlayerLevel();
             textPlayerTotalExp.text = "Exp " + LevelSystem.sharedInstance.GetPlayerTotalExp();
             textNextLevel.text = "Next " + LevelSystem.sharedInstance.GetNextLevel();
-            textRemainingExp.text = "ReExp " + LevelSystem.sharedInstance.GetPlayerRemainingExp();
+            //textRemainingExp.text = "ReExp " + LevelSystem.sharedInstance.GetPlayerRemainingExp();
+
+            textRemainingExp.text = $"ReExp {LevelSystem.sharedInstance.GetPlayerRemainingExp()} ";
+
         }
         else
         {
