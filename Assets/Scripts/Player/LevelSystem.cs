@@ -5,41 +5,28 @@ using UnityEngine;
 public class LevelSystem : MonoBehaviour
 {
     [SerializeField] int initialDamage;
-    [SerializeField] int currentDamage;
+    [SerializeField] int currentDamage = 10;
 
     public static LevelSystem sharedInstance;
-    //public static DataStorage sharedInstance;
 
     private int playerLevel = 1;
-
-    //private int playerExp = 0;
     private int playerRemainingExp = 0;
     private int playerTotalExp = 0;
-
     private int nextLevel;
-
     private PlayerController playerController;
 
     private void Awake()
     {
         sharedInstance = this;
-
         this.playerController = GetComponent<PlayerController>();
-
     }
 
     void Start()
     {
-        //this.playerExp = DataStorage.sharedInstance.GetPlayerExp();
         this.playerTotalExp = DataStorage.sharedInstance.GetPlayerTotalExp();
         this.playerLevel = DataStorage.sharedInstance.GetPlayerLevel();
         this.playerRemainingExp = DataStorage.sharedInstance.GetPlayerRemainingExp();
-
-        //if (this.playerLevel == 1)
-        //this.nextLevel = 10;
-        //else
         this.nextLevel = DataStorage.sharedInstance.GetNextLevel();
-
     }
 
     // Update is called once per frame
@@ -50,15 +37,8 @@ public class LevelSystem : MonoBehaviour
 
     public void SetPlayerTotalExp(int exp)
     {
-        
-            this.playerTotalExp += exp;
-
+        this.playerTotalExp += exp;
     }
-
-    /* public int GetPlayerExp()
-    {
-        return this.playerExp;
-    } */
 
     public int GetPlayerTotalExp()
     {
@@ -67,7 +47,6 @@ public class LevelSystem : MonoBehaviour
 
     public void SetPlayerLevel()
     {
-        Debug.Log("Set Player Level ENTRO");
         this.playerLevel++;
     }
 
@@ -88,16 +67,9 @@ public class LevelSystem : MonoBehaviour
 
     public void IncreaseLevel()
     {
-        /* if (this.playerLevel > 1)
-        {
-            //this.nextLevel = (this.playerLevel * 10) + this.nextLevel;
-            this.nextLevel += 10;
-        } */
-            this.nextLevel += 10;
-
+        //this.nextLevel =  (level * 10) + (level - 1) * 10;
+        this.nextLevel += 10;
         SetPlayerLevel();
-
-
     }
 
     public void calculateExp(int pointsExp)
@@ -115,8 +87,14 @@ public class LevelSystem : MonoBehaviour
                 break; // Sal del bucle si playerRemainingExp es menor que nextLevel
 
         }
-
         SetPlayerTotalExp(pointsExp);
     }
 
+    public void SetCurrentPlayerDamage(int newDamage){
+
+    }
+
+    public int GetCurrentPlayerDamage(){
+        return this.currentDamage;
+    }
 }
