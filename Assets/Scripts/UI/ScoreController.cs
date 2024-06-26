@@ -9,7 +9,7 @@ public class ScoreController : MonoBehaviour
     public static ScoreController sharedInstance;
 
     //public string textValue;
-    [SerializeField] TextMeshProUGUI textLife;
+    [SerializeField] Slider life;
     [SerializeField] TextMeshProUGUI textScene;
     [SerializeField] TextMeshProUGUI textTime;
     [SerializeField] TextMeshProUGUI textPlayerLevel;
@@ -19,18 +19,29 @@ public class ScoreController : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI textRemainingExp;
 
+    private Image lifeFillImage;
+
     //string timeS = "tiempo ";
     //float time=0;
 
     private void Awake()
     {
         sharedInstance = this;
+        this.lifeFillImage = life.fillRect.GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        textLife.text = "Vida " + PlayerController.sharedInstance.GetLife();
+        this.life.value = PlayerController.sharedInstance.GetLife();
+
+        //se desactiva el relleno rojo de vida cuando el jugador muere
+        //debido a que sino, queda un resto rojo en la barra al morir
+        if (this.life.value <= 0)
+            this.lifeFillImage.enabled = false;
+        else
+            this.lifeFillImage.enabled = true;
+
         textScene.text = this.UpdateNameScene();
         //time -= Time.deltaTime;
         //textTime.text = time + timeS.ToString("f0");
