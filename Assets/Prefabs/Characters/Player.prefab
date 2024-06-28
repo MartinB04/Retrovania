@@ -440,9 +440,7 @@ MonoBehaviour:
   attackCollider: {fileID: 1449300791}
   jumpForce: 45
   runningSpeed: 8
-  lifePoints: 50
   enemyImpulse: 10
-  MAXLIFE: 100
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -462,4 +460,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialDamage: 0
-  currentDamage: 10
+  currentDamage: 100
+  lifePoints: 100

@@ -12,6 +12,8 @@ public class DataStorage : MonoBehaviour
     float playerPointsLife = 100;
     int maxPlayerLife = 100;
 
+    int playerDamage = 10;
+
     bool relic1 = true;
     bool relic2 = true;
     bool relic3 = true;
@@ -71,6 +73,7 @@ public class DataStorage : MonoBehaviour
         this.playerRemainingExp = 0;
         this.nextLevel = 10;
         this.maxPlayerLife = 100;
+        this.playerDamage = 10;
 
         for (int i = 0; i < playerPositions.Length; i++)
             playerPositions[i] = Vector2.zero;
@@ -202,6 +205,16 @@ public class DataStorage : MonoBehaviour
     public int GetMaxPlayerLife()
     {
         return this.maxPlayerLife;
+    }
+
+    public int GetPlayerDamage()
+    {
+        return this.playerDamage;
+    }
+
+    public void SetPlayerDamage(int damage)
+    {
+        this.playerDamage = damage;
     }
 
 

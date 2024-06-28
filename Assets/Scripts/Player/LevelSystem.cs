@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelSystem : MonoBehaviour
 {
     [SerializeField] int initialDamage;
-    [SerializeField] int currentDamage = 10;
+    [SerializeField] int currentPlayerDamage = 10;
 
     public static LevelSystem sharedInstance;
 
@@ -37,6 +37,7 @@ public class LevelSystem : MonoBehaviour
 
         this.maxPlayerLife = DataStorage.sharedInstance.GetMaxPlayerLife();
         this.LoadPlayerLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
+        this.currentPlayerDamage = DataStorage.sharedInstance.GetPlayerDamage();
 
     }
 
@@ -80,13 +81,10 @@ public class LevelSystem : MonoBehaviour
     {
         //this.nextLevel =  (level * 10) + (level - 1) * 10;
         this.nextLevel += 10;
-
         this.maxPlayerLife += 10;
-        Debug.Log($"MaxLIfe {this.maxPlayerLife}");
-        Debug.Log($"LIfe {this.lifePoints}");
-
-
-
+        //Debug.Log($"MaxLIfe {this.maxPlayerLife}");
+        //Debug.Log($"LIfe {this.lifePoints}");
+        SetCurrentPlayerDamage();
         SetPlayerLevel();
     }
 
@@ -108,12 +106,12 @@ public class LevelSystem : MonoBehaviour
         SetPlayerTotalExp(pointsExp);
     }
 
-    public void SetCurrentPlayerDamage(int newDamage){
-
+    public void SetCurrentPlayerDamage(){
+        this.currentPlayerDamage += 10;
     }
 
     public int GetCurrentPlayerDamage(){
-        return this.currentDamage;
+        return this.currentPlayerDamage;
     }
 
 

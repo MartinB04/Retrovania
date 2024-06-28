@@ -114,6 +114,8 @@ public class ChangeScene : MonoBehaviour
         DataStorage.sharedInstance.SetPlayerRemainingExp(LevelSystem.sharedInstance.GetPlayerRemainingExp());
         DataStorage.sharedInstance.SetNextLevel(LevelSystem.sharedInstance.GetNextLevel());
 
+        DataStorage.sharedInstance.SetPlayerDamage(LevelSystem.sharedInstance.GetCurrentPlayerDamage());
+
 
         if (this.tarjetScene == Scenes.level1)
             SceneManager.LoadScene("Level1");
