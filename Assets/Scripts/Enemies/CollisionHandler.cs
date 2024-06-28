@@ -5,9 +5,18 @@ using UnityEngine;
 public class CollisionHandler : MonoBehaviour
 {
 
+    public static CollisionHandler sharedInstance;
+
     [SerializeField] float damage = 10.0f;
     [SerializeField] float enemyLife = 100;
     [SerializeField] int enemyExp;
+
+    private int enemyMaxLife = 100;
+
+    private void Awake()
+    {
+        sharedInstance = this;
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("PlayerAttack") && PlayerController.sharedInstance.GetAttackCollider())
@@ -38,4 +47,11 @@ public class CollisionHandler : MonoBehaviour
     {
         this.enemyLife -= damage;
     }
+
+    public float GetEnemyMaxLife()
+    {
+        return this.enemyMaxLife;
+    }
+
+
 }
