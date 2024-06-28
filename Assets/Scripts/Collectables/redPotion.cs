@@ -26,7 +26,7 @@ public class redPotion : MonoBehaviour
         {
             //Debug.Log("recoverylife " + this.recoveryLife);
 
-            this.remainingPoints = PlayerController.sharedInstance.IncreaseLife(this.recoveryLife);
+            this.remainingPoints = LevelSystem.sharedInstance.IncreaseLife(this.recoveryLife);
             //Debug.Log("recoverylife2 " + this.recoveryLife);
 
 

@@ -13,6 +13,12 @@ public class LevelSystem : MonoBehaviour
     private int playerRemainingExp = 0;
     private int playerTotalExp = 0;
     private int nextLevel;
+
+
+    [SerializeField] float lifePoints = 100;
+
+    private int maxPlayerLife = 100;
+
     private PlayerController playerController;
 
     private void Awake()
@@ -27,6 +33,8 @@ public class LevelSystem : MonoBehaviour
         this.playerLevel = DataStorage.sharedInstance.GetPlayerLevel();
         this.playerRemainingExp = DataStorage.sharedInstance.GetPlayerRemainingExp();
         this.nextLevel = DataStorage.sharedInstance.GetNextLevel();
+
+        this.LoadPlayerLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
     }
 
     // Update is called once per frame
@@ -69,6 +77,13 @@ public class LevelSystem : MonoBehaviour
     {
         //this.nextLevel =  (level * 10) + (level - 1) * 10;
         this.nextLevel += 10;
+
+        this.maxPlayerLife += 10;
+        Debug.Log($"MaxLIfe {this.maxPlayerLife}");
+        Debug.Log($"LIfe {this.lifePoints}");
+
+
+
         SetPlayerLevel();
     }
 
@@ -96,5 +111,51 @@ public class LevelSystem : MonoBehaviour
 
     public int GetCurrentPlayerDamage(){
         return this.currentDamage;
+    }
+
+
+    public float IncreaseLife(float points)
+    {
+        float remainingPoints = points;
+
+        // Solo añadir vida si el jugador no está al máximo de vida
+        if (GetLife() < this.maxPlayerLife)
+        {
+            this.lifePoints += points;
+            if (this.lifePoints > this.maxPlayerLife)
+            {
+                remainingPoints = this.lifePoints - this.maxPlayerLife;
+                this.lifePoints = this.maxPlayerLife;
+            }
+            else
+            {
+                remainingPoints = 0;  // Todo el "points" se ha utilizado
+            }
+        }
+
+        return remainingPoints;
+    }
+
+    public void DecreaseLife(float points)
+    {
+        this.lifePoints -= points;
+        if (this.lifePoints < 0)
+            this.lifePoints = 0;
+
+    }
+
+    public float GetLife()
+    {
+        return this.lifePoints;
+    }
+
+    public void LoadPlayerLife(float life)
+    {
+        this.lifePoints = life;
+    }
+
+    public int GetMaxPlayerLife()
+    {
+        return this.maxPlayerLife;
     }
 }

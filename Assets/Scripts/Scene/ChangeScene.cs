@@ -95,7 +95,7 @@ public class ChangeScene : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
 
-        DataStorage.sharedInstance.SavePlayerPointsLife(PlayerController.sharedInstance.GetLife());
+        DataStorage.sharedInstance.SavePlayerPointsLife(LevelSystem.sharedInstance.GetLife());
 
 
 

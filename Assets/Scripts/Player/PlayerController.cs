@@ -17,9 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] float jumpForce = 5;
     [SerializeField] float runningSpeed = 1.5f;
-    [SerializeField] float lifePoints = 100;
+    
     [SerializeField] float enemyImpulse = 2f;
-    [SerializeField] float MAXLIFE;
+    
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         else
             this.transform.position = playerPosition;
 
-        this.LoadLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
+        
         this.attackCollider.enabled = false;
 
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
@@ -117,63 +117,11 @@ public class PlayerController : MonoBehaviour
         AttackAnimationStatus(true);
     }
 
-    /* public void SetLife(float points)
-    {
-        if (points > 0)
-        {
-            if (GetLife() < this.MAXLIFE)
-                this.lifePoints += points;
-            if (this.lifePoints > this.MAXLIFE)
-                this.lifePoints = this.MAXLIFE;
-        }
-        else
-        {
-            this.lifePoints += points;
-            if (this.lifePoints < 0)
-                this.lifePoints = 0;
-        }
+    
 
-    } */
+    
 
-    public float IncreaseLife(float points)
-    {
-        float remainingPoints = points;
-
-        // Solo añadir vida si el jugador no está al máximo de vida
-        if (GetLife() < this.MAXLIFE)
-        {
-            this.lifePoints += points;
-            if (this.lifePoints > this.MAXLIFE)
-            {
-                remainingPoints = this.lifePoints - this.MAXLIFE;
-                this.lifePoints = this.MAXLIFE;
-            }
-            else 
-            {
-                remainingPoints = 0;  // Todo el "points" se ha utilizado
-            }
-        }
-
-        return remainingPoints;
-    }
-
-    public void DecreaseLife(float points)
-    {
-        this.lifePoints -= points;
-        if (this.lifePoints < 0)
-            this.lifePoints = 0;
-
-    }
-
-    public float GetLife()
-    {
-        return this.lifePoints;
-    }
-
-    public void LoadLife(float life)
-    {
-        this.lifePoints = life;
-    }
+    
 
     void Movement()
     {
@@ -246,9 +194,9 @@ public class PlayerController : MonoBehaviour
         rgbd.AddForce(enemyImpulse * side * Vector2.left, ForceMode2D.Impulse);
         spr.color = Color.red;
 
-        this.DecreaseLife(damage);
+        LevelSystem.sharedInstance.DecreaseLife(damage);
 
-        if (this.lifePoints <= 0)
+        if (LevelSystem.sharedInstance.GetLife() <= 0)
             Invoke("Kill", 0.9f);
         else
             Invoke("EnableMovement", 0.9f);

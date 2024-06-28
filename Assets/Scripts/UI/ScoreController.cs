@@ -36,7 +36,9 @@ public class ScoreController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.sliderLife.value = PlayerController.sharedInstance.GetLife();
+        
+        this.sliderLife.value = LevelSystem.sharedInstance.GetLife();
+        
 
         this.sliderRemainingExp.maxValue = LevelSystem.sharedInstance.GetNextLevel();
         this.sliderRemainingExp.value = LevelSystem.sharedInstance.GetPlayerRemainingExp();
