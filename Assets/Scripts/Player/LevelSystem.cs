@@ -17,7 +17,7 @@ public class LevelSystem : MonoBehaviour
 
     [SerializeField] float lifePoints = 100;
 
-    private int maxPlayerLife = 100;
+    private int maxPlayerLife;
 
     private PlayerController playerController;
 
@@ -34,7 +34,10 @@ public class LevelSystem : MonoBehaviour
         this.playerRemainingExp = DataStorage.sharedInstance.GetPlayerRemainingExp();
         this.nextLevel = DataStorage.sharedInstance.GetNextLevel();
 
+
+        this.maxPlayerLife = DataStorage.sharedInstance.GetMaxPlayerLife();
         this.LoadPlayerLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
+
     }
 
     // Update is called once per frame

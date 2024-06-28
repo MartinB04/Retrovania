@@ -97,6 +97,8 @@ public class ChangeScene : MonoBehaviour
 
         DataStorage.sharedInstance.SavePlayerPointsLife(LevelSystem.sharedInstance.GetLife());
 
+        DataStorage.sharedInstance.SetMaxPlayerLife(LevelSystem.sharedInstance.GetMaxPlayerLife());
+
 
 
         bool directionPlayer = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
@@ -106,10 +108,6 @@ public class ChangeScene : MonoBehaviour
 
         DataStorage.sharedInstance.SetPlayerPosition(playerPosition, GetNumberCurrentScene());
 
-        //Debug.Log(currentScene.name + " " + GetNumberCurrentScene() + " " + this.exitPosition);
-
-        /* DataStorage.sharedInstance.SetPlayerExp(LevelSystem.sharedInstance.GetPlayerExp());
-        DataStorage.sharedInstance.SetPlayerLevel(LevelSystem.sharedInstance.GetPlayerLevel()); */
 
         DataStorage.sharedInstance.SetPlayerTotalExp(LevelSystem.sharedInstance.GetPlayerTotalExp());
         DataStorage.sharedInstance.SetPlayerLevel(LevelSystem.sharedInstance.GetPlayerLevel());
