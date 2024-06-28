@@ -213,7 +213,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 20}
+  m_SizeDelta: {x: 40, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1022693323
 MonoBehaviour:
@@ -646,7 +646,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 2492040719708214202}
-  enemyLife: {fileID: 1022693323}
+  sliderEnemyLife: {fileID: 1022693323}
+  enemyMaxLife: 100
   offsetLife: {x: 0, y: -2.7}
 --- !u!114 &295871559
 MonoBehaviour:
