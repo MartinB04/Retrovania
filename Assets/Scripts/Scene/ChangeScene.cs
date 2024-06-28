@@ -13,11 +13,9 @@ public class ChangeScene : MonoBehaviour
     public static ChangeScene sharedInstance;
 
     [SerializeField] Scenes tarjetScene;
-
-    private bool knockingDoor;
-
     [SerializeField] Vector2 fixExitPosition;
 
+    private bool knockingDoor;
     private float exitPosition;
 
     private void Awake()
@@ -26,26 +24,17 @@ public class ChangeScene : MonoBehaviour
         this.exitPosition = this.gameObject.transform.position.x + this.fixExitPosition.x;
     }
 
-    private void Start()
-    {
-
-    }
-
-
     private void Update()
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
-        {
             if (this.knockingDoor && InputManager.sharedInstance.GetActionButton() && PlayerController.sharedInstance.IsTouchingTheGround())
                 ChangeSceneNow();
-        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
             this.knockingDoor = true;
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -57,12 +46,7 @@ public class ChangeScene : MonoBehaviour
     //se va a ejecutar desde el manager, solo si es game over, volvera a cargar lvl1
     public void RefreshScene()
     {
-
-        Debug.Log("Va a refrescar lvl1");
-
         SceneManager.LoadScene("Level1");
-        Debug.Log("Refresco lvl1");
-
     }
 
     public string GetCurrentScene()
@@ -90,32 +74,10 @@ public class ChangeScene : MonoBehaviour
         return -1;
     }
 
-
     void ChangeSceneNow()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-
-        DataStorage.sharedInstance.SavePlayerPointsLife(LevelSystem.sharedInstance.GetLife());
-
-        DataStorage.sharedInstance.SetMaxPlayerLife(LevelSystem.sharedInstance.GetMaxPlayerLife());
-
-
-
-        bool directionPlayer = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
-        DataStorage.sharedInstance.SetDirectionPlayer(directionPlayer);
-
-        Vector2 playerPosition = new Vector2(this.exitPosition, PlayerController.sharedInstance.GetCurrentPlayerPosition());
-
-        DataStorage.sharedInstance.SetPlayerPosition(playerPosition, GetNumberCurrentScene());
-
-
-        DataStorage.sharedInstance.SetPlayerTotalExp(LevelSystem.sharedInstance.GetPlayerTotalExp());
-        DataStorage.sharedInstance.SetPlayerLevel(LevelSystem.sharedInstance.GetPlayerLevel());
-        DataStorage.sharedInstance.SetPlayerRemainingExp(LevelSystem.sharedInstance.GetPlayerRemainingExp());
-        DataStorage.sharedInstance.SetNextLevel(LevelSystem.sharedInstance.GetNextLevel());
-
-        DataStorage.sharedInstance.SetPlayerDamage(LevelSystem.sharedInstance.GetCurrentPlayerDamage());
-
+        SavePlayerInfo();
 
         if (this.tarjetScene == Scenes.level1)
             SceneManager.LoadScene("Level1");
@@ -129,5 +91,22 @@ public class ChangeScene : MonoBehaviour
             SceneManager.LoadScene("Level5");
         else if (this.tarjetScene == Scenes.finalLevel)
             SceneManager.LoadScene("FinalLevel");
+    }
+
+    private void SavePlayerInfo()
+    {
+        DataStorage.sharedInstance.SavePlayerPointsLife(LevelSystem.sharedInstance.GetLife());
+        DataStorage.sharedInstance.SetMaxPlayerLife(LevelSystem.sharedInstance.GetMaxPlayerLife());
+
+        bool directionPlayer = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
+        DataStorage.sharedInstance.SetDirectionPlayer(directionPlayer);
+        Vector2 playerPosition = new Vector2(this.exitPosition, PlayerController.sharedInstance.GetCurrentPlayerPosition());
+
+        DataStorage.sharedInstance.SetPlayerPosition(playerPosition, GetNumberCurrentScene());
+        DataStorage.sharedInstance.SetPlayerTotalExp(LevelSystem.sharedInstance.GetPlayerTotalExp());
+        DataStorage.sharedInstance.SetPlayerLevel(LevelSystem.sharedInstance.GetPlayerLevel());
+        DataStorage.sharedInstance.SetPlayerRemainingExp(LevelSystem.sharedInstance.GetPlayerRemainingExp());
+        DataStorage.sharedInstance.SetNextLevel(LevelSystem.sharedInstance.GetNextLevel());
+        DataStorage.sharedInstance.SetPlayerDamage(LevelSystem.sharedInstance.GetCurrentPlayerDamage());
     }
 }
