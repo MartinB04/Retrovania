@@ -20,11 +20,18 @@ public class FireSkullController : MonoBehaviour
     Vector2 initialPositionTargetB;
 
     private Rigidbody2D rb2d;
+    private Animator animator;
+
+    private void Awake()
+    {
+        this.animator = GetComponent<Animator>();
+        this.rb2d = GetComponent<Rigidbody2D>();
+    }
 
     // Use this for initialization
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        
 
         this.midpoint = (TargetA.position + TargetB.position) / 2;
 
@@ -32,6 +39,8 @@ public class FireSkullController : MonoBehaviour
 
         initialPositionTargetA = TargetA.position;
         initialPositionTargetB = TargetB.position;
+
+        this.animator.SetBool("isAlive", true);
     }
 
     // Update is called once per frame
@@ -39,12 +48,22 @@ public class FireSkullController : MonoBehaviour
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
+            Debug.Log($"fireskull {CollisionHandler.sharedInstance.GetEnemyLife()}");
             Movement();
+            SetAnimation();
         }
         else
         {
             rb2d.velocity = Vector2.zero;
         }
+    }
+
+    private void SetAnimation()
+    {
+        if (CollisionHandler.sharedInstance.GetEnemyLife() > 0)
+            this.animator.SetBool("isAlive", true);
+        else
+            this.animator.SetBool("isAlive", false);
     }
 
     void FlipAnimation()
