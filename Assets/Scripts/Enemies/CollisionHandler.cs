@@ -11,11 +11,22 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float enemyLife = 100;
     [SerializeField] int enemyExp;
 
+    private FireSkullController fireSkullController;
+    private NightmareController nightmareController;
+
     private int enemyMaxLife = 100;
 
     private void Awake()
     {
         sharedInstance = this;
+
+        if (gameObject.name == "FireSkull")
+            this.fireSkullController = GetComponentInParent<FireSkullController>();
+        else if (gameObject.name == "Nightmare")
+            this.nightmareController = GetComponentInParent<NightmareController>();
+
+        
+
     }
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -29,7 +40,13 @@ public class CollisionHandler : MonoBehaviour
                 Destroy(gameObject);
             }
             else
-            Debug.Log($"VidaRestante {this.enemyLife}");
+            {
+                if(gameObject.name == "FireSkull") {
+                    Debug.Log(gameObject.name);
+                   fireSkullController.SetHurt();
+                }
+
+            }
         }
 
 
