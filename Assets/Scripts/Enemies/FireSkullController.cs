@@ -107,10 +107,10 @@ public class FireSkullController : MonoBehaviour
     {
         this.isHurt = true;
         this.animator.SetBool("isHurt", true);
-        StartCoroutine(EnemyHurt());
+        StartCoroutine(ResetHurt());
     }
 
-    IEnumerator EnemyHurt()
+    IEnumerator ResetHurt()
     {
         yield return new WaitForSeconds(1);
         this.isHurt = false;

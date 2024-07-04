@@ -7,6 +7,8 @@ using System.Linq;
 
 public class EnemyUI : MonoBehaviour
 {
+    private CollisionHandler collisionHandler;
+
     [SerializeField] Transform enemyTarget;
     
     [SerializeField] Slider sliderEnemyLife;
@@ -28,6 +30,8 @@ public class EnemyUI : MonoBehaviour
 
     private void Awake()
     {
+        this.collisionHandler = GetComponent<CollisionHandler>();
+
         this.canvasEnemyUI = GetComponentInChildren<Canvas>();
         this.enemyTransform = GetComponent<Transform>();
         this.mainCamera = Camera.main;
@@ -49,8 +53,8 @@ public class EnemyUI : MonoBehaviour
 
         FixLocalScale();
 
-        sliderEnemyLife.maxValue = CollisionHandler.sharedInstance.GetEnemyMaxLife();
-        sliderEnemyLife.value = CollisionHandler.sharedInstance.GetEnemyLife();
+        sliderEnemyLife.maxValue = this.collisionHandler.GetEnemyMaxLife();
+        sliderEnemyLife.value = this.collisionHandler.GetEnemyLife();
 
         sliderEnemyLife.transform.position = new Vector2(this.enemyTarget.position.x + this.offsetLife.x, this.enemyTarget.position.y + this.offsetLife.y);
 
@@ -62,7 +66,7 @@ public class EnemyUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sliderEnemyLife.value = CollisionHandler.sharedInstance.GetEnemyLife();
+        sliderEnemyLife.value = this.collisionHandler.GetEnemyLife();
         sliderEnemyLife.transform.position = new Vector2(this.enemyTarget.position.x + this.offsetLife.x, this.enemyTarget.position.y + this.offsetLife.y);
         
         ShowEnemyLifeBar();

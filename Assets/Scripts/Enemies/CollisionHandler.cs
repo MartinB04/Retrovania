@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollisionHandler : MonoBehaviour
 {
 
-    public static CollisionHandler sharedInstance;
+    //public static CollisionHandler sharedInstance;
 
     [SerializeField] float damage = 10.0f;
     [SerializeField] float enemyLife = 100;
@@ -18,7 +18,7 @@ public class CollisionHandler : MonoBehaviour
 
     private void Awake()
     {
-        sharedInstance = this;
+        //sharedInstance = this;
 
         if (gameObject.name == "FireSkull")
             this.fireSkullController = GetComponentInParent<FireSkullController>();
