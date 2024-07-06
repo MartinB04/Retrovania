@@ -250,7 +250,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator SetAfterAttack()
     {
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
+        yield return new WaitForFixedUpdate();
         this.afterAttack = false;
     }
 

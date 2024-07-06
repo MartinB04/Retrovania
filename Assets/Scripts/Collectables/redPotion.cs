@@ -23,6 +23,9 @@ public class redPotion : MonoBehaviour
 
         this.remainingPoints = this.recoveryLife;
         this.animator.SetBool("full", true);
+        this.animator.SetBool("medium", false);
+        this.animator.SetBool("almostEmpty", false);
+        this.animator.SetBool("empty", false);
     }
 
     // Update is called once per frame
@@ -42,7 +45,9 @@ public class redPotion : MonoBehaviour
             else
                 this.recoveryLife = this.remainingPoints;
             */
-            Potion();
+
+            if(this.remainingPoints < this.recoveryLife)
+                Potion();
 
             if (this.remainingPoints <= 0)
                 StartCoroutine(DestroyPotion());
