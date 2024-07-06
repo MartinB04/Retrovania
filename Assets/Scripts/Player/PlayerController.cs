@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour
     private bool isAlive = true;
     private bool attackAnimationStatus;
 
+    private bool isMoving;
+
+    private bool afterAttack;
+
+
     [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] float jumpForce = 5;
     [SerializeField] float runningSpeed = 1.5f;
@@ -61,37 +66,41 @@ public class PlayerController : MonoBehaviour
             this.isAlive = true;
 
         attackAnimationStatus = false;
+        this.afterAttack = false;
     }
 
     void Update()
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            if (IsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton() && !this.attackAnimationStatus)
+            if (GetIsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton() && !this.attackAnimationStatus)
                 Jump();
 
             if (InputManager.sharedInstance.GetAttackButton())
                 Attack();
+
+            Debug.Log($"Attack {this.isAttacking}");
         }
     }
 
     private void FixedUpdate()
     {
-        if (GameManager.sharedInstance.currentGameState == GameState.inGame && canMove && IsAlive())
+        if (GameManager.sharedInstance.currentGameState == GameState.inGame && this.canMove && GetIsAlive())
             Movement();
     }
 
-    public bool IsFalling()
+    public bool GetIsFalling()
     {
-        return !IsTouchingTheGround() && rgbd.velocity.y <= 0;
+        return !GetIsTouchingTheGround() && rgbd.velocity.y <= 0;
     }
 
-    public bool IsMoving()
+    public bool GetIsMoving()
     {
-        return rgbd.velocity.x != 0 && canMove;
+        return this.isMoving;
+        //return rgbd.velocity.x != 0 && canMove;
     }
 
-    public bool IsTouchingTheGround()
+    public bool GetIsTouchingTheGround()
     {
         return footA.isTouching || footB.isTouching;
     }
@@ -101,12 +110,12 @@ public class PlayerController : MonoBehaviour
         return this.isAttacking;
     }
 
-    public bool IsAlive()
+    public bool GetIsAlive()
     {
         return this.isAlive;
     }
 
-    public bool IsHurt()
+    public bool GetIsHurt()
     {
         return this.isHurt;
     }
@@ -114,18 +123,12 @@ public class PlayerController : MonoBehaviour
     public void Attack()
     {
         this.isAttacking = true;
-        AttackAnimationStatus(true);
+        //AttackAnimationStatus(true);
     }
-
-    
-
-    
-
-    
 
     void Movement()
     {
-        if (this.attackAnimationStatus && this.IsTouchingTheGround())
+        if (this.attackAnimationStatus && this.GetIsTouchingTheGround())
         {
             rgbd.velocity = new Vector2(0f, rgbd.velocity.y);
         }
@@ -154,6 +157,8 @@ public class PlayerController : MonoBehaviour
                 moveX = -runningSpeed;
             }
 
+            this.isMoving = moveX != 0 ? true : false;
+
             rgbd.velocity = new Vector2(moveX, rgbd.velocity.y);
         }
     }
@@ -178,12 +183,13 @@ public class PlayerController : MonoBehaviour
         rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    public void Kill()
+    public IEnumerator Kill()
     {
+        yield return new WaitForSeconds(1);
         this.isHurt = false;
         this.isAlive = false;
         spr.color = Color.white;
-        Invoke("GameOver", 3f);
+        StartCoroutine(GameOver());
     }
 
     public void EnemyKnockBack(float enemyPosX, float damage)
@@ -197,20 +203,22 @@ public class PlayerController : MonoBehaviour
         LevelSystem.sharedInstance.DecreaseLife(damage);
 
         if (LevelSystem.sharedInstance.GetLife() <= 0)
-            Invoke("Kill", 0.9f);
+            StartCoroutine(Kill());
         else
-            Invoke("EnableMovement", 0.9f);
+            StartCoroutine(EnableMovement());
     }
 
-    void EnableMovement()
+    IEnumerator EnableMovement()
     {
-        canMove = true;
+        yield return new WaitForSeconds(1);
+        this.canMove = true;
         this.isHurt = false;
-        spr.color = Color.white;
+        this.spr.color = Color.white;
     }
 
-    void GameOver()
+    IEnumerator GameOver()
     {
+        yield return new WaitForSeconds(3);
         GameManager.sharedInstance.GameOver();
     }
 
@@ -226,9 +234,24 @@ public class PlayerController : MonoBehaviour
 
     public void AttackAnimationStatus(bool status)
     {
-        this.attackAnimationStatus = status;
-        if (!status)
+        if (!status) { 
             this.isAttacking = false;
+            this.afterAttack = true;
+            StartCoroutine(SetAfterAttack());
+        }
+        this.attackAnimationStatus = status;
+        
+    }
+
+    public bool GetAfterAttack()
+    {
+        return this.afterAttack;
+    }
+
+    IEnumerator SetAfterAttack()
+    {
+        yield return new WaitForSeconds(0.1f);
+        this.afterAttack = false;
     }
 
     public float GetCurrentPlayerPosition()

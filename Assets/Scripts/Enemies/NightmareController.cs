@@ -10,7 +10,7 @@ public class NightmareController : MonoBehaviour
 
     Vector3 initialPosition;
 
-    float umbral = 0.1f;
+    //float umbral = 0.1f;
 
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
@@ -50,17 +50,7 @@ public class NightmareController : MonoBehaviour
                 this.speed = Mathf.Abs(this.speed);
                 FlipRigidBody();
             }
-
-            Debug.Log($"{this.rb2d.velocity.x}");
-            
         }
-
-        
-
-        Debug.Log($"footA {this.footA.isTouching}");
-        Debug.Log($"footB {this.footB.isTouching}");
-
-
     }
 
     public void FlipRigidBody()

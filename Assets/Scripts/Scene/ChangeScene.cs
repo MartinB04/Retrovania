@@ -27,7 +27,7 @@ public class ChangeScene : MonoBehaviour
     private void Update()
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
-            if (this.knockingDoor && InputManager.sharedInstance.GetActionButton() && PlayerController.sharedInstance.IsTouchingTheGround())
+            if (this.knockingDoor && InputManager.sharedInstance.GetActionButton() && PlayerController.sharedInstance.GetIsTouchingTheGround())
                 ChangeSceneNow();
     }
 

@@ -26,6 +26,7 @@ public class PlayerAnimationController : MonoBehaviour
         animator.SetBool("isAttacking", false);
         animator.SetBool("isFalling", false);
         animator.SetBool("isHurt", false);
+        animator.SetBool("afterAttack", false);
 
 
         this.mirrorAnimation = DataStorage.sharedInstance.GetDirectionPlayer();
@@ -41,15 +42,17 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void SetAnimations()
     {
-        animator.SetBool("isAlive", PlayerController.sharedInstance.IsAlive());
-        animator.SetBool("isGrounded", PlayerController.sharedInstance.IsTouchingTheGround());
-        animator.SetBool("isMoving", PlayerController.sharedInstance.IsMoving());
+        animator.SetBool("isAlive", PlayerController.sharedInstance.GetIsAlive());
+        animator.SetBool("isGrounded", PlayerController.sharedInstance.GetIsTouchingTheGround());
+        animator.SetBool("isMoving", PlayerController.sharedInstance.GetIsMoving());
 
-        animator.SetBool("isFalling", PlayerController.sharedInstance.IsFalling());
-        animator.SetBool("isHurt", PlayerController.sharedInstance.IsHurt());
+        animator.SetBool("isFalling", PlayerController.sharedInstance.GetIsFalling());
+        animator.SetBool("isHurt", PlayerController.sharedInstance.GetIsHurt());
         animator.SetBool("test", InputManager.sharedInstance.GetAnimationTestButton());
 
         animator.SetBool("isAttacking", PlayerController.sharedInstance.GetIsAttacking());
+
+        animator.SetBool("afterAttack", PlayerController.sharedInstance.GetAfterAttack());
     }
 
     public void SetMirrorAnimation(bool status)

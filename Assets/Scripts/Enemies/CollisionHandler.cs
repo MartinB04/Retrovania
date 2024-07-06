@@ -51,7 +51,7 @@ public class CollisionHandler : MonoBehaviour
 
 
         if (col.gameObject.CompareTag("NoPlayerAttack") && PlayerController.sharedInstance.GetIsAttacking() == false
-            && PlayerController.sharedInstance.IsAlive())
+            && PlayerController.sharedInstance.GetIsAlive())
             PlayerController.sharedInstance.EnemyKnockBack(transform.position.x, damage);
     }
 
