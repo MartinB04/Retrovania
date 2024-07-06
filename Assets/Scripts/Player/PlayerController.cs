@@ -142,8 +142,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
                 {
-                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(false);
-                    FlipRigidbody(true, this.fixFlip);
+                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(false);                              
+                        FlipRigidbody(true, this.fixFlip);
                 }
                 moveX = runningSpeed;
             }
@@ -151,8 +151,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (!PlayerAnimationController.sharedInstance.GetMirrorAnimation())
                 {
-                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(true);
-                    FlipRigidbody(false, this.fixFlip);
+                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(true);                
+                        FlipRigidbody(false, this.fixFlip);
                 }
                 moveX = -runningSpeed;
             }
@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour
 
     private void FlipRigidbody(bool flip, float value)
     {
+        
         if (flip)
         {
             rgbd.transform.localScale = new Vector3(1, 1, 1);
@@ -175,9 +176,10 @@ public class PlayerController : MonoBehaviour
             rgbd.transform.localScale = new Vector3(-1, 1, 1);
             rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
         }
+        
     }
 
-    void Jump()
+    public void Jump()
     {
         rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
         rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
