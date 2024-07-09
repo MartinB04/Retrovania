@@ -5301,10 +5301,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 933429602, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -1301430867, guid: a6c9c50ccabfe3b44972b8ab1f44714a, type: 3}
     - target: {fileID: 1251310407, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5337,46 +5333,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1783212533, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -258461647, guid: ec90041f28eaf2447bb31e738f812d2c, type: 3}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1820
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928358, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129928360, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1928360019, guid: f2c8b2c1ddac3a347bc71077741bb5ce, type: 3}
     - target: {fileID: 1080646842836208209, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
       propertyPath: m_Name
       value: SystemPrefab
