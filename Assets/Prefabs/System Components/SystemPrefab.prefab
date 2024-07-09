@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 259855251}
   - component: {fileID: 259855250}
   - component: {fileID: 259855249}
+  - component: {fileID: 1251260883}
   m_Layer: 5
   m_Name: CanvasTouchUI
   m_TagString: Untagged
@@ -182,6 +183,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1251260883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259855247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b355ebec722c02b4eb3c62720c7a8095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionButton: {fileID: 933429602}
 --- !u!1 &389604087
 GameObject:
   m_ObjectHideFlags: 0

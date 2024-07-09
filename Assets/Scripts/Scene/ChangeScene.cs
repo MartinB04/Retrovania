@@ -33,14 +33,20 @@ public class ChangeScene : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) 
+        { 
             this.knockingDoor = true;
+            TouchUIController.sharedInstance.SetActionButton(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+        { 
             this.knockingDoor = false;
+            TouchUIController.sharedInstance.SetActionButton(false);
+        }
     }
 
     //se va a ejecutar desde el manager, solo si es game over, volvera a cargar lvl1

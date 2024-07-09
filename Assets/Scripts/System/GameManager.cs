@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState = GameState.menu; //Variable para saber estado del juego, al inicio esta en menu principal
 
     [SerializeField] bool gameIsPaused = false;
-    [SerializeField] Canvas canvasMenu, canvasGameOver, canvasInGame, canvasPause, canvasWin;
+    [SerializeField] Canvas canvasMenu, canvasGameOver, canvasInGame, canvasPause, canvasWin, canvasTouchUI;
     private void Awake()
     {
         sharedInstance = this;
@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
         canvasInGame.enabled = false;
         canvasPause.enabled = false;
         canvasWin.enabled = false;
+        this.canvasTouchUI.enabled = false;
     }
 
     //Funcion que cambia el estado del juego
@@ -127,6 +128,7 @@ public class GameManager : MonoBehaviour
             //Preparar codigo para estar en juego
             SetCanvasEnable();
             canvasInGame.enabled = true;
+            this.canvasTouchUI.enabled = true;
    
         }
         else if (newGameState == GameState.pause)

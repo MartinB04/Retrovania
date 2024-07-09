@@ -2523,6 +2523,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e78b404e3f86190449ace366b18d6a12, type: 3}
+--- !u!223 &1251260882 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 259855251, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
+  m_PrefabInstance: {fileID: 6247078273532943578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1256565519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5337,6 +5342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SystemPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 6247078272086456551, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
+      propertyPath: canvasTouchUI
+      value: 
+      objectReference: {fileID: 1251260882}
     - target: {fileID: 7625141969905748601, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
       propertyPath: m_RootOrder
       value: 0
