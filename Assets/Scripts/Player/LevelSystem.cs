@@ -96,7 +96,7 @@ public class LevelSystem : MonoBehaviour
         {
             if (this.playerRemainingExp >= this.nextLevel)
             {
-                this.playerRemainingExp -= this.nextLevel;
+                this.playerRemainingExp = this.playerRemainingExp - this.nextLevel;
                 IncreaseLevel();
             }
             else
