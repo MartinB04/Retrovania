@@ -27,6 +27,7 @@ public class PlayerAnimationController : MonoBehaviour
         animator.SetBool("isFalling", false);
         animator.SetBool("isHurt", false);
         animator.SetBool("afterAttack", false);
+        animator.SetBool("afterJump", false);
 
 
         this.mirrorAnimation = DataStorage.sharedInstance.GetDirectionPlayer();
@@ -53,6 +54,16 @@ public class PlayerAnimationController : MonoBehaviour
         animator.SetBool("isAttacking", PlayerController.sharedInstance.GetIsAttacking());
 
         animator.SetBool("afterAttack", PlayerController.sharedInstance.GetAfterAttack());
+
+        if (!PlayerController.sharedInstance.GetIsTouchingTheGround() && PlayerController.sharedInstance.GetAfterJump() && PlayerController.sharedInstance.GetIsFalling())
+            StartCoroutine(FixJumpAnimation());
+        animator.SetBool("afterJump", PlayerController.sharedInstance.GetAfterJump());
+    }
+
+    IEnumerator FixJumpAnimation()
+    {
+        yield return new WaitForFixedUpdate();
+        PlayerController.sharedInstance.SetAfterJump(false);
     }
 
     public void SetMirrorAnimation(bool status)

@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isMoving;
 
     private bool afterAttack;
+    private bool afterJump;
 
 
     [SerializeField] private BoxCollider2D attackCollider;
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
 
         attackAnimationStatus = false;
         this.afterAttack = false;
+        this.afterJump = false;
     }
 
     void Update()
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour
             if (InputManager.sharedInstance.GetAttackButton())
                 Attack();
 
-            Debug.Log($"Attack {this.isAttacking}");
+           // Debug.Log($"Attack {this.isAttacking}");
         }
     }
 
@@ -183,6 +185,7 @@ public class PlayerController : MonoBehaviour
     {
         rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
         rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        SetAfterJump(true);
     }
 
     public IEnumerator Kill()
@@ -260,6 +263,16 @@ public class PlayerController : MonoBehaviour
     public float GetCurrentPlayerPosition()
     {
         return this.transform.position.y;
+    }
+
+    public bool GetAfterJump()
+    {
+        return this.afterJump;
+    }
+
+    public void SetAfterJump(bool status)
+    {
+        this.afterJump = status;
     }
 
 
