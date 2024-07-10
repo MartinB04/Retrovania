@@ -5301,6 +5301,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 933429601, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
+      propertyPath: m_ControlPath
+      value: <Keyboard>/e
+      objectReference: {fileID: 0}
     - target: {fileID: 1251310407, guid: 9fc68a605c06aa44981102c445bea62e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
