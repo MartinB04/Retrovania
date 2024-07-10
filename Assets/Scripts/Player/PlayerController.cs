@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController sharedInstance;
+
     private Rigidbody2D rgbd;
     private CapsuleCollider2D capsuleCollider;
     private SpriteRenderer spr;
@@ -19,19 +21,17 @@ public class PlayerController : MonoBehaviour
     private bool afterAttack;
     private bool afterJump;
 
+    private bool blockedFlip;
+
 
     [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] float jumpForce = 5;
     [SerializeField] float runningSpeed = 1.5f;
-    
     [SerializeField] float enemyImpulse = 2f;
-    
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerChecker footA;
     [SerializeField] LayerChecker footB;
     [SerializeField] float fixFlip;
-
-    public static PlayerController sharedInstance;
 
     private Vector3 startPosition;
 
@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
         else
             this.transform.position = playerPosition;
 
-        
         this.attackCollider.enabled = false;
 
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
@@ -69,6 +68,7 @@ public class PlayerController : MonoBehaviour
         attackAnimationStatus = false;
         this.afterAttack = false;
         this.afterJump = false;
+        this.blockedFlip = false;
     }
 
     void Update()
@@ -81,7 +81,12 @@ public class PlayerController : MonoBehaviour
             if (InputManager.sharedInstance.GetAttackButton())
                 Attack();
 
-           // Debug.Log($"Attack {this.isAttacking}");
+            if (GetIsAttacking() && !GetIsTouchingTheGround())
+                this.blockedFlip = true;
+            else
+                this.blockedFlip = false;
+
+            Debug.Log($"BlockedFlip {this.blockedFlip}");
         }
     }
 
@@ -99,7 +104,6 @@ public class PlayerController : MonoBehaviour
     public bool GetIsMoving()
     {
         return this.isMoving;
-        //return rgbd.velocity.x != 0 && canMove;
     }
 
     public bool GetIsTouchingTheGround()
@@ -125,15 +129,12 @@ public class PlayerController : MonoBehaviour
     public void Attack()
     {
         this.isAttacking = true;
-        //AttackAnimationStatus(true);
     }
 
     void Movement()
     {
         if (this.attackAnimationStatus && this.GetIsTouchingTheGround())
-        {
             rgbd.velocity = new Vector2(0f, rgbd.velocity.y);
-        }
         else
         {
             Vector2 moveInput = InputManager.sharedInstance.GetMovement();
@@ -167,18 +168,19 @@ public class PlayerController : MonoBehaviour
 
     private void FlipRigidbody(bool flip, float value)
     {
-        
-        if (flip)
+        if (!this.blockedFlip) 
         {
-            rgbd.transform.localScale = new Vector3(1, 1, 1);
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x + value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+            if (flip)
+            {
+                rgbd.transform.localScale = new Vector3(1, 1, 1);
+                rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x + value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+            }
+            else
+            {
+                rgbd.transform.localScale = new Vector3(-1, 1, 1);
+                rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+            }
         }
-        else
-        {
-            rgbd.transform.localScale = new Vector3(-1, 1, 1);
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
-        }
-        
     }
 
     public void Jump()
@@ -255,7 +257,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator SetAfterAttack()
     {
-        //yield return new WaitForSeconds(0.1f);
         yield return new WaitForFixedUpdate();
         this.afterAttack = false;
     }
@@ -274,6 +275,4 @@ public class PlayerController : MonoBehaviour
     {
         this.afterJump = status;
     }
-
-
 }
