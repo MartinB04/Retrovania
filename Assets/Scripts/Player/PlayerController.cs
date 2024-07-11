@@ -54,11 +54,22 @@ public class PlayerController : MonoBehaviour
 
         int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
         Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition(numScene);
-
+        
         if (playerPosition == Vector2.zero)
             this.transform.position = this.startPosition;
         else
             this.transform.position = playerPosition;
+
+        
+
+        if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+        {
+            rgbd.transform.localScale = new Vector3(-1, 1, 1);
+            //El .4f representa un ajuste para que el player este centrado en la puerta.
+            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - (this.fixFlip + .4f)), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+        }
+
+        
 
         this.attackCollider.enabled = false;
 
@@ -86,7 +97,7 @@ public class PlayerController : MonoBehaviour
             else
                 this.blockedFlip = false;
 
-            Debug.Log($"BlockedFlip {this.blockedFlip}");
+            //Debug.Log($"BlockedFlip {this.blockedFlip}");
         }
     }
 
@@ -160,11 +171,15 @@ public class PlayerController : MonoBehaviour
                 moveX = -runningSpeed;
             }
 
+            //StartCoroutine(FixFlip(direction));
+
             this.isMoving = moveX != 0 ? true : false;
 
             rgbd.velocity = new Vector2(moveX, rgbd.velocity.y);
         }
     }
+
+    
 
     private void FlipRigidbody(bool flip, float value)
     {
@@ -249,6 +264,7 @@ public class PlayerController : MonoBehaviour
         this.attackAnimationStatus = status;
         
     }
+    
 
     public bool GetAfterAttack()
     {
@@ -259,7 +275,32 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
         this.afterAttack = false;
+
+        //FixFlip();
+
     }
+
+    /*
+    void FixFlip()
+    {
+        bool mirror = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
+        Vector2 moveInput = InputManager.sharedInstance.GetMovement();
+        float direction = moveInput.x;
+
+        //si mirror true player mira izquierda
+
+        //dir falso player va izquierda, true va derecha
+
+        bool dir = direction > 0 ? true : false;
+
+        if(mirror && !dir )
+            FlipRigidbody(true, this.fixFlip);
+        else if(!mirror && dir)
+            FlipRigidbody(false, this.fixFlip);
+
+ 
+    }
+    */
 
     public float GetCurrentPlayerPosition()
     {
