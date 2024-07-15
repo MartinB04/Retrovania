@@ -18,7 +18,9 @@ public class ScoreController : MonoBehaviour
     [SerializeField] TextMeshProUGUI textNextLevel;
     //public Text textRemainingExp;
 
-    [SerializeField] TextMeshProUGUI textRemainingExp;
+    [SerializeField] TextMeshProUGUI textMoney;
+
+    //[SerializeField] TextMeshProUGUI textRemainingExp;
 
     private Image lifeFillImage;
     private Image remainingExpFillImage;
@@ -65,9 +67,8 @@ public class ScoreController : MonoBehaviour
             textPlayerLevel.text = "Lvl " + LevelSystem.sharedInstance.GetPlayerLevel();
             textPlayerTotalExp.text = "Exp " + LevelSystem.sharedInstance.GetPlayerTotalExp();
             textNextLevel.text = "Next " + LevelSystem.sharedInstance.GetNextLevel();
-            //textRemainingExp.text = "ReExp " + LevelSystem.sharedInstance.GetPlayerRemainingExp();
+            textMoney.text = "Money " + LevelSystem.sharedInstance.GetPlayerMoney();
 
-            //textRemainingExp.text = $"ReExp {LevelSystem.sharedInstance.GetPlayerRemainingExp()} ";
 
         }
         else

@@ -114,5 +114,7 @@ public class ChangeScene : MonoBehaviour
         DataStorage.sharedInstance.SetPlayerRemainingExp(LevelSystem.sharedInstance.GetPlayerRemainingExp());
         DataStorage.sharedInstance.SetNextLevel(LevelSystem.sharedInstance.GetNextLevel());
         DataStorage.sharedInstance.SetPlayerDamage(LevelSystem.sharedInstance.GetCurrentPlayerDamage());
+
+        DataStorage.sharedInstance.SetPlayerMoney(LevelSystem.sharedInstance.GetPlayerMoney());
     }
 }

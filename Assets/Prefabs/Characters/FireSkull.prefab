@@ -681,6 +681,7 @@ MonoBehaviour:
   damage: 30
   enemyLife: 100
   enemyExp: 5
+  money: 1
 --- !u!1 &2492040720131418018
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,6 +28,8 @@ public class DataStorage : MonoBehaviour
     int playerRemainingExp = 0;
     int nextLevel = 10;
 
+    int playerMoney;
+
     //private Vector2 playerPosition = Vector2.zero;
 
     private Vector2[] playerPositions = new Vector2[5]
@@ -74,6 +76,8 @@ public class DataStorage : MonoBehaviour
         this.nextLevel = 10;
         this.maxPlayerLife = 100;
         this.playerDamage = 10;
+
+        this.playerMoney = 0;
 
         for (int i = 0; i < playerPositions.Length; i++)
             playerPositions[i] = Vector2.zero;
@@ -215,6 +219,16 @@ public class DataStorage : MonoBehaviour
     public void SetPlayerDamage(int damage)
     {
         this.playerDamage = damage;
+    }
+
+    public void SetPlayerMoney(int money)
+    {
+        this.playerMoney = money;
+    }
+
+    public int GetPlayerMoney()
+    {
+        return this.playerMoney;
     }
 
 

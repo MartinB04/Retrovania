@@ -754,11 +754,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 0
-  speed: -2
+  speed: -5
   horizontal: 0
   animator: {fileID: 4136731596603087431}
   footA: {fileID: 882323219}
   footB: {fileID: 663668476}
+  fixPosition: 2
 --- !u!50 &2316045323074795357
 Rigidbody2D:
   serializedVersion: 4
@@ -821,6 +822,7 @@ MonoBehaviour:
   damage: 30
   enemyLife: 100
   enemyExp: 15
+  money: 2
 --- !u!114 &771928555
 MonoBehaviour:
   m_ObjectHideFlags: 0

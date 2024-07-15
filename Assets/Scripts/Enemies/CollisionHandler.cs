@@ -11,6 +11,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float enemyLife = 100;
     [SerializeField] int enemyExp;
 
+    [SerializeField] int money;
+
     private FireSkullController fireSkullController;
     private NightmareController nightmareController;
 
@@ -37,6 +39,7 @@ public class CollisionHandler : MonoBehaviour
             if (this.enemyLife <= 0)
             {
                 LevelSystem.sharedInstance.calculateExp(this.enemyExp);
+                LevelSystem.sharedInstance.SetPlayerMoney(this.money);
                 Destroy(gameObject);
             }
             else
