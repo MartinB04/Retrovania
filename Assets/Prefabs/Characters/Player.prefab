@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294454144}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.21, y: -1.68, z: 0}
+  m_LocalPosition: {x: -1.34, y: -1.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48,7 +48,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   direction: {x: 0, y: -1}
-  distance: 0.2
+  distance: 0.15
   isTouching: 0
 --- !u!1 &827527963
 GameObject:
@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 827527966}
   - component: {fileID: 827527965}
   - component: {fileID: 948291265}
+  - component: {fileID: 8603402683382493290}
   m_Layer: 7
   m_Name: sprite
   m_TagString: Player
@@ -167,6 +168,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f8f0689e65c017498596a43b24e1dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8603402683382493290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827527963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bae31d361d78864fbdb37db8f90a06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &882386888
@@ -310,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020957823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13, y: -1.68, z: 0}
+  m_LocalPosition: {x: 0.12, y: -1.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -333,7 +346,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   direction: {x: 0, y: -1}
-  distance: 0.2
+  distance: 0.15
   isTouching: 0
 --- !u!1 &4472717892086031724
 GameObject:
@@ -347,6 +360,8 @@ GameObject:
   - component: {fileID: 4513927351012616430}
   - component: {fileID: 566880018}
   - component: {fileID: 192460824}
+  - component: {fileID: 1795573759}
+  - component: {fileID: 1795573760}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -385,8 +400,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 3.614232
+  m_UseAutoMass: 0
+  m_Mass: 3.8253644
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
@@ -408,9 +423,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.6202203, y: -0.3685366}
-  m_Size: {x: 1.4887569, y: 2.7471745}
-  m_Direction: 0
+  m_Offset: {x: -0.6178391, y: -1.6025743}
+  m_Size: {x: 1.4330331, y: 0.16159417}
+  m_Direction: 1
 --- !u!114 &192460824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,14 +439,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 1449300791}
-  animator: {fileID: 827527966}
-  spr: {fileID: 827527965}
-  jumpForce: 45
+  jumpForce: 50
   runningSpeed: 8
-  pointsLife: 100
+  enemyImpulse: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  enemyImpulse: 10
   footA: {fileID: 294454145}
   footB: {fileID: 2020957824}
+  fixFlip: 1
+--- !u!114 &1795573759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472717892086031724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8b595f19771d545b35c198827b5244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDamage: 0
+  currentPlayerDamage: 10
+  lifePoints: 100
+--- !u!61 &1795573760
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4472717892086031724}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.6150172, y: -0.36310065}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.4685845, y: 2.604797}
+  m_EdgeRadius: 0

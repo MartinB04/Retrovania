@@ -4,296 +4,316 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rgbd;
-    private CapsuleCollider2D capsuleCollider;
-    private Animator animator;
-    private SpriteRenderer spr;
-
-    [SerializeField] private BoxCollider2D attackCollider;
-
-    [SerializeField] float jumpForce = 5;
-    [SerializeField] float runningSpeed = 1.5f;
-    [SerializeField] float lifePoints = 100;
-    [SerializeField] LayerMask groundLayer;
-
-    private bool bandAnimation; //Ayuda a determinar la correccion de posicion del player
-    private bool canMove = true;
-
-    private bool isHurt = false;
-
-    private bool isAttacking = false;
-
-    [SerializeField] float enemyImpulse = 2f;
-
-    [SerializeField] LayerChecker footA;
-    [SerializeField] LayerChecker footB;
-    
-
-    //Singleton de playercontroller
     public static PlayerController sharedInstance;
 
-    
+    private Rigidbody2D rgbd;
+    private CapsuleCollider2D capsuleCollider;
+    private SpriteRenderer spr;
+
+    private bool canMove = true;
+    private bool isHurt = false;
+    private bool isAttacking = false;
+    private bool isAlive = true;
+    private bool attackAnimationStatus;
+
+    private bool isMoving;
+
+    private bool afterAttack;
+    private bool afterJump;
+
+    private bool blockedFlip;
+
+
+    [SerializeField] private BoxCollider2D attackCollider;
+    [SerializeField] float jumpForce = 5;
+    [SerializeField] float runningSpeed = 1.5f;
+    [SerializeField] float enemyImpulse = 2f;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerChecker footA;
+    [SerializeField] LayerChecker footB;
+    [SerializeField] float fixFlip;
+
     private Vector3 startPosition;
-    //private Vector3 localScale;
 
     private void Awake()
     {
         this.rgbd = GetComponent<Rigidbody2D>();
         this.capsuleCollider = GetComponent<CapsuleCollider2D>();
-        this.animator = GetComponentInChildren<Animator>();
         this.spr = GetComponentInChildren<SpriteRenderer>();
-        
-        sharedInstance = this;   
-        startPosition = this.transform.position; //Toma el valor de la posicion del player en el inspector
+
+        sharedInstance = this;
+        startPosition = this.transform.position;
     }
 
-   
     public void Start()
     {
-        animator.SetBool("isAlive", true);
-        animator.SetBool("isGrounded", true);
-        animator.SetBool("isMoving", false);
-        animator.SetBool("isAttacking", false);
-        animator.SetBool("isFalling", false);
-        animator.SetBool("isHurt", false);
-        bandAnimation = false;
+        if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+            FlipRigidbody(false, this.fixFlip);
+        else
+            FlipRigidbody(true, 0f);
 
         int numScene = ChangeScene.sharedInstance.GetNumberCurrentScene();
         Vector2 playerPosition = DataStorage.sharedInstance.GetPlayerPosition(numScene);
-
-        if (playerPosition == Vector2.zero) //si la posicion del player en DataStorage es 0, toma la posicion del inspector.
+        
+        if (playerPosition == Vector2.zero)
             this.transform.position = this.startPosition;
         else
             this.transform.position = playerPosition;
 
-        this.LoadLife(DataStorage.sharedInstance.LoadPlayerPointsLife());
+        
+
+        if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+        {
+            rgbd.transform.localScale = new Vector3(-1, 1, 1);
+            //El .4f representa un ajuste para que el player este centrado en la puerta.
+            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - (this.fixFlip + .4f)), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+        }
+
+        
+
         this.attackCollider.enabled = false;
+
+        if (GameManager.sharedInstance.currentGameState == GameState.inGame)
+            this.isAlive = true;
+
+        attackAnimationStatus = false;
+        this.afterAttack = false;
+        this.afterJump = false;
+        this.blockedFlip = false;
     }
 
     void Update()
     {
-        if(GameManager.sharedInstance.currentGameState == GameState.inGame)
+        if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            // solo poder saltar si esta en modo juego
-            if (IsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton())
+            if (GetIsTouchingTheGround() && InputManager.sharedInstance.GetJumpButton() && !this.attackAnimationStatus)
                 Jump();
-            SetAnimations();
-            Attack();
+
+            if (InputManager.sharedInstance.GetAttackButton())
+                Attack();
+
+            if (GetIsAttacking() && !GetIsTouchingTheGround())
+                this.blockedFlip = true;
+            else
+                this.blockedFlip = false;
+
+            //Debug.Log($"BlockedFlip {this.blockedFlip}");
         }
     }
 
     private void FixedUpdate()
     {
-        if (GameManager.sharedInstance.currentGameState == GameState.inGame)
-            if (canMove && IsAlive())
-                Movement();
+        if (GameManager.sharedInstance.currentGameState == GameState.inGame && this.canMove && GetIsAlive())
+            Movement();
     }
 
-    //Gestiona las animaciones
-    private void SetAnimations()
+    public bool GetIsFalling()
     {
-        animator.SetBool("isAlive", IsAlive());
-        animator.SetBool("isGrounded", IsTouchingTheGround());
-        animator.SetBool("isMoving", IsMoving());
-        
-        animator.SetBool("isFalling", IsFalling());
-        animator.SetBool("isHurt", IsHurt());
-        animator.SetBool("test", AnimationTest());
-
-        animator.SetBool("isAttacking", this.isAttacking);
+        return !GetIsTouchingTheGround() && rgbd.velocity.y <= 0;
     }
 
-    private bool AnimationTest()
+    public bool GetIsMoving()
     {
-        return Input.GetKey(KeyCode.F);
+        return this.isMoving;
     }
-    private bool IsFalling()
+
+    public bool GetIsTouchingTheGround()
     {
-        return !IsTouchingTheGround() && rgbd.velocity.y <= 0;
-    }
-    
-    public bool IsAlive()
-    { 
-        return animator.GetBool("isAlive");
-    }
-
-
-    //corrige la pocision cuando se invierte la animacion
-    private void FixAnimationMirror()
-    {
-        if ((bandAnimation == true) && Input.GetKey(KeyCode.D))
-        {
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x +1), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
-            bandAnimation = false;
-        }
-         else if ((bandAnimation == false) && Input.GetKey(KeyCode.A))
-        {
-            rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - 1), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
-            bandAnimation = true;
-        }
-    }
-    
-
-    public void Attack()
-    {
-        if (InputManager.sharedInstance.GetAttackButton())
-        {
-            this.isAttacking = true;
-            Invoke("RealiseAttack", 1f);
-        }
-    }
-
-    public void RealiseAttack()
-    {
-        this.isAttacking = false;
-    }
-
-    //suma o resta los pv que recibe como parametro al jugador
-    public void SetLife(float life)
-    {
-        this.lifePoints += life;
-        DataStorage.sharedInstance.SavePlayerPointsLife(this.lifePoints);
-    }
-
-    public float GetLife()
-    {
-        return this.lifePoints;
-    }
-
-    //Establece los puntos de vida almacenados en DataStorage
-    public void LoadLife(float life)
-    {
-        this.lifePoints = life;
-    }
-
-    bool IsMoving()
-    {
-        return rgbd.velocity.x != 0 && canMove == true;
-    }
-
-
-
-    void Movement()
-    {
-        if (this.isAttacking) // Verifica si el jugador está atacando
-        {
-            Debug.Log("Player atacando Bv");
-            rgbd.velocity = new Vector2(0f, rgbd.velocity.y); // Detiene el movimiento en el eje X mientras ataca
-        }
-        else
-        {
-            Debug.Log("no esta atacando Bv");
-            float moveX = 0f; // Inicialmente, la velocidad en el eje X es 0
-                              //float direction = Input.GetAxis("Horizontal");
-                              //if (direction > 0)  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
-            if (Input.GetKey(KeyCode.D))  // Si se presiona la tecla D, establece la velocidad a runningSpeed en el eje X
-            {
-                moveX = runningSpeed;
-                FlipAnimation(true); // Voltea sprite a la derecha.
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                // Si se presiona la tecla A, establece la velocidad a -runningSpeed en el eje X
-                moveX = -runningSpeed;
-                FlipAnimation(false);
-            }
-            rgbd.velocity = new Vector2(moveX, rgbd.velocity.y); // Establece la velocidad en el eje X
-        }
-    }
-
-    private void FlipAnimation(bool flip)
-    {
-        if(flip)
-            rgbd.transform.localScale = new Vector3(1, 1, 1);
-        else
-            rgbd.transform.localScale = new Vector3(-1, 1, 1);
-        FixAnimationMirror();
-    }
-
-
-    void Jump()
-    {
-        // F = m*a ====> a = F/m
-        if (IsTouchingTheGround())
-        {
-            rgbd.velocity = new Vector2(rgbd.velocity.x, 0f); // Eliminar la velocidad vertical actual antes de aplicar el salto
-            rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Aplicar el impulso de salto
-        }
-    }
-
-    public bool IsTouchingTheGround()
-    {
-        //Verifica si almenos uno de los elementos hijos pie toca el suelo
         return footA.isTouching || footB.isTouching;
     }
 
-    public void Kill()
+    public bool GetIsAttacking()
     {
-        this.isHurt = false;
-        spr.color = Color.white;
-        this.animator.SetBool("isAlive", false);
-
-        Debug.Log("Jugador muerto");
-        Invoke("GameOver", 3f);
+        return this.isAttacking;
     }
 
-    public void EnemyKnockBack(float enemyPosX)
+    public bool GetIsAlive()
+    {
+        return this.isAlive;
+    }
+
+    public bool GetIsHurt()
+    {
+        return this.isHurt;
+    }
+
+    public void Attack()
+    {
+        this.isAttacking = true;
+    }
+
+    void Movement()
+    {
+        if (this.attackAnimationStatus && this.GetIsTouchingTheGround())
+            rgbd.velocity = new Vector2(0f, rgbd.velocity.y);
+        else
+        {
+            Vector2 moveInput = InputManager.sharedInstance.GetMovement();
+            float direction = moveInput.x;
+            float moveX = 0f;
+
+            if (direction > 0)
+            {
+                if (PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+                {
+                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(false);                              
+                        FlipRigidbody(true, this.fixFlip);
+                }
+                moveX = runningSpeed;
+            }
+            else if (direction < 0)
+            {
+                if (!PlayerAnimationController.sharedInstance.GetMirrorAnimation())
+                {
+                    PlayerAnimationController.sharedInstance.SetMirrorAnimation(true);                
+                        FlipRigidbody(false, this.fixFlip);
+                }
+                moveX = -runningSpeed;
+            }
+
+            //StartCoroutine(FixFlip(direction));
+
+            this.isMoving = moveX != 0 ? true : false;
+
+            rgbd.velocity = new Vector2(moveX, rgbd.velocity.y);
+        }
+    }
+
+    
+
+    private void FlipRigidbody(bool flip, float value)
+    {
+        if (!this.blockedFlip) 
+        {
+            if (flip)
+            {
+                rgbd.transform.localScale = new Vector3(1, 1, 1);
+                rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x + value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+            }
+            else
+            {
+                rgbd.transform.localScale = new Vector3(-1, 1, 1);
+                rgbd.transform.localPosition = new Vector3((rgbd.transform.localPosition.x - value), rgbd.transform.localPosition.y, rgbd.transform.localPosition.z);
+            }
+        }
+    }
+
+    public void Jump()
+    {
+        rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
+        rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        SetAfterJump(true);
+    }
+
+    public IEnumerator Kill()
+    {
+        yield return new WaitForSeconds(1);
+        this.isHurt = false;
+        this.isAlive = false;
+        spr.color = Color.white;
+        StartCoroutine(GameOver());
+    }
+
+    public void EnemyKnockBack(float enemyPosX, float damage)
     {
         canMove = false;
         this.isHurt = true;
         float side = Mathf.Sign(enemyPosX - transform.position.x);
         rgbd.AddForce(enemyImpulse * side * Vector2.left, ForceMode2D.Impulse);
-        Invoke("EnableMovement", 0.9f);
-
-        if (this.lifePoints <= 0)
-            Kill();
-        else
-            Invoke("EnableMovement", 0.9f);
-
         spr.color = Color.red;
 
-    }
-    private bool IsHurt()
-    {
-        return this.isHurt;
-    }
-    void EnableMovement()
-    {
-        canMove = true;
-        this.isHurt = false;
-        spr.color = Color.white;
-        if (lifePoints <= 0)
-            Kill();
-        spr.color = Color.white;
-    }
-    void GameOver()
-    {
-        GameManager.sharedInstance.GameOver();
-        Debug.Log("Juego terminado");
-    }
-  
+        LevelSystem.sharedInstance.DecreaseLife(damage);
 
-    // Agrega un nuevo método en tu script PlayerController para habilitar o deshabilitar el Collider2D
+        if (LevelSystem.sharedInstance.GetLife() <= 0)
+            StartCoroutine(Kill());
+        else
+            StartCoroutine(EnableMovement());
+    }
+
+    IEnumerator EnableMovement()
+    {
+        yield return new WaitForSeconds(1);
+        this.canMove = true;
+        this.isHurt = false;
+        this.spr.color = Color.white;
+    }
+
+    IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(3);
+        GameManager.sharedInstance.GameOver();
+    }
+
     public void AttackCollider(int act)
     {
-        attackCollider.enabled = act == 1 ? true : false;
+        attackCollider.enabled = act == 1;
     }
 
     public bool GetAttackCollider()
     {
         return attackCollider.enabled;
     }
-    //<----Termina el animationEvent para el attack collider---->
 
+    public void AttackAnimationStatus(bool status)
+    {
+        if (!status) { 
+            this.isAttacking = false;
+            this.afterAttack = true;
+            StartCoroutine(SetAfterAttack());
+        }
+        this.attackAnimationStatus = status;
+        
+    }
+    
+
+    public bool GetAfterAttack()
+    {
+        return this.afterAttack;
+    }
+
+    IEnumerator SetAfterAttack()
+    {
+        yield return new WaitForFixedUpdate();
+        this.afterAttack = false;
+
+        //FixFlip();
+
+    }
+
+    /*
+    void FixFlip()
+    {
+        bool mirror = PlayerAnimationController.sharedInstance.GetMirrorAnimation();
+        Vector2 moveInput = InputManager.sharedInstance.GetMovement();
+        float direction = moveInput.x;
+
+        //si mirror true player mira izquierda
+
+        //dir falso player va izquierda, true va derecha
+
+        bool dir = direction > 0 ? true : false;
+
+        if(mirror && !dir )
+            FlipRigidbody(true, this.fixFlip);
+        else if(!mirror && dir)
+            FlipRigidbody(false, this.fixFlip);
+
+ 
+    }
+    */
 
     public float GetCurrentPlayerPosition()
     {
         return this.transform.position.y;
     }
-    
-    public bool GetIsAttacking()
+
+    public bool GetAfterJump()
     {
-        return this.isAttacking;
+        return this.afterJump;
     }
 
+    public void SetAfterJump(bool status)
+    {
+        this.afterJump = status;
+    }
 }

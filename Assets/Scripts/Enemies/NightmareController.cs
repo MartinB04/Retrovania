@@ -10,12 +10,24 @@ public class NightmareController : MonoBehaviour
 
     Vector3 initialPosition;
 
+    //float umbral = 0.1f;
+
+    [SerializeField] LayerChecker footA;
+    [SerializeField] LayerChecker footB;
+
+    [SerializeField] float fixPosition;
+
     private Rigidbody2D rb2d;
+
+    private void Awake()
+    {
+        rb2d = GetComponent<Rigidbody2D>();
+    }
 
     // Use this for initialization
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        
         initialPosition = rb2d.transform.position;
     }
 
@@ -24,29 +36,34 @@ public class NightmareController : MonoBehaviour
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            rb2d.AddForce(Vector2.right * speed);
-            
+            //this.rb2d.AddForce(Vector2.right * this.speed);
 
-
-            if (rb2d.velocity.x > -0.01f && rb2d.velocity.x < 0.01f)
+            //this.rb2d.velocity = new Vector2(-this.speed, this.rb2d.velocity.y);
+            this.rb2d.velocity = new Vector2(this.speed, this.rb2d.velocity.y);
+            if (this.speed > 0 && !this.footA.isTouching)
             {
-                speed = -speed;
-                rb2d.velocity = new Vector2(speed, rb2d.velocity.y);
+                this.speed = -Mathf.Abs(this.speed);
+                FlipRigidBody();
             }
-
-            if (speed < 0)
-                transform.localScale = new Vector3(1f, 1f, 1f);
-            if (speed > 0)
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-
+            else if(this.speed < 0 && !this.footA.isTouching)
+            {
+                this.speed = Mathf.Abs(this.speed);
+                FlipRigidBody();
+            }
         }
-
-
-
-        else
-            rb2d.velocity = new Vector2(0, 0);
     }
 
-
-    
+    public void FlipRigidBody()
+    {
+        if (this.speed > 0)
+        {
+            this.rb2d.transform.localScale = new Vector3(-1, 1, 1);
+            rb2d.transform.localPosition = new Vector3((rb2d.transform.localPosition.x - this.fixPosition), rb2d.transform.localPosition.y, rb2d.transform.localPosition.z);
+        }
+        else
+        {
+            this.rb2d.transform.localScale = new Vector3(1, 1, 1);
+            rb2d.transform.localPosition = new Vector3((rb2d.transform.localPosition.x + this.fixPosition), rb2d.transform.localPosition.y, rb2d.transform.localPosition.z);
+        }
+    }
 }

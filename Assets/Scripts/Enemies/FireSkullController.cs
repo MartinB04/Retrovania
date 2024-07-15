@@ -16,18 +16,36 @@ public class FireSkullController : MonoBehaviour
 
     Vector2 midpoint;
 
+    Vector2 initialPositionTargetA;
+    Vector2 initialPositionTargetB;
+
+    bool isHurt;
+
     private Rigidbody2D rb2d;
+    private Animator animator;
+
+    private void Awake()
+    {
+        this.animator = GetComponentInChildren<Animator>();
+        this.rb2d = GetComponent<Rigidbody2D>();
+    }
 
     // Use this for initialization
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        
 
-        this.midpoint = (TargetA.transform.position + TargetB.transform.position) / 2;
+        this.midpoint = (TargetA.position + TargetB.position) / 2;
 
         rb2d.position = this.midpoint;
 
+        initialPositionTargetA = TargetA.position;
+        initialPositionTargetB = TargetB.position;
 
+        this.isHurt = false;
+
+        this.animator.SetBool("isAlive", true);
+        this.animator.SetBool("isHurt", this.isHurt);
     }
 
     // Update is called once per frame
@@ -35,43 +53,70 @@ public class FireSkullController : MonoBehaviour
     {
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            Movement();
+            if(!this.isHurt)
+                Movement();
+            else
+                rb2d.velocity = Vector2.zero;
+
         }
         else
-            rb2d.velocity = new Vector2(0, 0);
-
+        {
+            rb2d.velocity = Vector2.zero;
+        }
     }
+
+    
 
     void FlipAnimation()
     {
         if (this.flipRight)
-            gameObject.transform.localScale = new Vector3(-1,1,1);
+        {
+            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+        }
         else
+        {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
     }
+
     void Movement()
     {
+        // Convertir las posiciones a Vector2
+        Vector2 currentPosition = rb2d.position;
+        Vector2 targetPositionA = initialPositionTargetA;
+        Vector2 targetPositionB = initialPositionTargetB;
+
         // Calcula la dirección del movimiento.
-        Vector2 direction = this.flipRight ? (TargetB.position - rb2d.transform.position) : (TargetA.position - rb2d.transform.position);
+        Vector2 direction = this.flipRight ? (targetPositionB - currentPosition) : (targetPositionA - currentPosition);
+
         direction.Normalize(); // Normaliza la dirección para mantener una velocidad constante.
 
         // Aplica velocidad en ambos ejes.
         rb2d.velocity = direction * speed;
 
         // Cambia la dirección cuando llega a los límites.
-        if ((this.flipRight && rb2d.transform.position.x >= TargetB.position.x) ||
-            (!this.flipRight && rb2d.transform.position.x <= TargetA.position.x))
+        if ((this.flipRight && currentPosition.x >= initialPositionTargetB.x) ||
+            (!this.flipRight && currentPosition.x <= initialPositionTargetA.x))
         {
             this.flipRight = !this.flipRight;
             FlipAnimation();
         }
     }
 
+    public void SetHurt()
+    {
+        this.isHurt = true;
+        this.animator.SetBool("isHurt", true);
+        StartCoroutine(ResetHurt());
+    }
 
+    IEnumerator ResetHurt()
+    {
+        yield return new WaitForSeconds(1);
+        this.isHurt = false;
+        this.animator.SetBool("isHurt", false);
 
-    // Este método se ejecutará en el Editor de Unity.
-
-
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -82,14 +127,8 @@ public class FireSkullController : MonoBehaviour
         Vector2 direction = targetBPosition - targetAPosition;
 
         // Dibuja un rayo desde TargetA hacia TargetB en el Editor de Unity.
-
-        if (targetAPosition.y == targetBPosition.y || targetAPosition.x == targetBPosition.x)
-            Gizmos.color = Color.green;
-        else
-            Gizmos.color = Color.red;
+        Gizmos.color = (targetAPosition.y == targetBPosition.y || targetAPosition.x == targetBPosition.x) ? Color.green : Color.red;
         Gizmos.DrawLine(targetAPosition, targetBPosition);
     }
-
 #endif
-
 }
