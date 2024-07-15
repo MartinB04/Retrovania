@@ -823,6 +823,7 @@ MonoBehaviour:
   enemyLife: 100
   enemyExp: 15
   money: 2
+  coinPrefab: {fileID: 5835409685698608519, guid: 3652ffd95ad9799459efd63eaa70f248, type: 3}
 --- !u!114 &771928555
 MonoBehaviour:
   m_ObjectHideFlags: 0

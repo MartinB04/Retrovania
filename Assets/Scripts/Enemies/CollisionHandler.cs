@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-
-    //public static CollisionHandler sharedInstance;
-
     [SerializeField] float damage = 10.0f;
     [SerializeField] float enemyLife = 100;
     [SerializeField] int enemyExp;
 
     [SerializeField] int money;
+    [SerializeField] GameObject coinPrefab;
 
     private FireSkullController fireSkullController;
     private NightmareController nightmareController;
@@ -20,14 +18,10 @@ public class CollisionHandler : MonoBehaviour
 
     private void Awake()
     {
-        //sharedInstance = this;
-
         if (gameObject.name == "FireSkull")
             this.fireSkullController = GetComponentInParent<FireSkullController>();
         else if (gameObject.name == "Nightmare")
             this.nightmareController = GetComponentInParent<NightmareController>();
-
-        
 
     }
     void OnTriggerEnter2D(Collider2D col)
@@ -39,7 +33,14 @@ public class CollisionHandler : MonoBehaviour
             if (this.enemyLife <= 0)
             {
                 LevelSystem.sharedInstance.calculateExp(this.enemyExp);
-                LevelSystem.sharedInstance.SetPlayerMoney(this.money);
+
+                GameObject coin =Instantiate(this.coinPrefab, transform.position, Quaternion.identity);
+                coinController coinScript = coin.GetComponent<coinController>();
+                if (coinScript != null)
+                    coinScript.SetCoinValue(this.money);
+                else
+                    Debug.LogWarning("CoinScript nulo");
+
                 Destroy(gameObject);
             }
             else

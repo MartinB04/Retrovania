@@ -44,12 +44,6 @@ public class LevelSystem : MonoBehaviour
         this.playerMoney = DataStorage.sharedInstance.GetPlayerMoney();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetPlayerTotalExp(int exp)
     {
         this.playerTotalExp += exp;
@@ -165,7 +159,9 @@ public class LevelSystem : MonoBehaviour
 
     public void SetPlayerMoney(int money)
     {
+        Debug.Log($"SetPlayerMoeny money = {money}");
         this.playerMoney += money;
+        Debug.Log($"PlayerMoney = {this.playerMoney}");
     }
 
     public int GetPlayerMoney()

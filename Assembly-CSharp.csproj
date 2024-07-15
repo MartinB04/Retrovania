@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\UI\EnemyUI.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerSpriteController.cs" />
+    <Compile Include="Assets\Scripts\Collectables\coinController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
