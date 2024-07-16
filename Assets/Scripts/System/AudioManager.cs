@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource audioSource;
     [SerializeField] AudioClip coinAudio;
+    [SerializeField] AudioClip backgroundAudio;
+
 
     private void Awake()
     {

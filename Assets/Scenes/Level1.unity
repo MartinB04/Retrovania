@@ -2907,6 +2907,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7084270813209176183, guid: bc3ec3bcc9f37a8419dc0c5e2db63778, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084270813209176183, guid: bc3ec3bcc9f37a8419dc0c5e2db63778, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
+    - target: {fileID: 7084270813209176183, guid: bc3ec3bcc9f37a8419dc0c5e2db63778, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084270813209176184, guid: bc3ec3bcc9f37a8419dc0c5e2db63778, type: 3}
+      propertyPath: backgroundAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc3ec3bcc9f37a8419dc0c5e2db63778, type: 3}
 --- !u!1001 &1492457604
