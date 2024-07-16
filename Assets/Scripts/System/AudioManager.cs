@@ -6,10 +6,12 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager sharedInstance;
 
-    private AudioSource audioSource;
+    //private AudioSource audioSource;
     [SerializeField] AudioClip coinAudio;
     [SerializeField] AudioClip backgroundAudio;
 
+    [SerializeField] AudioSource backgroundMusic;
+    [SerializeField] AudioSource audioClips;
 
     private void Awake()
     {
@@ -23,24 +25,20 @@ public class AudioManager : MonoBehaviour
         sharedInstance = this;
         DontDestroyOnLoad(gameObject);
 
-        this.audioSource = GetComponent<AudioSource>();
-
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (this.audioSource == null)
-            Debug.LogWarning("AudioManager - AudioSource Nulo");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void PlayCoin()
     {
-        this.audioSource.PlayOneShot(this.coinAudio);
+        this.audioClips.PlayOneShot(this.coinAudio);
+    }
+
+    public void SetMusicVolume(float vol)
+    {
+        this.backgroundMusic.volume = vol;
+    }
+
+    public void SetSfxVolume(float vol)
+    {
+        this.audioClips.volume = vol;
     }
 }
