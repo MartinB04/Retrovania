@@ -66,12 +66,14 @@
     <Compile Include="Assets\Scripts\Npcs\NPCat.cs" />
     <Compile Include="Assets\Scripts\Collectables\redPotion.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\System\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Player\LevelSystem.cs" />
     <Compile Include="Assets\Scripts\Npcs\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\UI\TouchUIController.cs" />
     <Compile Include="Assets\Scripts\System\GameManager.cs" />
     <Compile Include="Assets\Scripts\Collectables\KeyObjectController.cs" />
     <Compile Include="Assets\Scripts\BarriersAndPlatforms\SceneBarrierController.cs" />
+    <Compile Include="Assets\Scripts\Collectables\coinController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\System\DataStorage.cs" />
     <Compile Include="Assets\Scripts\Physics\LayerChecker.cs" />
@@ -80,7 +82,6 @@
     <Compile Include="Assets\Scripts\UI\EnemyUI.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerSpriteController.cs" />
-    <Compile Include="Assets\Scripts\Collectables\coinController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
