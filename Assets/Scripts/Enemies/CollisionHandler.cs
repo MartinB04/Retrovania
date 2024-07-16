@@ -10,6 +10,7 @@ public class CollisionHandler : MonoBehaviour
 
     [SerializeField] int money;
     [SerializeField] GameObject coinPrefab;
+    [SerializeField] GameObject coinPosition;
 
     private FireSkullController fireSkullController;
     private NightmareController nightmareController;
@@ -34,7 +35,7 @@ public class CollisionHandler : MonoBehaviour
             {
                 LevelSystem.sharedInstance.calculateExp(this.enemyExp);
 
-                GameObject coin =Instantiate(this.coinPrefab, transform.position, Quaternion.identity);
+                GameObject coin =Instantiate(this.coinPrefab, this.coinPosition.transform.position, Quaternion.identity);
                 coinController coinScript = coin.GetComponent<coinController>();
                 if (coinScript != null)
                     coinScript.SetCoinValue(this.money);

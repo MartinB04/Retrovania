@@ -202,6 +202,37 @@ MonoBehaviour:
   direction: {x: 0, y: -1}
   distance: 0.15
   isTouching: 0
+--- !u!1 &785083449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785083450}
+  m_Layer: 3
+  m_Name: coinPositionNightmare
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &785083450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785083449}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: -0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6153101483228212721}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &882323217
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +769,7 @@ Transform:
   - {fileID: 886614731}
   - {fileID: 882323218}
   - {fileID: 663668475}
+  - {fileID: 785083450}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -772,7 +804,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 19.880753
+  m_Mass: 20.880753
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -824,6 +856,7 @@ MonoBehaviour:
   enemyExp: 15
   money: 2
   coinPrefab: {fileID: 5835409685698608519, guid: 3652ffd95ad9799459efd63eaa70f248, type: 3}
+  coinPosition: {fileID: 785083449}
 --- !u!114 &771928555
 MonoBehaviour:
   m_ObjectHideFlags: 0

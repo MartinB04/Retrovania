@@ -681,7 +681,7 @@ Transform:
   - {fileID: 1496491932}
   - {fileID: 2061089220}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &290211011
 PrefabInstance:
@@ -1133,6 +1133,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2316045323074795357, guid: 798234a33113eab4088ccde600e451d3, type: 3}
+      propertyPath: m_Mass
+      value: 19.880753
+      objectReference: {fileID: 0}
     - target: {fileID: 6153101483228212721, guid: 798234a33113eab4088ccde600e451d3, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1208,7 +1212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1567606616480092903, guid: 9287209f07f2a3b419c5be5ef1093feb, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1567606616480092903, guid: 9287209f07f2a3b419c5be5ef1093feb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2425,6 +2429,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 295871562, guid: e78b404e3f86190449ace366b18d6a12, type: 3}
+      propertyPath: m_Mass
+      value: 11.916292
+      objectReference: {fileID: 0}
     - target: {fileID: 1250320481, guid: e78b404e3f86190449ace366b18d6a12, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3672,7 +3680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4146850814461336074, guid: 61296462f6ec20f4d89df89c6d416b98, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4146850814461336074, guid: 61296462f6ec20f4d89df89c6d416b98, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3798,7 +3806,7 @@ Transform:
   - {fileID: 1719601352}
   - {fileID: 1769611170}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1719601352 stripped
 Transform:
