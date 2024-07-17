@@ -304,5 +304,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinAudio: {fileID: 8300000, guid: 0362a354f05ba314f9d68d41cd427648, type: 3}
   backgroundAudio: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
-  backgroundMusic: {fileID: 1757699030}
-  audioClips: {fileID: 209844756}
+  audioSourceMusic: {fileID: 1757699030}
+  audioSourceSfx: {fileID: 209844756}

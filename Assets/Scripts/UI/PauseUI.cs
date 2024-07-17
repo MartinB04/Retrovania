@@ -5,20 +5,14 @@ using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
 {
-
     [SerializeField] Slider sliderMusic;
     [SerializeField] Slider sliderSfx;
-    // Start is called before the first frame update
+
     void Start()
     {
+        LoadVolumeSettings();
         this.sliderMusic.onValueChanged.AddListener(SetMusicVolume);
         this.sliderSfx.onValueChanged.AddListener(SetSfxVolume);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void SetMusicVolume(float vol)
@@ -29,5 +23,20 @@ public class PauseUI : MonoBehaviour
     private void SetSfxVolume(float vol)
     {
         AudioManager.sharedInstance.SetSfxVolume(vol);
+    }
+
+    private void LoadVolumeSettings()
+    {
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            float musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+            this.sliderMusic.value = musicVolume;
+        }
+
+        if (PlayerPrefs.HasKey("SfxVolume"))
+        {
+            float sfxVolume = PlayerPrefs.GetFloat("SfxVolume");
+            this.sliderSfx.value = sfxVolume;
+        }
     }
 }
