@@ -8,6 +8,7 @@ public class TouchUIController : MonoBehaviour
     public static TouchUIController sharedInstance;
 
     [SerializeField] Image actionButton;
+    //[SerializeField] Image pauseButton;
 
     private void Awake()
     {
@@ -22,7 +23,8 @@ public class TouchUIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
+
     }
     public void SetActionButton(bool status)
     {
