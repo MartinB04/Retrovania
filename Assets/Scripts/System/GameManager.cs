@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        //if (this.gameIsPaused)
+          //  Resume();
         if(this.currentGameState == GameState.gameOver ||
         this.currentGameState == GameState.win)
         {
@@ -145,6 +147,8 @@ public class GameManager : MonoBehaviour
             canvasWin.enabled = true;
         }
         this.currentGameState = newGameState;
+
+        AudioManager.sharedInstance.SetTrackMusic(this.currentGameState);
     }
 
     public void ExitGame()

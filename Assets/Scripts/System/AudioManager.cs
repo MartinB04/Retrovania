@@ -7,7 +7,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager sharedInstance;
 
     [SerializeField] AudioClip coinAudio;
-    [SerializeField] AudioClip backgroundAudio;
+    [SerializeField] AudioClip initialMusic;
+    [SerializeField] AudioClip gameplayMusic1;
 
     [SerializeField] AudioSource audioSourceMusic;
     [SerializeField] AudioSource audioSourceSfx;
@@ -28,6 +29,11 @@ public class AudioManager : MonoBehaviour
         LoadVolumeSettings();
     }
 
+    private void Update()
+    {
+        //SetTrackMusic();
+    }
+
     public void PlayCoin()
     {
         this.audioSourceSfx.PlayOneShot(this.coinAudio);
@@ -43,6 +49,28 @@ public class AudioManager : MonoBehaviour
     {
         this.audioSourceSfx.volume = vol;
         PlayerPrefs.SetFloat("SfxVolume", vol);
+    }
+
+    public void SetTrackMusic(GameState gameState)
+    {
+        AudioClip newClip = null;
+        switch (gameState)
+        {
+            case GameState.menu:
+                newClip = this.initialMusic;
+                break;
+            case GameState.inGame:
+                newClip = this.gameplayMusic1;
+                break;
+        }
+        if (newClip != null && this.audioSourceMusic.clip != newClip)
+        {
+            this.audioSourceMusic.clip = newClip;
+            this.audioSourceMusic.loop = true;
+            this.audioSourceMusic.Play();
+        }
+        //else //if()
+          //  this.audioSourceMusic.Stop();
     }
 
     private void LoadVolumeSettings()
