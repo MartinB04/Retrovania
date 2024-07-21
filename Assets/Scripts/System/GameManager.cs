@@ -70,24 +70,29 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        DataStorage.sharedInstance.ResetData();
+        //DataStorage.sharedInstance.ResetData();
         this.SetGameState(GameState.gameOver);     
     }
 
     public void Win()
     {
-        DataStorage.sharedInstance.ResetData();
+        //DataStorage.sharedInstance.ResetData();
         this.SetGameState(GameState.win);   
     }
 
     public void BackToMenu()
     {
-        //if (this.gameIsPaused)
-          //  Resume();
-        if(this.currentGameState == GameState.gameOver ||
-        this.currentGameState == GameState.win)
+        if (this.gameIsPaused)
         {
+            gameIsPaused = false;
+            Time.timeScale = 1f;
+        }
 
+        if(this.currentGameState == GameState.gameOver ||
+        this.currentGameState == GameState.win ||
+        this.currentGameState == GameState.pause)
+        {
+            DataStorage.sharedInstance.ResetData();
             ChangeScene.sharedInstance.RefreshScene();
         }
             

@@ -63,14 +63,14 @@ public class AudioManager : MonoBehaviour
                 newClip = this.gameplayMusic1;
                 break;
         }
-        if (newClip != null && this.audioSourceMusic.clip != newClip)
+
+        if(this.audioSourceMusic.clip != newClip)
         {
             this.audioSourceMusic.clip = newClip;
             this.audioSourceMusic.loop = true;
             this.audioSourceMusic.Play();
         }
-        //else //if()
-          //  this.audioSourceMusic.Stop();
+
     }
 
     private void LoadVolumeSettings()
