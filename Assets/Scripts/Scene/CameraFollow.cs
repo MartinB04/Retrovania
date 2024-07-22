@@ -6,8 +6,11 @@ public class CameraFollow : MonoBehaviour
 {
     public static CameraFollow sharedInstance;
     [SerializeField] GameObject follow;
-    [SerializeField] Vector2 minCamPos, maxCamPos;
-   
+    //[SerializeField] Transform minPosition, maxPosition;
+    private Vector2 minCameraPosition, maxCameraPosition;
+
+    Camera cam;
+    float camHalfH, camHalfW;
 
     [SerializeField] float smoothTime;
 
@@ -16,14 +19,28 @@ public class CameraFollow : MonoBehaviour
     private void Awake()
     {
         sharedInstance = this;
+
+        this.cam = GetComponent<Camera>();
+        this.camHalfH = this.cam.orthographicSize;
+        this.camHalfW = this.camHalfH * cam.aspect;
     }
 
     // Use this for initialization
     void Start()
     {
+        GameObject min = GameObject.Find("AxisMinCamera");
+        GameObject max = GameObject.Find("AxisMaxCamera");
+        if (!min || !max)
+            Debug.LogWarning("Limites de mainCamera nulos");
+        else
+        {
+            this.minCameraPosition = min.transform.position;
+            this.maxCameraPosition = max.transform.position;
+        }
+
         transform.position = new Vector3(
-            Mathf.Clamp(follow.transform.position.x, minCamPos.x, maxCamPos.x),
-            Mathf.Clamp(follow.transform.position.y, minCamPos.y, maxCamPos.y),
+            Mathf.Clamp(follow.transform.position.x, minCameraPosition.x, maxCameraPosition.x),
+            Mathf.Clamp(follow.transform.position.y, minCameraPosition.y, maxCameraPosition.y),
             transform.position.z);
     }
 
@@ -35,10 +52,10 @@ public class CameraFollow : MonoBehaviour
         float posY = Mathf.SmoothDamp(transform.position.y,
             follow.transform.position.y, ref velocity.y, smoothTime);
 
-        transform.position = new Vector3(
-            Mathf.Clamp(posX, minCamPos.x, maxCamPos.x),
-            Mathf.Clamp(posY, minCamPos.y, maxCamPos.y),
-            transform.position.z);
+        float clampedX = Mathf.Clamp(posX, minCameraPosition.x + this.camHalfW, maxCameraPosition.x - this.camHalfW);
+        float clampedY = Mathf.Clamp(posY, minCameraPosition.y + this.camHalfH, maxCameraPosition.y - this.camHalfH);
+
+        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
 
     }
 }
