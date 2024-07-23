@@ -9,6 +9,8 @@ public class coinController : MonoBehaviour
 
     private int coinValue = 0;
 
+    private bool isCollected = false;
+
    
 
     private void Awake()
@@ -18,16 +20,18 @@ public class coinController : MonoBehaviour
 
     public void SetCoinValue(int coin)
     {
+        Debug.Log($"Valor moneda antes set = {this.coinValue}");
         this.coinValue = coin;
-        //Debug.Log($"Valor moneda = {this.coinValue}");
+        Debug.Log($"Valor moneda  depues set = {this.coinValue}");
     }
 
     
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) {
-            //Debug.Log($"OnTriggerEnter = {this.coinValue}");
+        if (!this.isCollected && collision.gameObject.CompareTag("Player")) {
+            this.isCollected = true;
+            Debug.Log($"OnTriggerEnter = {this.coinValue}");
             LevelSystem.sharedInstance.SetPlayerMoney(this.coinValue);
             //this.audioSource.PlayOneShot(this.coinAudio);
             AudioManager.sharedInstance.PlayCoin();

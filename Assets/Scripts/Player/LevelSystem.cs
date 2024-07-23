@@ -159,9 +159,12 @@ public class LevelSystem : MonoBehaviour
 
     public void SetPlayerMoney(int money)
     {
-        Debug.Log($"SetPlayerMoeny money = {money}");
+        Debug.Log($"SetPlayerMoney called with money = {money}");
+        Debug.Log($"PlayerMoney before update = {this.playerMoney}");
+
         this.playerMoney += money;
-        Debug.Log($"PlayerMoney = {this.playerMoney}");
+
+        Debug.Log($"PlayerMoney after update = {this.playerMoney}");
     }
 
     public int GetPlayerMoney()

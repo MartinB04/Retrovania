@@ -15,6 +15,8 @@ public class CollisionHandler : MonoBehaviour
     private FireSkullController fireSkullController;
     private NightmareController nightmareController;
 
+    private bool isDefeated = false;
+
     private int enemyMaxLife = 100;
 
     private void Awake()
@@ -31,11 +33,17 @@ public class CollisionHandler : MonoBehaviour
         {
             SetEnemyLife(LevelSystem.sharedInstance.GetCurrentPlayerDamage());
 
-            if (this.enemyLife <= 0)
+            if (this.enemyLife <= 0 && !this.isDefeated)
             {
+                this.isDefeated = true;
+
+                Debug.Log($"Enemigo derrotado exp {this.enemyExp} money {this.money}");
+
                 LevelSystem.sharedInstance.calculateExp(this.enemyExp);
 
-                GameObject coin =Instantiate(this.coinPrefab, this.coinPosition.transform.position, Quaternion.identity);
+                GameObject coin = Instantiate(this.coinPrefab, this.coinPosition.transform.position, Quaternion.identity);
+                Debug.Log("Coin instanciada");
+
                 coinController coinScript = coin.GetComponent<coinController>();
                 if (coinScript != null)
                     coinScript.SetCoinValue(this.money);
