@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemies\CollisionHandler.cs" />
     <Compile Include="Assets\Scripts\Enemies\NightmareController.cs" />
+    <Compile Include="Assets\Scripts\BarriersAndPlatforms\TraversablePlatform.cs" />
     <Compile Include="Assets\Scripts\BarriersAndPlatforms\SwitchController.cs" />
     <Compile Include="Assets\InputActions\GameInput.cs" />
     <Compile Include="Assets\Scripts\BarriersAndPlatforms\MobilePlatform.cs" />

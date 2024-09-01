@@ -5,6 +5,7 @@ using UnityEngine;
 public class LayerChecker : MonoBehaviour
 {
     [SerializeField] LayerMask targetMask;
+    [SerializeField] LayerMask alternativeTargetMask;
     [SerializeField] Vector2 direction;
     [SerializeField] float distance;
 
@@ -14,7 +15,7 @@ public class LayerChecker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isTouching = Physics2D.Raycast(this.transform.position, direction, distance, targetMask);
+        isTouching = (Physics2D.Raycast(this.transform.position, direction, distance, targetMask) || Physics2D.Raycast(this.transform.position, direction, distance, alternativeTargetMask));
 
     }
 

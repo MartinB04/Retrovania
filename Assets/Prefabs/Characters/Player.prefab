@@ -47,6 +47,9 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 64
+  alternativeTargetMask:
+    serializedVersion: 2
+    m_Bits: 1024
   direction: {x: 0, y: -1}
   distance: 0.15
   isTouching: 0
@@ -63,9 +66,9 @@ GameObject:
   - component: {fileID: 827527965}
   - component: {fileID: 948291265}
   - component: {fileID: 8603402683382493290}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: sprite
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,6 +348,9 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 64
+  alternativeTargetMask:
+    serializedVersion: 2
+    m_Bits: 1024
   direction: {x: 0, y: -1}
   distance: 0.15
   isTouching: 0

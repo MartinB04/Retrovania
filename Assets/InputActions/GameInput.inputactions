@@ -150,6 +150,28 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "up",
+                    "id": "fbf9d5f9-dc4f-450e-b523-fa88526dccb1",
+                    "path": "<DualShockGamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "f5bbe380-b9f2-48ab-af8f-e08951ac6f34",
+                    "path": "<DualShockGamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "Left",
                     "id": "1485ba18-983b-4535-a315-1365535a5576",
                     "path": "<DualShockGamepad>/leftStick/left",
@@ -161,8 +183,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Right",
-                    "id": "fbf9d5f9-dc4f-450e-b523-fa88526dccb1",
+                    "name": "right",
+                    "id": "86cf9ec9-c47b-49c9-bf12-cf202943cb1e",
                     "path": "<DualShockGamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
@@ -173,7 +195,7 @@
                 },
                 {
                     "name": "2D Vector",
-                    "id": "4e143d5f-9c78-4715-913f-bb963a424508",
+                    "id": "9eb132c8-226b-4a33-847e-7dade082706f",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -183,8 +205,30 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "up",
+                    "id": "94c90719-c20b-45ad-9b2b-4571d2a32e15",
+                    "path": "<DualShockGamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "98cdb139-7c67-4578-b5c9-7f251f816ca1",
+                    "path": "<DualShockGamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "left",
-                    "id": "4ca4c6da-76dc-4c34-a058-4b9030c2652b",
+                    "id": "33337930-8d2e-4cb8-b539-daa1c28a2101",
                     "path": "<DualShockGamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
@@ -195,7 +239,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "f9d93184-fe55-41f0-8443-5a261e72ea67",
+                    "id": "f2a6a41e-6e8b-46b2-bae2-d43aa611ae3a",
                     "path": "<DualShockGamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
@@ -206,7 +250,7 @@
                 },
                 {
                     "name": "2D Vector",
-                    "id": "cb07629c-6cc2-4e25-a579-20f968a1f059",
+                    "id": "86d0cd9b-94bf-4577-9a52-a97259ab0aca",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -216,8 +260,30 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "up",
+                    "id": "5d62a4ea-e65a-41d5-9ce5-5ab40381348e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "47e6fc4b-4ddd-414d-acf8-5d626c8fb5bb",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "left",
-                    "id": "3eb72799-79d2-4842-8804-c14ea275c1aa",
+                    "id": "2927a96b-2146-4dcb-b848-c2aa0660c4d6",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -228,7 +294,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "9045ab4e-9432-4f89-84d1-92a6b1fe156f",
+                    "id": "32d433fd-f488-4eba-a755-e29e9c92037b",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",

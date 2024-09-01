@@ -98,6 +98,8 @@ public class PlayerController : MonoBehaviour
                 this.blockedFlip = false;
 
             //Debug.Log($"BlockedFlip {this.blockedFlip}");
+            Debug.Log(InputManager.sharedInstance.GetMovementY().y);
+          
         }
     }
 
@@ -148,7 +150,7 @@ public class PlayerController : MonoBehaviour
             rgbd.velocity = new Vector2(0f, rgbd.velocity.y);
         else
         {
-            Vector2 moveInput = InputManager.sharedInstance.GetMovement();
+            Vector2 moveInput = InputManager.sharedInstance.GetMovementX();
             float direction = moveInput.x;
             float moveX = 0f;
 
@@ -200,8 +202,12 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        //Vector2 movY = InputManager.sharedInstance.GetMovementY();
+        float ejeY = InputManager.sharedInstance.GetMovementY().y;
+        if (ejeY >= 0) { 
         rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
         rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
         SetAfterJump(true);
     }
 

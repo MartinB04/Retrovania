@@ -29,10 +29,16 @@ public class InputManager : MonoBehaviour
         input.Disable();
     }
 
-    public Vector2 GetMovement()
+    public Vector2 GetMovementX()
     {
-        Vector2 movementValue = input.Gameplay.Move.ReadValue<Vector2>();
-        return movementValue;
+        float movementValue = input.Gameplay.Move.ReadValue<Vector2>().x;
+        return new Vector2(movementValue, 0);
+    }
+
+    public Vector2 GetMovementY()
+    {
+        float movementValue = input.Gameplay.Move.ReadValue<Vector2>().y;
+        return new Vector2(0, movementValue);
     }
 
     public bool GetJumpButton()
