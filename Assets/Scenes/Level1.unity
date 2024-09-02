@@ -1864,11 +1864,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dbffe11721bba24d82a061ef9d17e86, type: 3}
---- !u!61 &843822660 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 843822660, guid: ddf52026afc295148854005a873cf3e6, type: 3}
-  m_PrefabInstance: {fileID: 1404639963}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &866977046 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 518711428607064460, guid: d0afa472f0d87ea499ebb0a8e92d2493, type: 3}
@@ -2863,25 +2858,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 843822659, guid: ddf52026afc295148854005a873cf3e6, type: 3}
-      propertyPath: triggerCollider2D
-      value: 
-      objectReference: {fileID: 843822660}
     - target: {fileID: 3980766647126675048, guid: ddf52026afc295148854005a873cf3e6, type: 3}
       propertyPath: m_Name
       value: TraversablePlatform
-      objectReference: {fileID: 0}
-    - target: {fileID: 3980766647126675049, guid: ddf52026afc295148854005a873cf3e6, type: 3}
-      propertyPath: m_UseOneWay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3980766647126675049, guid: ddf52026afc295148854005a873cf3e6, type: 3}
-      propertyPath: m_SurfaceArc
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3980766647126675049, guid: ddf52026afc295148854005a873cf3e6, type: 3}
-      propertyPath: m_UseOneWayGrouping
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3980766647126675051, guid: ddf52026afc295148854005a873cf3e6, type: 3}
       propertyPath: m_RootOrder

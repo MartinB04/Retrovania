@@ -204,11 +204,13 @@ public class PlayerController : MonoBehaviour
     {
         //Vector2 movY = InputManager.sharedInstance.GetMovementY();
         float ejeY = InputManager.sharedInstance.GetMovementY().y;
-        if (ejeY >= 0) { 
-        rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
-        rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        if (ejeY >= 0)
+        { 
+            rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
+            rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            SetAfterJump(true);
         }
-        SetAfterJump(true);
+        
     }
 
     public IEnumerator Kill()
