@@ -56,12 +56,12 @@ public class FireSkullController : MonoBehaviour
             if(!this.isHurt)
                 Movement();
             else
-                rb2d.velocity = Vector2.zero;
+                rb2d.linearVelocity = Vector2.zero;
 
         }
         else
         {
-            rb2d.velocity = Vector2.zero;
+            rb2d.linearVelocity = Vector2.zero;
         }
     }
 
@@ -86,15 +86,15 @@ public class FireSkullController : MonoBehaviour
         Vector2 targetPositionA = initialPositionTargetA;
         Vector2 targetPositionB = initialPositionTargetB;
 
-        // Calcula la dirección del movimiento.
+        // Calcula la direcciï¿½n del movimiento.
         Vector2 direction = this.flipRight ? (targetPositionB - currentPosition) : (targetPositionA - currentPosition);
 
-        direction.Normalize(); // Normaliza la dirección para mantener una velocidad constante.
+        direction.Normalize(); // Normaliza la direcciï¿½n para mantener una velocidad constante.
 
         // Aplica velocidad en ambos ejes.
-        rb2d.velocity = direction * speed;
+        rb2d.linearVelocity = direction * speed;
 
-        // Cambia la dirección cuando llega a los límites.
+        // Cambia la direcciï¿½n cuando llega a los lï¿½mites.
         if ((this.flipRight && currentPosition.x >= initialPositionTargetB.x) ||
             (!this.flipRight && currentPosition.x <= initialPositionTargetA.x))
         {
@@ -121,7 +121,7 @@ public class FireSkullController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        // Calculamos la dirección del rayo.
+        // Calculamos la direcciï¿½n del rayo.
         Vector2 targetAPosition = TargetA.position;
         Vector2 targetBPosition = TargetB.position;
         Vector2 direction = targetBPosition - targetAPosition;

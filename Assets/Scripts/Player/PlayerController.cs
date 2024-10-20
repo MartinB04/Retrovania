@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     public bool GetIsFalling()
     {
-        return !GetIsTouchingTheGround() && rgbd.velocity.y <= 0;
+        return !GetIsTouchingTheGround() && rgbd.linearVelocity.y <= 0;
     }
 
     public bool GetIsMoving()
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
     void Movement()
     {
         if (this.attackAnimationStatus && this.GetIsTouchingTheGround())
-            rgbd.velocity = new Vector2(0f, rgbd.velocity.y);
+            rgbd.linearVelocity = new Vector2(0f, rgbd.linearVelocity.y);
         else
         {
             Vector2 moveInput = InputManager.sharedInstance.GetMovementX();
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
             this.isMoving = moveX != 0 ? true : false;
 
-            rgbd.velocity = new Vector2(moveX, rgbd.velocity.y);
+            rgbd.linearVelocity = new Vector2(moveX, rgbd.linearVelocity.y);
         }
     }
 
@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
         float ejeY = InputManager.sharedInstance.GetMovementY().y;
         if (ejeY >= 0)
         { 
-            rgbd.velocity = new Vector2(rgbd.velocity.x, 0f);
+            rgbd.linearVelocity = new Vector2(rgbd.linearVelocity.x, 0f);
             rgbd.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             SetAfterJump(true);
         }

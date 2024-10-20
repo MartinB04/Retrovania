@@ -39,7 +39,7 @@ public class NightmareController : MonoBehaviour
             //this.rb2d.AddForce(Vector2.right * this.speed);
 
             //this.rb2d.velocity = new Vector2(-this.speed, this.rb2d.velocity.y);
-            this.rb2d.velocity = new Vector2(this.speed, this.rb2d.velocity.y);
+            this.rb2d.linearVelocity = new Vector2(this.speed, this.rb2d.linearVelocity.y);
             if (this.speed > 0 && !this.footA.isTouching)
             {
                 this.speed = -Mathf.Abs(this.speed);
